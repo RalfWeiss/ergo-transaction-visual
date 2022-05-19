@@ -1,6 +1,6 @@
 {
-  "name": "ts-monorepo",
-  "description": "Template for setting up a TypeScript monorepo",
+  "name": "ergo-transaction-visual",
+  "description": "Input to Output mappings of a Ergo transaction",
   "private": true,
   "workspaces": [
     "packages/*",
