@@ -1,1 +1,1 @@
-export {TxIoView} from './diagram'
+export { TxIoView } from "./diagram";

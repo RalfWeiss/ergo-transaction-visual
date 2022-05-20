@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@ertravi/txio-view-react": "*",
+    "@cypress/react": "^5.12.5",    
     "next": "~12.1.6",
     "react": "~18.1.0",
     "react-dom": "~18.1.0"
   },
   "devDependencies": {
-    "@cypress/react": "^5.12.5",
     "@cypress/webpack-dev-server": "^1.8.4",
     "@types/node": "~16.11.0",
     "@types/react": "~18.0.0",

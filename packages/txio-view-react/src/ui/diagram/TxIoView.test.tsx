@@ -1,15 +1,15 @@
 // import dependencies
-import React from 'react'
+// import React from "react";
 
-// import react-testing methods
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+// // import react-testing methods
+// import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 
-// add custom jest matchers from jest-dom
-import '@testing-library/jest-dom'
+// // add custom jest matchers from jest-dom
+// import "@testing-library/jest-dom";
 
-import {TxIoView} from './TxIoView'
+// import { TxIoView } from "./TxIoView";
 
-test("demo-test", () => {})
+test("demo-test", () => {});
 
 // Error: Uncaught [ReferenceError: ResizeObserver is not defined]
 // describe("TxIoView", () => {
@@ -21,10 +21,10 @@ test("demo-test", () => {})
 //     render(<TxIoView width={800} height={800} ergoTx={data}/>)
 
 //     //fireEvent.click(screen.getByText('Load Greeting'))
-  
+
 //     //await waitFor(() => screen.getByRole('alert'))
-//     // await waitFor(() => screen.getByText('Click me'))    
-//     await waitFor(() => screen.getByText('default title')) 
-    
+//     // await waitFor(() => screen.getByText('Click me'))
+//     await waitFor(() => screen.getByText('default title'))
+
 //   });
 // });

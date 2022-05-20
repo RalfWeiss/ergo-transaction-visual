@@ -1,4 +1,4 @@
 export default {
   verticalDistanceBetweenBoxes: 40,
-  horizontalDistanceBetweenInOutColumns:120
-}
+  horizontalDistanceBetweenInOutColumns: 120,
+};

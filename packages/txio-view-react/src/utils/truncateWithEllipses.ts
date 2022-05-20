@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+// import * as R from "ramda";
 
 // export class Asset {
 //   constructor(
@@ -9,10 +9,9 @@ import * as R from 'ramda'
 //   ){}
 // }
 
-
-export const truncateWithEllipses = (len:number) => (val:string) => {
-  if (val.length <= len) return val
-  return val.substring(0,len) + "..."
-}
-
-
+export const truncateWithEllipses = (len: number) => (val: string) => {
+  if (val.length <= len) {
+    return val;
+  }
+  return `${val.substring(0, len)}...`;
+};

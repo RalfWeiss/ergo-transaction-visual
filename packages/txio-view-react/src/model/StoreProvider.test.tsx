@@ -1,15 +1,15 @@
 // import dependencies
-import React from 'react'
+// import React from "react";
 
-// import react-testing methods
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+// // import react-testing methods
+// import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 
-// add custom jest matchers from jest-dom
-import '@testing-library/jest-dom'
+// // add custom jest matchers from jest-dom
+// import "@testing-library/jest-dom";
 
-import {Provider} from './StoreProvider'
+// import { Provider } from "./StoreProvider";
 
-test("demo test",() =>{})
+test("demo test", () => {});
 
 // describe("TxIoView", () => {
 //   it("should show title from Store", async () => {
@@ -19,6 +19,6 @@ test("demo test",() =>{})
 //       </Provider>
 //     )
 
-//     await waitFor(() => screen.getByText('default title'))        
+//     await waitFor(() => screen.getByText('default title'))
 //   });
 // });

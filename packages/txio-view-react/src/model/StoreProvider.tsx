@@ -1,42 +1,48 @@
-import React from 'react'
+import React from "react";
 // based on: https://felixgerschau.com/react-typescript-context/
-import { createContext, ReactNode, useState, Dispatch, SetStateAction} from 'react'
-//import { Store, mergeStore } from './store'
-import { Store } from './store'
+import {
+  createContext,
+  ReactNode,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+} from "react";
+// import { Store, mergeStore } from './store'
+import { Store } from "./store";
 
 interface IStoreContext {
-  state: Store, //| undefined,
+  state: Store; // | undefined,
   // setState: (state:Store) => Store
-  setState: Dispatch<SetStateAction<Store>>
+  setState: Dispatch<SetStateAction<Store>>;
 }
 
-//const defaultState:Store = mergeStore({})
-const defaultState:Store = {
+// const defaultState:Store = mergeStore({})
+const defaultState: Store = {
   title: "default title",
   boxes: {},
   allBoxes: [],
   inputBoxIds: [],
-  outputBoxIds: [],  
-  dimensions: {}
-}
+  outputBoxIds: [],
+  dimensions: {},
+};
 
-export const Context = createContext<IStoreContext>( {
+export const Context = createContext<IStoreContext>({
   state: defaultState,
-  //setState: () => mergeStore({})
-  setState: () => ({})
-})
-
+  // setState: () => mergeStore({})
+  setState: () => ({}),
+});
 
 export interface IProvider {
-  //data?: Store;
-  children: ReactNode
+  // data?: Store;
+  children: ReactNode;
 }
 
-export const Provider = ({ children }:IProvider) => {
-  const [state, setState] = useState(defaultState)
-  return (
-    <Context.Provider value={{state, setState}} >
-      {children}
-    </Context.Provider>
+export const Provider = ({ children }: IProvider) => {
+  const [state, setState] = useState(defaultState);
+  const contextValue = useMemo(
+    () => ({ state, setState } as IStoreContext),
+    [state, setState]
   );
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };

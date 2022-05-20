@@ -1,2 +1,2 @@
-export {TxIoView} from './TxIoView'
-export {TxDiagram} from './TxDiagram'
+export { TxIoView } from "./TxIoView";
+export { TxDiagram } from "./TxDiagram";

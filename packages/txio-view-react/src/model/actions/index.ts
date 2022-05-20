@@ -1,2 +1,2 @@
-export {addInputBox, addOutputBox} from './addBox'
-export {setDimension} from './setDimensions'
+export { addInputBox, addOutputBox } from "./addBox";
+export { setDimension } from "./setDimensions";

@@ -1,36 +1,40 @@
-import React from 'react'
-import { ErgoBox } from "../../model"
-import { truncateWithEllipses } from "../../utils"
-import * as R from 'ramda'
+import React from "react";
+import { ErgoBox } from "../../model";
+import { truncateWithEllipses } from "../../utils";
+import * as R from "ramda";
 
 interface RegistersProps {
-  ergoBox:ErgoBox
+  ergoBox: ErgoBox;
 }
 
-const TRUNCATE_MAXLEN = 45
+const TRUNCATE_MAXLEN = 45;
 
-export const Registers = ({ergoBox}:RegistersProps) => {
-  if (!ergoBox.additionalRegisters || R.isEmpty(ergoBox.additionalRegisters)) return <></>  
+export const Registers = ({ ergoBox }: RegistersProps) => {
+  if (!ergoBox.additionalRegisters || R.isEmpty(ergoBox.additionalRegisters)) {
+    return null;
+  }
   const Registers = R.toPairs(ergoBox.additionalRegisters).map(
-    ([prop, value]:[prop:string, value:any]) => (
+    ([prop, value]: [prop: string, value: any]) => (
       <tr key={prop}>
         <td>{prop}</td>
-        <td>{truncateWithEllipses(TRUNCATE_MAXLEN)(JSON.stringify(value,null,2))}</td>          
-      </tr>      
+        <td>
+          {truncateWithEllipses(TRUNCATE_MAXLEN)(
+            JSON.stringify(value, null, 2)
+          )}
+        </td>
+      </tr>
     )
-  )
+  );
   return (
     <table>
       {/* <caption style={{textAlign:'left', fontSize: 'small'}}>additionalRegisters</caption> */}
       <thead>
         <tr>
           <th>name</th>
-          <th>value</th>          
+          <th>value</th>
         </tr>
-      </thead>        
-      <tbody>
-        {Registers}
-      </tbody>                 
+      </thead>
+      <tbody>{Registers}</tbody>
     </table>
-  )
-}
+  );
+};

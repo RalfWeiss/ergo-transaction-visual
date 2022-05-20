@@ -1,2 +1,2 @@
-export { ErgoBoxCard } from './ErgoBoxCard'
-export { ErgoBoxCardContext } from './ErgoBoxCardContext'
+export { ErgoBoxCard } from "./ErgoBoxCard";
+export { IErgoBoxCardContext, ErgoBoxCardContext } from "./ErgoBoxCardContext";

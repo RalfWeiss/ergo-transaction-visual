@@ -1,1 +1,1 @@
-export {getBoxById} from './getBoxById'
+export { getBoxById } from "./getBoxById";
