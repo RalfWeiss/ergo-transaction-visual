@@ -4,7 +4,7 @@ import { normalize } from '../../model/ergoBox'
 import { addInputBox, addOutputBox } from '../../model/actions/addBox'
 import {Store} from '../../model/store'
 import * as R from 'ramda'
-import {DappstepFlow} from './DappstepFlow'
+import {TxFlowView} from './TxFlowView'
 
 import {Node} from 'react-flow-renderer';
 
@@ -75,7 +75,7 @@ export const TxDiagram = ({width, height, data}:TxDiagramProps) => {
       { (state.allBoxes.length === 0 
         ? <div>No nodes</div>
 //        : <DappstepFlow initialNodes={state.allBoxes.map(initializeNode)}/>
-        : <DappstepFlow initialNodes={state.allBoxes.map(initialNodesWithState(state))}/>
+        : <TxFlowView initialNodes={state.allBoxes.map(initialNodesWithState(state))}/>
       )}      
     </div>
   )

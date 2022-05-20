@@ -27,13 +27,13 @@ const nodeTypes: NodeTypes = {
   outputBox: (props) => <ErgoBoxNode {...{...props, nodeType:"outputBox"}} />,
 };
 
-interface DappstepFlowProps {
+interface TxFlowViewProps {
   initialNodes: Node[]
 }
 
 const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns
 
-export const DappstepFlow = ({initialNodes}:DappstepFlowProps) => {
+export const TxFlowView = ({initialNodes}:TxFlowViewProps) => {
   const {state, setState} = useContext(StoreContext);    
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);  
 
@@ -59,7 +59,7 @@ export const DappstepFlow = ({initialNodes}:DappstepFlowProps) => {
       return node
     }) as Node[]
     setNodes(layoutedNodes)    
-  }, [state])
+  }, [state, nodes, setNodes])
   
 
 
