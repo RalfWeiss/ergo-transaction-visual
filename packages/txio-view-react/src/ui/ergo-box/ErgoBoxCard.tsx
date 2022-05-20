@@ -64,7 +64,7 @@ export const ErgoBoxCard = ({ergoBox}:ErgoBoxCardProps) => {
       setState(setDimension(ergoBox.internalId)(dimension))
     }
 
-  }, [state, ergoBox]);
+  }, [state, ergoBox, setState]);
 
   if (!ergoBox) {
     return <div>Missing ergoBox data</div>

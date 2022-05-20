@@ -68,7 +68,7 @@ export const TxDiagram = ({width, height, data}:TxDiagramProps) => {
 
 
     setState(newState2)    
-  }, [data, state])  
+  }, [data, state, setState])  
 
   return (
     <div style={{width,height}}>
