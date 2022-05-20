@@ -3,6 +3,8 @@
 
 **ertravi** = Ergo Transactions Visuals
 
+[![tests](https://github.com/RalfWeiss/ergo-transaction-visual/actions/workflows/tests.yml/badge.svg)](https://github.com/RalfWeiss/ergo-transaction-visual/actions/workflows/tests.yml)
+
 </div>
 
 ----
