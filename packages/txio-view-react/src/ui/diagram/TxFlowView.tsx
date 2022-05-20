@@ -3,7 +3,9 @@ import { Context as StoreContext } from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
 import { adjustpositionFromStartPos } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
+import { usePrevious } from "../../hooks";
 import appConfig from "../../appConfig";
+import * as R from "ramda";
 
 import ReactFlow, { NodeTypes, Node, useNodesState } from "react-flow-renderer";
 
@@ -23,8 +25,13 @@ const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
 export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
   const { state } = useContext(StoreContext);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const prevInitialNodes = usePrevious(initialNodes);
 
   useEffect(() => {
+    if (R.equals(prevInitialNodes, initialNodes)) {
+      return;
+    }
+
     const { dimensions } = state;
     const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
       state.inputBoxIds
@@ -52,7 +59,9 @@ export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
       return node;
     }) as Node[];
     setNodes(layoutedNodes);
-  }, [state, nodes, setNodes]);
+    // }, [state]);
+    // Todo: wrong dependency array
+  }, [initialNodes, prevInitialNodes, state, nodes, setNodes]);
 
   return (
     <ReactFlow

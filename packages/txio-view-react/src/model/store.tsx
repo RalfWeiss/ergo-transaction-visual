@@ -10,4 +10,7 @@ export interface Store {
   inputBoxIds: string[];
   outputBoxIds: string[];
   dimensions: DimensionsByKey;
+  colorMap: {
+    [key: string]: string;
+  };
 }

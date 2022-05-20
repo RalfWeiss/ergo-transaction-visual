@@ -1,4 +1,6 @@
-import React, { useRef } from "react";
+import React, { useContext } from "react";
+import { Context as StoreContext, Store } from "../../model";
+import * as R from "ramda";
 
 import { Handle, Position, NodeProps } from "react-flow-renderer";
 import { ErgoBoxCardContext } from "../ergo-box";
@@ -15,16 +17,25 @@ interface ErgoBoxNodeProps extends NodeProps {
   nodeType: NodeType;
 }
 
+const addressById = (id: string) => R.path(["boxes", id, "address"]);
+const boxIdById = (id: string) => R.path(["boxes", id, "boxId"]);
+
+const colorForInternalId =
+  (id: string) =>
+  (state: Store): string => {
+    const address = addressById(id)(state) || "";
+    if (state.colorMap[address]) {
+      return state.colorMap[address];
+    }
+    const boxId = boxIdById(id)(state) || "";
+    if (state.colorMap[boxId]) {
+      return state.colorMap[boxId];
+    }
+    return ""; // Todo: return a default color
+  };
+
 export const ErgoBoxNode = ({ data, nodeType }: ErgoBoxNodeProps) => {
-  const ref: any = useRef(null);
-
-  // const [width, setWidth] = useState(0);
-  // const [height, setHeight] = useState(0);
-
-  // useLayoutEffect(() => {
-  //   setWidth(ref.current?.offsetWidth || 0);
-  //   setHeight(ref.current?.offsetHeight || 0);
-  // }, []);
+  const { state } = useContext(StoreContext);
 
   const NodeHandle =
     nodeType === "inputBox"
@@ -33,7 +44,8 @@ export const ErgoBoxNode = ({ data, nodeType }: ErgoBoxNodeProps) => {
 
   return (
     <>
-      <div ref={ref} style={nodeStyles(data.bgColor)}>
+      {/* <div style={nodeStyles(data.bgColor)}>      */}
+      <div style={nodeStyles(colorForInternalId(data.internalId)(state))}>
         <ErgoBoxCardContext internalId={data.internalId} />
       </div>
 

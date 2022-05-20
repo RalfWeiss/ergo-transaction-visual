@@ -5,6 +5,7 @@ import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";
 import { Registers } from "./Registers";
 import { setDimension } from "../../model";
+import { usePrevious } from "../../hooks";
 import * as R from "ramda";
 
 const cardStyle = {
@@ -49,10 +50,15 @@ interface ErgoBoxCardProps {
 }
 
 export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
+  const prevErgoBox = usePrevious(ergoBox);
   const { state, setState } = useContext(StoreContext);
   const ref: any = useRef(null);
 
   useLayoutEffect(() => {
+    if (R.equals(prevErgoBox, ergoBox)) {
+      return;
+    }
+
     const dimension = {
       width: ref.current?.offsetWidth || 0,
       height: ref.current?.offsetHeight || 0,
@@ -66,7 +72,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
     ) {
       setState(setDimension(ergoBox.internalId)(dimension));
     }
-  }, [state, ergoBox, setState]);
+  }, [state, ergoBox, prevErgoBox, setState]);
 
   if (!ergoBox) {
     return <div>Missing ergoBox data</div>;

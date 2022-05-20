@@ -3,28 +3,17 @@ import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store } from "../../model/store";
+import { makeColorMap } from "../../utils";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
+import { usePrevious } from "../../hooks";
 
 import { Node } from "react-flow-renderer";
-
-// const initializeNode = (internalId: string): Node => ({
-//   id: internalId,
-//   // type: 'inputBox',
-//   type: "outputBox",
-//   position: { x: 50, y: 50 },
-//   data: {
-//     internalId,
-//     label: internalId,
-//   },
-// });
 
 const initialNodesWithState =
   (state: Store) =>
   (internalId: string): Node => ({
     id: internalId,
-    // type: 'inputBox',
-    // type: 'outputBox',
     type: state.boxes[internalId]?.boxType || "inputBox",
     position: { x: 50, y: 50 },
     data: {
@@ -43,33 +32,31 @@ interface TxDiagramProps {
 }
 
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
+  const prevData = usePrevious(data);
   const { state, setState } = useContext(StoreContext);
 
-  // move data to state
   useEffect(() => {
-    const inputs = data.inputs.map((b, idx) => ({
-      ...b,
+    // move data to state
+    if (R.equals(prevData, data)) {
+      return;
+    }
+
+    const inputs = data.inputs.map((box, idx) => ({
+      ...box,
       internalId: `input-${idx}`,
       boxType: "inputBox",
     }));
-    const outputs = data.outputs.map((b, idx) => ({
-      ...b,
+    const outputs = data.outputs.map((box, idx) => ({
+      ...box,
       internalId: `output-${idx}`,
       boxType: "outputBox",
     }));
+    inputs.forEach((box) => setState(addInputBox(normalize(box))));
+    outputs.forEach((box) => setState(addOutputBox(normalize(box))));
 
-    const newState = R.reduce<any, any>(
-      (state, b) => addInputBox(normalize(b))(state),
-      state
-    )(inputs);
-
-    const newState2 = R.reduce<any, any>(
-      (state, b) => addOutputBox(normalize(b))(state),
-      newState
-    )(outputs);
-
-    setState(newState2);
-  }, [data, state, setState]);
+    const colorMap = makeColorMap(data);
+    setState(R.assoc("colorMap", colorMap));
+  }, [data, prevData, state, setState]);
 
   return (
     <div style={{ width, height }}>

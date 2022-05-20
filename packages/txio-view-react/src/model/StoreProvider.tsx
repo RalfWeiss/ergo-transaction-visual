@@ -25,6 +25,7 @@ const defaultState: Store = {
   inputBoxIds: [],
   outputBoxIds: [],
   dimensions: {},
+  colorMap: {},
 };
 
 export const Context = createContext<IStoreContext>({
