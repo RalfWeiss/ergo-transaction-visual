@@ -15,13 +15,10 @@ export const ErgoBoxCardContext = ({internalId}:ErgoBoxCardContext) => {
 
   useEffect(() => {
     const box = getBoxById(internalId)(state) as ErgoBox
-    console.log("ErgoBoxCardContext internalId: ", internalId)
     setBox(box)
   }, [internalId, state])
 
-//  const box = getBoxById(internalId)(state) as ErgoBox
-  if (R.isEmpty(box)) return <div>Not a box</div>
-  const ergoBox:ErgoBox = box as ErgoBox
+  if (R.isEmpty(box)) return <></>
 
-  return <ErgoBoxCard ergoBox={ergoBox} />
+  return <ErgoBoxCard ergoBox={box as ErgoBox} />
 } 

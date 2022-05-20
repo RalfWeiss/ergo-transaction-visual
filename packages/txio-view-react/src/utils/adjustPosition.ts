@@ -1,12 +1,9 @@
 import { XYPosition } from 'react-flow-renderer';
 import * as R from 'ramda'
+import appConfig from '../appConfig'
 
-// export interface Dimensions {
-//   width: number;
-//   height: number;
-// }
 
-export const SizeBetween =  40
+export const VerticalDistanceBetweenBoxes =  appConfig.verticalDistanceBetweenBoxes
 
 export interface Dimensions {
   width: number;
@@ -34,7 +31,7 @@ export const adjustPositions = (dimensions:ObjWithKeyedDimensions) =>
     let prevPosition = accTyped[prevKey].position
     let prevDimension = dimensions[prevKey]
     if (!prevPosition || !prevDimension) return accTyped
-    let newPosition = { x: prevPosition.x, y: prevPosition.y + prevDimension.height + SizeBetween}
+    let newPosition = { x: prevPosition.x, y: prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes}
     accTyped[currentKey].position = newPosition as XYPosition
     return acc
   }
@@ -60,7 +57,7 @@ export const adjustpositionFromStartPos = (dimensions:ObjWithKeyedDimensions) =>
         let prevPosition = accTyped[prevKey].position
         let prevDimension = dimensions[prevKey]
         if (!prevPosition || !prevDimension) return accTyped
-        let newPosition = { x: prevPosition.x, y: prevPosition.y + prevDimension.height + SizeBetween}
+        let newPosition = { x: prevPosition.x, y: prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes}
         accTyped[currentKey].position = newPosition as XYPosition
         return accTyped
       }
@@ -68,23 +65,23 @@ export const adjustpositionFromStartPos = (dimensions:ObjWithKeyedDimensions) =>
   }
 
 
-// const adjustPositions = (dimensions:any) => (startPos:Position) => (keys:string[]) => {
-//   return keys.map(
-//     (key, idx) => {
-//       if (idx === 0)
-//     }
-//   )
-// } as any
+// // const adjustPositions = (dimensions:any) => (startPos:Position) => (keys:string[]) => {
+// //   return keys.map(
+// //     (key, idx) => {
+// //       if (idx === 0)
+// //     }
+// //   )
+// // } as any
 
 
-export const adjustedPositions = {
-  'input-0': {
-    position: { x: 50, y: 50 },   
-  },
-  'input-1': {
-    position: { x: 50, y: 50+150+SizeBetween },
-  },  
-  'input-2': {
-    position: { x: 50, y: 50+150+150+(2*SizeBetween) },
-  },    
-} 
+// export const adjustedPositions = {
+//   'input-0': {
+//     position: { x: 50, y: 50 },   
+//   },
+//   'input-1': {
+//     position: { x: 50, y: 50+150+SizeBetween },
+//   },  
+//   'input-2': {
+//     position: { x: 50, y: 50+150+150+(2*SizeBetween) },
+//   },    
+// } 

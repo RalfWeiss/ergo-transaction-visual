@@ -11,34 +11,23 @@ const nodeStyles = (color:string) => ({
   backgroundColor: color
 });
 
-const handleStyle = { left: 10 };
+// const handleStyle = { left: 10 };
 
 type NodeType = 'inputBox' | 'outputBox'
 
-const ErgoNodeSimple = (nodeType:NodeType):FC<ErgoNodeEasyProps> =>  ErgoNodeEasy
-
-
-interface ErgoNodeEasyProps extends NodeProps {
+interface ErgoBoxNodeProps extends NodeProps {
   nodeType : NodeType
 }
 
-export const ErgoNodeEasy =  ({ id, data, nodeType }:ErgoNodeEasyProps) => {
+export const ErgoBoxNode =  ({ id, data, nodeType }:ErgoBoxNodeProps) => {
   const ref:any = useRef(null);
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  // https://bobbyhadz.com/blog/react-get-width-of-element
-  // https://stackoverflow.com/questions/43817118/how-to-get-the-width-of-a-react-element
   useLayoutEffect(() => {
-    console.log("width: ", id, " ", ref.current.offsetWidth || 'null')
-    console.log("height: ", id, " ", ref.current.offsetHeight )
-    console.log('ref.current', ref.current );
-    // console.log('width', ref.current ? ref.current.getBoundingClientRect().width : 0);
     setWidth(ref.current?.offsetWidth || 0);
     setHeight(ref.current?.offsetHeight || 0);
-
-    console.log("ErgoNodeEasy data: ", JSON.stringify(data, null, 2))
   }, []);
 
   const NodeHandle = (nodeType === 'inputBox') 
@@ -49,8 +38,6 @@ export const ErgoNodeEasy =  ({ id, data, nodeType }:ErgoNodeEasyProps) => {
   return (
     <>
     <div ref={ref} style={nodeStyles(data.bgColor)}>
-      {/* <div>{data.label.map((v:any) => <p>{v}</p>)}</div> */}
-      {/* <ErgoBoxCard ergoBox={data.raw} internalId={data.internalId}/> */}
       <ErgoBoxCardContext  internalId={data.internalId}/>
     </div>
 
@@ -59,6 +46,3 @@ export const ErgoNodeEasy =  ({ id, data, nodeType }:ErgoNodeEasyProps) => {
     </>
   );
 };
-
-//export default memo(ErgoNodeSimple);
-export default (nodeType:NodeType) => memo(ErgoNodeSimple(nodeType));

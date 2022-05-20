@@ -1,10 +1,10 @@
 import React, {ReactNode} from 'react'
 
-export interface BaseInfoContainerProps {
+export interface RootPropsContainerProps {
   children?: ReactNode
 }
 
-export const BaseInfoContainer = ({children}:BaseInfoContainerProps) => {
+export const RootPropsContainer = ({children}:RootPropsContainerProps) => {
   return (
     <table>      
       <tbody>
