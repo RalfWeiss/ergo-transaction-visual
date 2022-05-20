@@ -1,7 +1,8 @@
 /* eslint-disable no-alert */
 import React from "react";
-import {Provider} from '../model'
+import {Provider as StoreProvider} from '../model'
 import {Title, TxDiagram} from './'
+import { ReactFlowProvider } from 'react-flow-renderer';
 
 interface TxIoViewProps {
   width: number
@@ -14,9 +15,10 @@ interface TxIoViewProps {
 
 export const TxIoView = ({width, height, ergoTx}:TxIoViewProps) => {
   return (
-    <Provider>
-      <Title />
-      <TxDiagram width={width} height={height} />
-    </Provider>
+    <StoreProvider>
+      <ReactFlowProvider>
+        <TxDiagram width={width} height={height} data={ergoTx}/>
+      </ReactFlowProvider>
+    </StoreProvider>
   )
 }

@@ -1,6 +1,8 @@
 {
   "name": "@ertravi/txio-view-react",
   "version": "0.0.1",
+  "main": "dist/index",
+  "types": "dist/index",  
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
@@ -26,5 +28,9 @@
     "ts-jest": "~28.0.0",
     "ts-node": "~10.7.0",
     "typescript": "~4.6.4"
+  },
+  "dependencies": {
+    "ramda": "^0.28.0",
+    "react-flow-renderer": "^10.2.3"
   }
 }

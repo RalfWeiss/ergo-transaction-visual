@@ -1,7 +1,9 @@
+import { ErgoBox } from "./ergoBox";
+
 export interface Store {
-  // boxes: {
-  //   [key:string]:ErgoBox        // should be ErgoBox with dimensions
-  // },
+  boxes: {
+    [key:string]:ErgoBox
+  },
   title: string,
   allBoxes: string[],
   inputBoxIds: string[],

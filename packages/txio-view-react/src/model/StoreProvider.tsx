@@ -13,6 +13,7 @@ interface IStoreContext {
 //const defaultState:Store = mergeStore({})
 const defaultState:Store = {
   title: "default title",
+  boxes: {},
   allBoxes: [],
   inputBoxIds: [],
   outputBoxIds: [],  
@@ -23,10 +24,6 @@ export const Context = createContext<IStoreContext>( {
   //setState: () => mergeStore({})
   setState: () => ({})
 })
-
-//export const Context = createContext<Partial<Store>>({boxes: {}, allBoxes: []})
-//export const Context = createContext<Partial<Store>>({boxes: {}, allBoxes: []})
-//export const Context = createContext<Store | {}>({})
 
 
 export interface IProvider {
