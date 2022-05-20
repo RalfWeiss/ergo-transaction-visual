@@ -74,7 +74,8 @@ export const RootProps = ({ ergoBox }: RootPropsProps) => {
   // these keys should show up in base info section
   const BasicKeys = pickKeyValue(
     // ['boxId', 'address', 'ergoTree', 'blockId', 'transactionId', 'value']
-    ["boxId", "address", "ergoTree", "blockId", "value"]
+    // ["boxId", "address", "ergoTree", "blockId", "value"]
+    ["boxId", "address", "value"]
   )(ergoBox).map(mapBaseProps(components));
   return (
     <table>
