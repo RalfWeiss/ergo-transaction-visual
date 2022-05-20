@@ -35,9 +35,9 @@ cd examples/nextjs/
 yarn dev
 ```
 
-This will start the Nextjs development server and you have some routes: [index](https:\\localhost:3000)
+This will start the Nextjs development server and you have some routes:  index, demo-2, demo-3 and demo-4 to look at.
 
-As of now, with version v0.0.3, you should see sth. like this:
+As of now, with version v0.0.4, you should see sth. like this:
 
 ![](media/demo-output-v0-0-3.png)
 
@@ -45,5 +45,5 @@ This means: related boxes share the same color.
 
 ## Setup
 
-This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo) and **/demo-2** to **/demo-4**.
+This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo).
 
