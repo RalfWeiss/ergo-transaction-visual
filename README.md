@@ -1,9 +1,7 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <div align="center">
 
-Cloned from Template project for setting up a TypeScript monorepo
-
-[![tests](https://github.com/NiGhTTraX/ts-monorepo/actions/workflows/tests.yml/badge.svg)](https://github.com/NiGhTTraX/ts-monorepo/actions/workflows/tests.yml)
+**ertravi** = Ergo Transactions Visuals
 
 </div>
 
@@ -20,22 +18,9 @@ Cloned from Template project for setting up a TypeScript monorepo
 
 ## Features
 
-> The main focus of this repo is making the **`Go to definition`** feature in IDEs work without any surprises, meaning it will work after a fresh clone without needing to build the project.
+> The main focus of this repo is making tools to help understand the **Ergo** blockchain in. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
 
 ## Setup
 
-This repo uses [pnpm](https://pnpm.io/), but should work fine with any of the following:
+This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo).
 
-- [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/)
-- [npm 7 workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
-- [npm < 7 and `lerna bootstrap`](https://github.com/lerna/lerna/blob/main/commands/bootstrap/README.md)
-
-I strongly recommend `pnpm` over the other solutions, not only because it's usually faster, but because it avoids dependency problems caused by hoisting (see https://github.com/NiGhTTraX/ts-monorepo/commit/d93139166b25fab15e9538df58a7d06270b846c9 as an example).
-
-```sh
-# Install pnpm with your preferred method: https://pnpm.io/installation.
-npm i -g pnpm
-
-# Install all dependencies.
-pnpm i
-```

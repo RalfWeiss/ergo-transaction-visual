@@ -1,5 +1,5 @@
 {
-  "name": "@ergo-transaction-visual/ergo-in-out-map",
+  "name": "@ertravi/txio-view-react",
   "version": "0.0.1",
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
