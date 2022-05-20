@@ -1,5 +1,8 @@
 import React, {useEffect, useContext} from 'react'
-import {Context as StoreContext} from '../model'
+import {Context as StoreContext} from '../../model'
+import {ErgoNodeEasy} from './ErgoNodeSimple'
+import {adjustPositions, adjustpositionFromStartPos} from '../../utils'
+import { getMaxWidthFromDimensions } from '../../model'
 
 import ReactFlow, {
   useReactFlow,
@@ -20,10 +23,10 @@ import ReactFlow, {
 
 const nodeTypes: NodeTypes = {
   // Todo change to proper node types
-  // inputBox: (props) => <ErgoNodeEasy {...{...props, nodeType:"inputBox"}} />,
-  // outputBox: (props) => <ErgoNodeEasy {...{...props, nodeType:"outputBox"}} />,
-  inputBox: (props) => <div>InputNode</div>,
-  outputBox: (props) => <div>OutputNode</div>
+  inputBox: (props) => <ErgoNodeEasy {...{...props, nodeType:"inputBox"}} />,
+  outputBox: (props) => <ErgoNodeEasy {...{...props, nodeType:"outputBox"}} />,
+  // inputBox: (props) => <div>InputNode</div>,
+  // outputBox: (props) => <div>OutputNode</div>
 };
 
 interface DappstepFlowProps {
@@ -60,29 +63,29 @@ export const DappstepFlow = ({initialNodes}:DappstepFlowProps) => {
 
   const OffsetX = 120
 
-  // useEffect(() => {
-  //   const dimensions = state.dimensions
-  //   // const allWidth = R.pluck('width', R.values(dimensions))
-  //   // const maxWidth = R.reduce(R.max, 0, allWidth) as number
-  //   const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(state.inputBoxIds) as number
+  useEffect(() => {
+    const dimensions = state.dimensions
+    // const allWidth = R.pluck('width', R.values(dimensions))
+    // const maxWidth = R.reduce(R.max, 0, allWidth) as number
+    const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(state.inputBoxIds) as number
 
-  //   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({ x: 5, y: 5 })(state.inputBoxIds) as any
-  //   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({ x: OffsetX + maxWidthFromInputBoxes, y: 5 })(state.outputBoxIds) as any
-  //   //const adjustedPositions = adjustpositionFromStartPos(dimensions)({ x: 50, y: 50 })(state.inputBoxIds) as any
-  //   const adjustedPositions = {
-  //     ...adjustedInputPositions,
-  //     ...adjustedOutputPositions
-  //   }
-  //   const layoutedNodes = nodes.map((node) => {
-  //     const newPosition = adjustedPositions[node.data.internalId]?.position
-  //     if (newPosition) {
-  //       node.position = adjustedPositions[node.data.internalId].position
-  //     }
+    const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({ x: 5, y: 5 })(state.inputBoxIds) as any
+    const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({ x: OffsetX + maxWidthFromInputBoxes, y: 5 })(state.outputBoxIds) as any
+    //const adjustedPositions = adjustpositionFromStartPos(dimensions)({ x: 50, y: 50 })(state.inputBoxIds) as any
+    const adjustedPositions = {
+      ...adjustedInputPositions,
+      ...adjustedOutputPositions
+    }
+    const layoutedNodes = nodes.map((node) => {
+      const newPosition = adjustedPositions[node.data.internalId]?.position
+      if (newPosition) {
+        node.position = adjustedPositions[node.data.internalId].position
+      }
       
-  //     return node
-  //   }) as Node[]
-  //   setNodes(layoutedNodes)    
-  // }, [state])
+      return node
+    }) as Node[]
+    setNodes(layoutedNodes)    
+  }, [state])
   
 
 

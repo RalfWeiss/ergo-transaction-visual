@@ -1,1 +1,1 @@
-export { TxIoView } from './ui/TxIoView'
+export { TxIoView } from './ui'

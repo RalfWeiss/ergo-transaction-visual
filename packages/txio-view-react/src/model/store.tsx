@@ -1,4 +1,6 @@
 import { ErgoBox } from "./ergoBox";
+import { Dimensions, DimensionsByKey } from './dimensions'
+import * as R from 'ramda'
 
 export interface Store {
   boxes: {
@@ -8,5 +10,5 @@ export interface Store {
   allBoxes: string[],
   inputBoxIds: string[],
   outputBoxIds: string[],
-//  dimensions: DimensionsByKey
+  dimensions: DimensionsByKey
 }

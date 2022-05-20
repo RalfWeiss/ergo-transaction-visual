@@ -8,17 +8,17 @@ import {render, fireEvent, waitFor, screen} from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import {Provider} from './StoreProvider'
-import {Title} from '../ui'
 
+test("demo test",() =>{})
 
-describe("TxIoView", () => {
-  it("should show title from Store", async () => {
-    render(
-      <Provider>
-        <Title />
-      </Provider>
-    )
+// describe("TxIoView", () => {
+//   it("should show title from Store", async () => {
+//     render(
+//       <Provider>
 
-    await waitFor(() => screen.getByText('default title'))        
-  });
-});
+//       </Provider>
+//     )
+
+//     await waitFor(() => screen.getByText('default title'))        
+//   });
+// });

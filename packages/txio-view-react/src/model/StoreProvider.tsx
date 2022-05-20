@@ -17,6 +17,7 @@ const defaultState:Store = {
   allBoxes: [],
   inputBoxIds: [],
   outputBoxIds: [],  
+  dimensions: {}
 }
 
 export const Context = createContext<IStoreContext>( {

@@ -1,8 +1,8 @@
 import React, {useEffect, useContext} from 'react'
-import {Context as StoreContext} from '../model'
-import { normalize } from '../model/ergoBox'
-import { addInputBox, addOutputBox } from '../model/actions/addBox'
-import {Store} from '../model/store'
+import {Context as StoreContext} from '../../model'
+import { normalize } from '../../model/ergoBox'
+import { addInputBox, addOutputBox } from '../../model/actions/addBox'
+import {Store} from '../../model/store'
 import * as R from 'ramda'
 import {DappstepFlow} from './DappstepFlow'
 
@@ -69,11 +69,13 @@ export const TxDiagram = ({width, height, data}:TxDiagramProps) => {
 
     setState(newState2)    
   }, [data, state])  
+
   return (
     <div style={{width,height}}>
       { (state.allBoxes.length === 0 
         ? <div>No nodes</div>
-        : <DappstepFlow initialNodes={state.allBoxes.map(initializeNode)}/>
+//        : <DappstepFlow initialNodes={state.allBoxes.map(initializeNode)}/>
+        : <DappstepFlow initialNodes={state.allBoxes.map(initialNodesWithState(state))}/>
       )}      
     </div>
   )

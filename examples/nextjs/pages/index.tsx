@@ -1,4 +1,14 @@
 import React from "react";
-import { Button } from "@nighttrax/components/button";
+//import { Button } from "@nighttrax/components/button";
+import { TxIoView } from "@ertravi/txio-view-react"
 
-export default () => <Button />;
+const data = {
+  inputs: [
+    {boxId: "000x", address: "asdfess", value: 1000}
+  ],
+  outputs: [
+    {boxId: "100x", address: "asdfess", value: 1000}
+  ]
+}
+
+export default () => <TxIoView width={800} height={800} ergoTx={data}/>;
