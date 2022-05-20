@@ -37,11 +37,13 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes: [index](https:\\localhost:3000)
 
-## Setup
-
-This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo) and **/demo-2** to **/demo-4**.
 As of now, with version v0.0.2, you should see sth. like this:
-![..]
+
 ![](media/demo-output-v0-0-2.png)
 
 This means: related boxes share the same color.
+
+## Setup
+
+This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo) and **/demo-2** to **/demo-4**.
+
