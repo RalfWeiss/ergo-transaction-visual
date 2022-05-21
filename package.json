@@ -9,7 +9,7 @@
   "scripts": {
     "docs": "doctoc --title '**Table of content**' README.md",
     "clean": "pnpm run -r clean",
-    "build": "pnpm i && pnpm run -r prebuild && pnpm run -r build",
+    "build": "pnpm i && pnpm run -r --filter \"./packages/**\" build && pnpm run -r --filter \"./examples/**\"  build",
     "test": "pnpm run -r test",
     "lint": "eslint --ext js,ts,tsx ."
   },

@@ -12,7 +12,7 @@
     "access": "public"
   },  
   "scripts": {
-    "prebuild": "pnpm i && pnpm run clean && pnpm run compile",
+    "build": "pnpm i && pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "pnpm run build",
