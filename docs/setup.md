@@ -1,90 +1,63 @@
 # Setup
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of content**
+
+- [Topics requiring more details](#topics-requiring-more-details)
+- [Autopublish Packages](#autopublish-packages)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Topics requiring more details
+
 In order to make it run some steps were taken:
 
 - packages\tsconfig
 - packages.json: 
   - run pnpm i first
   - run build on packages before build on examples
-- github\workflows
-  - autopublish packages
-
+- [doctoc](https://www.npmjs.com/package/doctoc) on subfolders
 
 ## Autopublish Packages
 
-Based on [Publish packages from within a Monorepo](https://dev.to/menghif/publish-packages-from-within-a-monorepo-3b96)
+Based on [Publish packages from within a Monorepo](https://dev.to/menghif/publish-packages-from-within-a-monorepo-3b96) these steps lead to an `autopublishing`:
 
+- create an environment `Dev` on Github.
 
-```
-  - run: pnpm -r publish --no-git-checks --access=public
+- add environment `Dev` to workflow script
+
+  ```  
+  on:
+    push:
+    pull_request: ...
+
+  jobs:
+    tests:
+      environment: Dev  
+      steps: ...
+
+  ```      
+
+- add a step `Publish` to workflow script
+
+  ```  
+  - name: Publish
+    run: pnpm -r publish --filter "txio-view-react"  --no-git-checks --access=public
     env:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
+  ```
+
+- create a `New Access Token` on npm with type=**Automation**
+
+- copy the generated token in a save place:
+
+- create `.npmrc` in folder `packages\txio-view-react` (see: https://github.com/pnpm/pnpm/issues/3141#issuecomment-778844482) with the following content:
+
+  ```
+  //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+  ```
 
 
-```
-  - run: pnpm -r publish --no-git-checks --access=public
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
+And that worked! The next error free push will automatically publish a new version of `@ertravi/txio-view-react`.
 
--     environment: Dev added to workflow script
-
-
-Create New Access Token on npm with:
-
-name: PublishFromGit
-type: Automation
-
-Copied the generated token in a save place:
-
-Environment Dev created on Github.
-
-
-### First Try
-
-- Error:
-
-Run pnpm -r publish  --filter "@ertravi/txio-view-react" --no-git-checks --access=public
-  
-
-> @ertravi/txio-view-react@0.0.8 prepublishOnly /home/runner/work/ergo-transaction-visual/ergo-transaction-visual/packages/txio-view-react
-> pnpm run build
-
- ERR_PNPM_NO_SCRIPT  Missing script: build
-
-- so changing the prebuild by postbuild solution
-
-### Second Try
-
-- Error
-
-npm ERR! code ENEEDAUTH
-npm ERR! need auth This command requires you to be logged in to https://registry.npmjs.org/
-npm ERR! need auth You need to authorize this machine using `npm adduser`
-
-- logged in to npm
-
-```
-npm adduser
-```
-
-try changing:
-
-```
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
-
-to 
-
-```
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-```
-
--- create `.npmrc` in packages folder
-
-```
-//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
-```

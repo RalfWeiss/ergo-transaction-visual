@@ -48,3 +48,4 @@ This means:
 
 This repo was initially cloned from [Template project for setting up a TypeScript monorepo](https://github.com/NiGhTTraX/ts-monorepo).
 
+Some modifications were needed. More on this under [setup documentation](./docs/setup.md)
