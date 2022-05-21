@@ -28,6 +28,9 @@ export interface Store {
   // connectionsByBoxId?: [[string,string]]
   connectionsByBoxId: any;
   noOfGraphLayouts: 0;
+  config: {
+    useDagreLayout: true
+  }
 }
 
 interface IStoreContext {
@@ -47,6 +50,9 @@ export const defaultState: Store = {
   colorMap: {},
   connectionsByBoxId: [],
   noOfGraphLayouts: 0,
+  config: {
+    useDagreLayout: true
+  }
 };
 
 export const Context = createContext<IStoreContext>({

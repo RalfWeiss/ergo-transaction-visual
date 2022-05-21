@@ -82,8 +82,8 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   }, [state, ergoBox, prevErgoBox, setState]);
 
   if (!ergoBox) {
-    return null;
-    // return <div>Missing ergoBox data</div>;
+    //return null;
+    return <div>Missing ergoBox data</div>;
   }
   // don't hide root props anymore
   // hideOn={R.o(R.isEmpty, R.prop('value'))}

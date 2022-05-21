@@ -20,33 +20,47 @@ const data4 = {
   ],
 };
 
-const style = {
+const mainStyle = {
   backgroundColor: "lightgray",
   width: 800,
   height: 800,
+  display: "flex",
+  flexDirection: "column",
+  //alignItems: "center"
+  alignItems: "space-between"
 };
+
+const headerStyle = {
+  display: "flex",
+  flexDirection: "row",
+  wrap: "no-wrap"
+}
 
 export default () => {
   const [txData, setTxData] = useState(data4);
   return (
-    <div style={style}>
-      <button type="button" onClick={() => setTxData(data1 as any)}>
-        Demo-1
-      </button>
-      <button type="button" onClick={() => setTxData(data2 as any)}>
-        Demo-2
-      </button>
-      <button type="button" onClick={() => setTxData(data3 as any)}>
-        Demo-3
-      </button>
-      <button type="button" onClick={() => setTxData(data4 as any)}>
-        Demo-4
-      </button>
-      <TxIoView
-        width={style.width}
-        height={style.height}
-        ergoTx={txData as any}
-      />
+    <div style={mainStyle}>
+      <div style={headerStyle}>
+        <button type="button" onClick={() => setTxData(data1 as any)}>
+          Demo-1
+        </button>
+        <button type="button" onClick={() => setTxData(data2 as any)}>
+          Demo-2
+        </button>
+        <button type="button" onClick={() => setTxData(data3 as any)}>
+          Demo-3
+        </button>
+        <button type="button" onClick={() => setTxData(data4 as any)}>
+          Demo-4
+        </button>
+      </div>
+      <div>
+        <TxIoView
+          width={mainStyle.width}
+          height={mainStyle.height}
+          ergoTx={txData as any}
+        />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from "react";
-import { Context as StoreContext } from "../../model";
+import { Context as StoreContext, Store } from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
+import TxSimpleNode from "./TxSimpleNode"
 import { adjustpositionFromStartPos } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
@@ -11,6 +12,7 @@ import dagre from "dagre";
 import ReactFlow, {
   NodeTypes,
   Node,
+  Edge,
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
@@ -20,29 +22,30 @@ const nodeTypes: NodeTypes = {
   outputBox: (props) => (
     <ErgoBoxNode {...{ ...props, nodeType: "outputBox" }} />  // eslint-disable-line
   ),
+  txBox: (props) => <TxSimpleNode {...props}/> // eslint-disable-line
 };
 
 interface TxFlowViewProps {
   initialNodes: Node[];
+  useDagreLayout?: boolean
 }
 
 const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
 
 const defaultEdgesInit = [];
-// const defaultEdges = [
-//   //  { id: 'e57', source: 'input-0', target: 'output-1', type: 'smoothstep' },
-//   //  { id: 'e57', source: 'input-0', target: 'output-1', type: 'smoothstep' },
-//   {
-//     id: "e1-2",
-//     source: "input-0",
-//     target: "output-1",
-//     sourceHandle: "right",
-//     targetHandle: "left",
-//   },
-// ];
 
-//
-const edgeFromPair = ([inputId, outputId]: [string, string]) => ({
+const InitialTxNode:Node = ({
+  id: 'Tx',
+  type: 'txBox',
+  data: { 
+    label: 'txBox',
+    internalId: "Tx",    
+  },
+  position: {x: 300, y: 200},
+  hidden: true,
+})
+
+const edgeFromIdPair = ([inputId, outputId]: [string, string]) => ({
   id: `${inputId}-${outputId}`,
   source: inputId,
   target: outputId,
@@ -55,96 +58,135 @@ const edgeFromPair = ([inputId, outputId]: [string, string]) => ({
   },
 });
 
-export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
+const edgeForInputToTx = (state:Store) => (internalId:string) => ({
+  id: `${internalId}-Tx`,
+  source: internalId,
+  target: "Tx",
+  sourceHandle: "right",
+  //targetHandle: "left",
+  //animated: true,
+  markerEnd: {
+    type: "arrowclosed",
+    color: "gray",
+  },
+})
+
+const edgeForOutputToTx = (state:Store) => (internalId:string) => ({
+  id: `Tx-${internalId}`,
+  source: "Tx",
+  target: internalId,
+  //sourceHandle: "right",
+  targetHandle: "left",
+  //animated: true,
+  markerEnd: {
+    type: "arrowclosed",
+    color: "gray",
+  },
+})
+
+const adjustNodePositions = (state) => {
+  const { dimensions } = state;
+  const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
+    state.inputBoxIds
+  ) as number;
+
+  const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
+    x: 5,
+    y: 5,
+  })(state.inputBoxIds) as any;
+  const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
+    x: OffsetX + maxWidthFromInputBoxes,
+    y: 5,
+  })(state.outputBoxIds) as any;
+
+  return {
+    ...adjustedInputPositions,
+    ...adjustedOutputPositions,
+  };  
+}
+
+const layoutWithDagre = (nodes:Node[], edges:Edge[]) => {
+  // if (R.equals(edges, prevEdges)) {
+  //   console.log("edges are the same")
+  //   return
+  // }
+  // console.log("nodes in layout: ", JSON.stringify(nodes, null,2))
+  if (edges.length === 0) {
+    return nodes;
+  }
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+  dagreGraph.setGraph({ rankdir: "LR" });
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, node);
+  });
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  const layoutedNodes = nodes.map((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    node.position = {          // eslint-disable-line
+      x: nodeWithPosition.x + Math.random() / 1000,
+      y: nodeWithPosition.y,
+    };
+
+    return node;
+  });
+  return layoutedNodes;
+};
+
+export const TxFlowView = ({ initialNodes, useDagreLayout }: TxFlowViewProps) => {
   const { state, setState } = useContext(StoreContext);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-
-  //  console.log("initialNodes: ", JSON.stringify(initialNodes,null,2))
-  //
   const [edges, setEdges, onEdgesChange] = useEdgesState(defaultEdgesInit);
   const prevInitialNodes = usePrevious(initialNodes);
 
   useEffect(() => {
-    const layoutWithDagre = () => {
-      // if (R.equals(edges, prevEdges)) {
-      //   console.log("edges are the same")
-      //   return
-      // }
-      // console.log("nodes in layout: ", JSON.stringify(nodes, null,2))
-      if (edges.length === 0) {
-        return nodes;
-      }
-      const dagreGraph = new dagre.graphlib.Graph();
-      dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-      dagreGraph.setGraph({ rankdir: "LR" });
-      nodes.forEach((node) => {
-        dagreGraph.setNode(node.id, node);
-      });
-      edges.forEach((edge) => {
-        dagreGraph.setEdge(edge.source, edge.target);
-      });
-
-      dagre.layout(dagreGraph);
-
-      const layoutedNodes = nodes.map((node) => {
-        const nodeWithPosition = dagreGraph.node(node.id);
-        node.position = {          // eslint-disable-line
-          x: nodeWithPosition.x + Math.random() / 1000,
-          y: nodeWithPosition.y,
-        };
-
-        return node;
-      });
-      return layoutedNodes;
-    };
     // if (R.equals(prevInitialNodes, initialNodes)) {
     //   return;
     // }
-    if (state.noOfGraphLayouts > 4) {
+    if (state.noOfGraphLayouts > 5) {
       return;
     }
 
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
-    const { dimensions } = state;
-    const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-      state.inputBoxIds
-    ) as number;
+    const adjustedPositions = adjustNodePositions(state)
 
-    const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
-      x: 5,
-      y: 5,
-    })(state.inputBoxIds) as any;
-    const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
-      x: OffsetX + maxWidthFromInputBoxes,
-      y: 5,
-    })(state.outputBoxIds) as any;
-
-    const adjustedPositions = {
-      ...adjustedInputPositions,
-      ...adjustedOutputPositions,
-    };
     const layoutedNodes = nodes.map((node) => {
-      const newPosition = adjustedPositions[node.data.internalId]?.position;
-      if (newPosition) {
-        node.position = adjustedPositions[node.data.internalId].position; // eslint-disable-line
-      }
-      // node.style = {border:"solid 3px black"}
-      node.style = { borderRadius: "10px", border: "solid 1px lightgray" };  // eslint-disable-line
+      return {
+        ...node,
+        position: adjustedPositions[node.data?.internalId]?.position || node.position,
+        style: { borderRadius: "10px", border: "solid 1px lightgray" }
+      };
+    }) as Node[];    
 
-      return node;
-    }) as Node[];
-    setNodes(layoutedNodes);
-    const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
+    const layoutedNodesWithTx = R.append(InitialTxNode, layoutedNodes)
+    setNodes(layoutedNodesWithTx);
+
+    //const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
+    const edgesFromStore = [
+      ...R.map(edgeFromIdPair)(state.connectionsByBoxId),
+      ...R.map(edgeForInputToTx(state))(state.inputBoxIds),
+      ...R.map(edgeForOutputToTx(state))(state.outputBoxIds)
+    ]
+
     setEdges(edgesFromStore);
 
     if (state.noOfGraphLayouts < 3) {
       return;
     }
     // setNodes(layoutWithDagre)
-    setNodes(layoutWithDagre());
+    if (useDagreLayout) {
+      setNodes(layoutWithDagre(nodes,edges));
+    }
     // }, [state]);
+
     // Todo: wrong dependency array
   }, [
     initialNodes,
