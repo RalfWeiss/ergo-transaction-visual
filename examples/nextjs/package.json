@@ -10,8 +10,8 @@
     "cypress": "cypress open"
   },
   "dependencies": {
+    "@cypress/react": "^5.12.5",
     "@ertravi/txio-view-react": "*",
-    "@cypress/react": "^5.12.5",    
     "next": "~12.1.6",
     "react": "~18.1.0",
     "react-dom": "~18.1.0"

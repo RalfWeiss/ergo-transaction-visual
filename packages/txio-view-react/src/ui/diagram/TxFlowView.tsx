@@ -6,6 +6,7 @@ import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
 import appConfig from "../../appConfig";
 import * as R from "ramda";
+import dagre from "dagre";
 
 import ReactFlow, {
   NodeTypes,
@@ -55,7 +56,7 @@ const edgeFromPair = ([inputId, outputId]: [string, string]) => ({
 });
 
 export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
-  const { state } = useContext(StoreContext);
+  const { state, setState } = useContext(StoreContext);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
 
   //  console.log("initialNodes: ", JSON.stringify(initialNodes,null,2))
@@ -64,9 +65,47 @@ export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
   const prevInitialNodes = usePrevious(initialNodes);
 
   useEffect(() => {
-    if (R.equals(prevInitialNodes, initialNodes)) {
+    const layoutWithDagre = () => {
+      // if (R.equals(edges, prevEdges)) {
+      //   console.log("edges are the same")
+      //   return
+      // }
+      // console.log("nodes in layout: ", JSON.stringify(nodes, null,2))
+      if (edges.length === 0) {
+        return nodes;
+      }
+      const dagreGraph = new dagre.graphlib.Graph();
+      dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+      dagreGraph.setGraph({ rankdir: "LR" });
+      nodes.forEach((node) => {
+        dagreGraph.setNode(node.id, node);
+      });
+      edges.forEach((edge) => {
+        dagreGraph.setEdge(edge.source, edge.target);
+      });
+
+      dagre.layout(dagreGraph);
+
+      const layoutedNodes = nodes.map((node) => {
+        const nodeWithPosition = dagreGraph.node(node.id);
+        node.position = {          // eslint-disable-line
+          x: nodeWithPosition.x + Math.random() / 1000,
+          y: nodeWithPosition.y,
+        };
+
+        return node;
+      });
+      return layoutedNodes;
+    };
+    // if (R.equals(prevInitialNodes, initialNodes)) {
+    //   return;
+    // }
+    if (state.noOfGraphLayouts > 4) {
       return;
     }
+
+    setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
     const { dimensions } = state;
     const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
@@ -99,9 +138,41 @@ export const TxFlowView = ({ initialNodes }: TxFlowViewProps) => {
     setNodes(layoutedNodes);
     const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     setEdges(edgesFromStore);
+
+    if (state.noOfGraphLayouts < 3) {
+      return;
+    }
+    // setNodes(layoutWithDagre)
+    setNodes(layoutWithDagre());
     // }, [state]);
     // Todo: wrong dependency array
-  }, [initialNodes, prevInitialNodes, state, nodes, setNodes, edges, setEdges]);
+  }, [
+    initialNodes,
+    prevInitialNodes,
+    state,
+    nodes,
+    setNodes,
+    edges,
+    setEdges,
+    setState,
+  ]);
+
+  // useEffect(() => {
+  //   if (R.equals(initialNodes, prevInitialNodes)) {
+  //     console.log("useEffect: initialNodes are the same")
+  //   }
+  //   if (R.equals(nodes, prevNodes)) {
+  //     console.log("useEffect: nodes are the same")
+  //   }
+  //   if (R.equals(edges, prevEdges)) {
+  //     console.log("useEffect: nodes are the same")
+  //   }
+  //   console.log("noOfGraphLayouts: ", state.noOfGraphLayouts)
+  //   if (state.noOfGraphLayouts < 3) {
+  //     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts+1))
+  //   }
+  //   //if (edges.length > 0 ) setNodes(layout())
+  // },[nodes, edges, state])
 
   return (
     <ReactFlow

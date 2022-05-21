@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
-import { Store } from "../../model/store";
+import { Store, defaultState } from "../../model";
 import { connectionsByBoxId, makeColorMap } from "../../utils";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
@@ -36,6 +36,17 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const { state, setState } = useContext(StoreContext);
 
   useEffect(() => {
+    if (prevData && prevData !== data) {
+      // reset state on changed data
+      setState(defaultState);
+      // setState(R.assoc("boxes", defaultState.boxes))
+      // setState(R.assoc("allBoxes", defaultState.allBoxes))
+      // setState(R.assoc("inputBoxIds", defaultState.inputBoxIds))
+      // setState(R.assoc("outputBoxIds", defaultState.outputBoxIds))
+    }
+  }, [prevData, data, setState]);
+
+  useEffect(() => {
     // move data to state
     if (R.equals(prevData, data)) {
       return;
@@ -59,7 +70,12 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(
       R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
     );
+    setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
+
+  // useEffect(() => {
+  //   if (state.doLayoutGraph) setState(R.assoc("doLayoutGraph", true))
+  // },[state, setState])
 
   return (
     <div style={{ width, height }}>

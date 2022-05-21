@@ -9,7 +9,26 @@ import {
   useMemo,
 } from "react";
 // import { Store, mergeStore } from './store'
-import { Store } from "./store";
+// import { Store } from "./store";
+import { ErgoBox } from "./ergoBox";
+import { DimensionsByKey } from "./dimensions";
+
+export interface Store {
+  boxes: {
+    [key: string]: ErgoBox;
+  };
+  title: string;
+  allBoxes: string[];
+  inputBoxIds: string[];
+  outputBoxIds: string[];
+  dimensions: DimensionsByKey;
+  colorMap: {
+    [key: string]: string;
+  };
+  // connectionsByBoxId?: [[string,string]]
+  connectionsByBoxId: any;
+  noOfGraphLayouts: 0;
+}
 
 interface IStoreContext {
   state: Store; // | undefined,
@@ -18,7 +37,7 @@ interface IStoreContext {
 }
 
 // const defaultState:Store = mergeStore({})
-const defaultState: Store = {
+export const defaultState: Store = {
   title: "default title",
   boxes: {},
   allBoxes: [],
@@ -27,6 +46,7 @@ const defaultState: Store = {
   dimensions: {},
   colorMap: {},
   connectionsByBoxId: [],
+  noOfGraphLayouts: 0,
 };
 
 export const Context = createContext<IStoreContext>({

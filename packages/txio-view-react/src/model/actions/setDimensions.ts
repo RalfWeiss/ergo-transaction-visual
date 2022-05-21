@@ -1,5 +1,5 @@
 import { Dimensions } from "../dimensions";
-import { Store } from "../store";
+import { Store } from "..";
 import * as R from "ramda";
 
 export const setDimension =

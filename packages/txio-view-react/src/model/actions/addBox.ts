@@ -1,4 +1,4 @@
-import { Store } from "../store";
+import { Store } from "..";
 import { ErgoBox } from "../ergoBox";
 import * as R from "ramda";
 

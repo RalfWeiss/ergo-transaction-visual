@@ -59,6 +59,9 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   const ref: any = useRef(null);
 
   useLayoutEffect(() => {
+    if (!ergoBox) {
+      return;
+    }
     if (R.equals(prevErgoBox, ergoBox)) {
       return;
     }
@@ -79,7 +82,8 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   }, [state, ergoBox, prevErgoBox, setState]);
 
   if (!ergoBox) {
-    return <div>Missing ergoBox data</div>;
+    return null;
+    // return <div>Missing ergoBox data</div>;
   }
   // don't hide root props anymore
   // hideOn={R.o(R.isEmpty, R.prop('value'))}

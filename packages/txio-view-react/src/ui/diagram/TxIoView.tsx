@@ -8,10 +8,6 @@ interface TxIoViewProps {
   width: number;
   height: number;
   ergoTx: ErgoTx;
-  // ergoTx: {
-  //   inputs: any[];
-  //   outputs: any[];
-  // };
 }
 
 export const TxIoView = ({ width, height, ergoTx }: TxIoViewProps) => (
