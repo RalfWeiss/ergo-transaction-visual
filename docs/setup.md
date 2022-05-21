@@ -39,3 +39,27 @@ type: Automation
 Copied the generated token in a save place:
 
 Environment Dev created on Github.
+
+
+### First Try
+
+- Error:
+
+Run pnpm -r publish  --filter "@ertravi/txio-view-react" --no-git-checks --access=public
+  
+
+> @ertravi/txio-view-react@0.0.8 prepublishOnly /home/runner/work/ergo-transaction-visual/ergo-transaction-visual/packages/txio-view-react
+> pnpm run build
+
+ ERR_PNPM_NO_SCRIPT  Missing script: build
+
+- so changing the prebuild by postbuild solution
+
+### Second Try
+
+- Error
+
+npm ERR! code ENEEDAUTH
+npm ERR! need auth This command requires you to be logged in to https://registry.npmjs.org/
+npm ERR! need auth You need to authorize this machine using `npm adduser`
+
