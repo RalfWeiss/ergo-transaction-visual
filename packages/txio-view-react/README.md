@@ -9,7 +9,7 @@
 
 ## Features
 
-> The main focus of this repo is making tools to help understand the **Ergo** blockchain. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
+> The main focus of this repo is making tools to help understand the **[Ergo](https://ergoplatform.org/)** blockchain. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
 
 As of now, with version v0.0.7, you could see sth. like this:
 

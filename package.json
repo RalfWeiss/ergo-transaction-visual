@@ -1,7 +1,7 @@
 {
   "name": "ergo-transaction-visual",
   "description": "Input to Output mappings of a Ergo transaction",
-  "private": false,
+  "private": true,
   "workspaces": [
     "packages/*",
     "examples/*"
