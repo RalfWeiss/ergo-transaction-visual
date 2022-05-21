@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf .next",
     "dev": "next dev",
-    "nobuild": "pnpm i && next build",
+    "build": "pnpm i && next build",
     "cy:open-ct": "cypress open-ct",
     "cypress": "cypress open"
   },

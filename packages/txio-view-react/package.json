@@ -1,6 +1,6 @@
 {
   "name": "@ertravi/txio-view-react",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/index",
   "types": "dist/index",  
   "license": "MIT",
@@ -8,8 +8,11 @@
     "type": "git",
     "url": "git@github.com:RalfWeiss/ergo-transaction-visual.git"
   },  
+  "publishConfig": {
+    "access": "public"
+  },  
   "scripts": {
-    "build": "pnpm i && pnpm run clean && pnpm run compile",
+    "prebuild": "pnpm i && pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
     "compile": "tsc -p tsconfig.build.json",
     "prepublishOnly": "pnpm run build",

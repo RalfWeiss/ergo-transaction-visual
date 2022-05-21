@@ -32,8 +32,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "cross-env SKIP_PREFLIGHT_CHECK=true craco start",
-    "nobuild": "pnpm i && cross-env SKIP_PREFLIGHT_CHECK=true craco build",
-    "notest": "cross-env SKIP_PREFLIGHT_CHECK=true craco test --watchAll=false"
+    "build": "pnpm i && cross-env SKIP_PREFLIGHT_CHECK=true craco build",
+    "test": "cross-env SKIP_PREFLIGHT_CHECK=true craco test --watchAll=false"
   },
   "browserslist": {
     "production": [

@@ -1,7 +1,7 @@
 {
   "name": "ergo-transaction-visual",
   "description": "Input to Output mappings of a Ergo transaction",
-  "private": true,
+  "private": false,
   "workspaces": [
     "packages/*",
     "examples/*"
@@ -9,7 +9,7 @@
   "scripts": {
     "docs": "doctoc --title '**Table of content**' README.md",
     "clean": "pnpm run -r clean",
-    "build": "pnpm run -r build",
+    "build": "pnpm i && pnpm run -r prebuild && pnpm run -r build",
     "test": "pnpm run -r test",
     "lint": "eslint --ext js,ts,tsx ."
   },
