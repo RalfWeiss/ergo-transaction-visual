@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
-import { Context as StoreContext, Store } from "../../model";
+import { Context as StoreContext } from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
-import TxSimpleNode from "./TxSimpleNode"
+import TxSimpleNode from "./TxSimpleNode";
 import { adjustpositionFromStartPos } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
@@ -27,23 +27,23 @@ const nodeTypes: NodeTypes = {
 
 interface TxFlowViewProps {
   initialNodes: Node[];
-  useDagreLayout?: boolean
+  useDagreLayout?: boolean;
 }
 
 const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
 
 const defaultEdgesInit = [];
 
-const InitialTxNode:Node = ({
-  id: 'Tx',
-  type: 'txBox',
-  data: { 
-    label: 'txBox',
-    internalId: "Tx",    
+const InitialTxNode: Node = {
+  id: "Tx",
+  type: "txBox",
+  data: {
+    label: "txBox",
+    internalId: "Tx",
   },
-  position: {x: 300, y: 200},
+  position: { x: 300, y: 200 },
   hidden: true,
-})
+};
 
 const edgeFromIdPair = ([inputId, outputId]: [string, string]) => ({
   id: `${inputId}-${outputId}`,
@@ -58,31 +58,31 @@ const edgeFromIdPair = ([inputId, outputId]: [string, string]) => ({
   },
 });
 
-const edgeForInputToTx = (state:Store) => (internalId:string) => ({
+const edgeForInputToTx = (internalId: string) => ({
   id: `${internalId}-Tx`,
   source: internalId,
   target: "Tx",
   sourceHandle: "right",
-  //targetHandle: "left",
-  //animated: true,
+  // targetHandle: "left",
+  // animated: true,
   markerEnd: {
     type: "arrowclosed",
     color: "gray",
   },
-})
+});
 
-const edgeForOutputToTx = (state:Store) => (internalId:string) => ({
+const edgeForOutputToTx = (internalId: string) => ({
   id: `Tx-${internalId}`,
   source: "Tx",
   target: internalId,
-  //sourceHandle: "right",
+  // sourceHandle: "right",
   targetHandle: "left",
-  //animated: true,
+  // animated: true,
   markerEnd: {
     type: "arrowclosed",
     color: "gray",
   },
-})
+});
 
 const adjustNodePositions = (state) => {
   const { dimensions } = state;
@@ -102,10 +102,10 @@ const adjustNodePositions = (state) => {
   return {
     ...adjustedInputPositions,
     ...adjustedOutputPositions,
-  };  
-}
+  };
+};
 
-const layoutWithDagre = (nodes:Node[], edges:Edge[]) => {
+const layoutWithDagre = (nodes: Node[], edges: Edge[]) => {
   // if (R.equals(edges, prevEdges)) {
   //   console.log("edges are the same")
   //   return
@@ -139,14 +139,16 @@ const layoutWithDagre = (nodes:Node[], edges:Edge[]) => {
   return layoutedNodes;
 };
 
-export const TxFlowView = ({ initialNodes, useDagreLayout }: TxFlowViewProps) => {
+export const TxFlowView = ({
+  initialNodes,
+  useDagreLayout,
+}: TxFlowViewProps) => {
   const { state, setState } = useContext(StoreContext);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(defaultEdgesInit);
   const prevInitialNodes = usePrevious(initialNodes);
 
   useEffect(() => {
-
     // if (R.equals(prevInitialNodes, initialNodes)) {
     //   return;
     // }
@@ -156,25 +158,24 @@ export const TxFlowView = ({ initialNodes, useDagreLayout }: TxFlowViewProps) =>
 
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
-    const adjustedPositions = adjustNodePositions(state)
+    const adjustedPositions = adjustNodePositions(state);
 
-    const layoutedNodes = nodes.map((node) => {
-      return {
-        ...node,
-        position: adjustedPositions[node.data?.internalId]?.position || node.position,
-        style: { borderRadius: "10px", border: "solid 1px lightgray" }
-      };
-    }) as Node[];    
+    const layoutedNodes = nodes.map((node) => ({
+      ...node,
+      position:
+        adjustedPositions[node.data?.internalId]?.position || node.position,
+      style: { borderRadius: "10px", border: "solid 1px lightgray" },
+    })) as Node[];
 
-    const layoutedNodesWithTx = R.append(InitialTxNode, layoutedNodes)
+    const layoutedNodesWithTx = R.append(InitialTxNode, layoutedNodes);
     setNodes(layoutedNodesWithTx);
 
-    //const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
+    // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     const edgesFromStore = [
       ...R.map(edgeFromIdPair)(state.connectionsByBoxId),
-      ...R.map(edgeForInputToTx(state))(state.inputBoxIds),
-      ...R.map(edgeForOutputToTx(state))(state.outputBoxIds)
-    ]
+      ...R.map(edgeForInputToTx)(state.inputBoxIds),
+      ...R.map(edgeForOutputToTx)(state.outputBoxIds),
+    ];
 
     setEdges(edgesFromStore);
 
@@ -183,7 +184,7 @@ export const TxFlowView = ({ initialNodes, useDagreLayout }: TxFlowViewProps) =>
     }
     // setNodes(layoutWithDagre)
     if (useDagreLayout) {
-      setNodes(layoutWithDagre(nodes,edges));
+      setNodes(layoutWithDagre(nodes, edges));
     }
     // }, [state]);
 
@@ -197,6 +198,7 @@ export const TxFlowView = ({ initialNodes, useDagreLayout }: TxFlowViewProps) =>
     edges,
     setEdges,
     setState,
+    useDagreLayout,
   ]);
 
   // useEffect(() => {

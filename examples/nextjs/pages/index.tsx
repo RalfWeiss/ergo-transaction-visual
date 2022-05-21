@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { TxIoView } from "@ertravi/txio-view-react";
+import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react";
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 import data3 from "../fixtures/demo-3.json";
@@ -20,46 +20,66 @@ const data4 = {
   ],
 };
 
+const screenStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
 const mainStyle = {
   backgroundColor: "lightgray",
   width: 800,
   height: 800,
   display: "flex",
   flexDirection: "column",
-  //alignItems: "center"
-  alignItems: "space-between"
 };
 
 const headerStyle = {
   display: "flex",
   flexDirection: "row",
-  wrap: "no-wrap"
-}
+  padding: "4px",
+};
+
+const Buttons = ({ setTxData }) => {
+  const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout(true);
+  return (
+    <>
+      <button type="button" onClick={() => setTxData(data1 as any)}>
+        Demo-1
+      </button>
+      <button type="button" onClick={() => setTxData(data2 as any)}>
+        Demo-2
+      </button>
+      <button type="button" onClick={() => setTxData(data3 as any)}>
+        Demo-3
+      </button>
+      <button type="button" onClick={() => setTxData(data4 as any)}>
+        Demo-4
+      </button>
+      <button
+        type="button"
+        onClick={toogleWithDagreLayout}
+        style={{ marginLeft: "auto" }}
+      >
+        {withDagreLayout ? "No Dagre Layout" : "Use Dagre Layout"}
+      </button>
+    </>
+  );
+};
 
 export default () => {
   const [txData, setTxData] = useState(data4);
+
   return (
-    <div style={mainStyle}>
-      <div style={headerStyle}>
-        <button type="button" onClick={() => setTxData(data1 as any)}>
-          Demo-1
-        </button>
-        <button type="button" onClick={() => setTxData(data2 as any)}>
-          Demo-2
-        </button>
-        <button type="button" onClick={() => setTxData(data3 as any)}>
-          Demo-3
-        </button>
-        <button type="button" onClick={() => setTxData(data4 as any)}>
-          Demo-4
-        </button>
-      </div>
-      <div>
-        <TxIoView
-          width={mainStyle.width}
-          height={mainStyle.height}
-          ergoTx={txData as any}
-        />
+    <div style={screenStyle}>
+      <div style={mainStyle}>
+        <div style={headerStyle}>
+          <Buttons {...{ setTxData }} // eslint-disable-line
+          />
+        </div>
+        <div>
+          <TxDiagram width={800} height={800} data={txData} />
+        </div>
       </div>
     </div>
   );

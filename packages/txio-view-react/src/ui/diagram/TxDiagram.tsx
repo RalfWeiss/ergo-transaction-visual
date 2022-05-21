@@ -2,12 +2,11 @@ import React, { useEffect, useContext } from "react";
 import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
-import { Store, defaultState, setUseDagreLayout } from "../../model";
+import { Store, defaultState } from "../../model";
 import { connectionsByBoxId, makeColorMap } from "../../utils";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
-import { useEdgesState, useNodesState} from "react-flow-renderer";
 
 import { Node } from "react-flow-renderer";
 
@@ -37,19 +36,21 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const { state, setState } = useContext(StoreContext);
 
   // reset state on changed data
-  useEffect(() => {    
+  useEffect(() => {
     if (prevData && prevData !== data) {
-      setState(R.assoc("boxes", defaultState.boxes))
-      setState(R.assoc("allBoxes", defaultState.allBoxes))
-      setState(R.assoc("inputBoxIds", defaultState.inputBoxIds))
-      setState(R.assoc("outputBoxIds", defaultState.outputBoxIds))
+      setState(R.assoc("boxes", defaultState.boxes));
+      setState(R.assoc("allBoxes", defaultState.allBoxes));
+      setState(R.assoc("inputBoxIds", defaultState.inputBoxIds));
+      setState(R.assoc("outputBoxIds", defaultState.outputBoxIds));
     }
   }, [prevData, data, setState]);
 
   // move data to state
   useEffect(() => {
     // immediate return on equal data
-    if (R.equals(prevData, data)) return;
+    if (R.equals(prevData, data)) {
+      return;
+    }
 
     const inputs = data.inputs.map((box, idx) => ({
       ...box,
@@ -72,16 +73,13 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
 
-  const toggleLayout = () => {
-    setState(setUseDagreLayout(!state.config.useDagreLayout))
-    setState(R.assoc("noOfGraphLayouts", 0))
-  }
+  // const toggleLayout = () => {
+  //   setState(setUseDagreLayout(!state.config.useDagreLayout));
+  //   setState(R.assoc("noOfGraphLayouts", 0));
+  // };
 
   return (
     <div style={{ width, height }}>
-      <button onClick={toggleLayout}>
-        {(state.config.useDagreLayout) ? "No Dagre Layout" : "Use Dagre Layout"}
-      </button>
       {state.allBoxes.length === 0 ? (
         <div>No nodes</div>
       ) : (

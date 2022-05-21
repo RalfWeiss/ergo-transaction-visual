@@ -37,8 +37,10 @@ const colorForInternalId =
 
 export const ErgoBoxNode = ({ data, nodeType }: ErgoBoxNodeProps) => {
   const { state } = useContext(StoreContext);
-  
-  if (!state.boxes[data.internalId]) return null
+
+  if (!state.boxes[data.internalId]) {
+    return null;
+  }
 
   const NodeHandle =
     nodeType === "inputBox"

@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/home/ralf/.cache/yarn/v5/npm-globals-13.15.0-38113218c907d2f7e98658af246cef8b77e90bac/node_modules/globals/globals.json' -> '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/@eslint/eslintrc/node_modules/globals/globals.json'
+  Error: EEXIST: file already exists, mkdir '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/doctoc/node_modules'
 
 npm manifest: 
   {

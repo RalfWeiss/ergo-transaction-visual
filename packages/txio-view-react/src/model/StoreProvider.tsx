@@ -29,8 +29,8 @@ export interface Store {
   connectionsByBoxId: any;
   noOfGraphLayouts: 0;
   config: {
-    useDagreLayout: true
-  }
+    useDagreLayout: true;
+  };
 }
 
 interface IStoreContext {
@@ -51,8 +51,8 @@ export const defaultState: Store = {
   connectionsByBoxId: [],
   noOfGraphLayouts: 0,
   config: {
-    useDagreLayout: true
-  }
+    useDagreLayout: true,
+  },
 };
 
 export const Context = createContext<IStoreContext>({
