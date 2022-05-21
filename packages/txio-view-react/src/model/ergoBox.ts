@@ -18,7 +18,7 @@ export class ErgoBox {
     public blockId = "",
     public ergoTree = "",
     public transactionId = "",
-    public value = "",
+    public value: string | number = "",
     public additionalRegisters = {},
     public boxType = ""
   ) {}

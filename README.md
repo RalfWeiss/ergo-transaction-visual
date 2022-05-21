@@ -38,9 +38,11 @@ This will start the Nextjs development server and you have some routes:  index, 
 
 As of now, with version v0.0.5, you should see sth. like this:
 
-![](media/demo-output-v0-0-3.png)
+![](media/demo-output-v0-0-5.png)
 
-This means: related boxes share the same color.
+This means: 
+- related boxes share the same color.
+- boxes with same boxId are connected by an arrow line
 
 ## Setup
 

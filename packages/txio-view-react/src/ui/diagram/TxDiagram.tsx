@@ -3,7 +3,7 @@ import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store } from "../../model/store";
-import { makeColorMap } from "../../utils";
+import { connectionsByBoxId, makeColorMap } from "../../utils";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
@@ -56,6 +56,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
 
     const colorMap = makeColorMap(data);
     setState(R.assoc("colorMap", colorMap));
+    setState(
+      R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
+    );
   }, [data, prevData, state, setState]);
 
   return (

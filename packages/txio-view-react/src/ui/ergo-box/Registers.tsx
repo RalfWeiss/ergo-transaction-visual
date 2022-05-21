@@ -28,7 +28,7 @@ export const Registers = ({ ergoBox }: RegistersProps) => {
   return (
     <table>
       {/* <caption style={{textAlign:'left', fontSize: 'small'}}>additionalRegisters</caption> */}
-      <thead>
+      <thead style={{ fontSize: "x-small" }}>
         <tr>
           <th>name</th>
           <th>value</th>

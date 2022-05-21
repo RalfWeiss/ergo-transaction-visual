@@ -9,16 +9,20 @@ import { usePrevious } from "../../hooks";
 import * as R from "ramda";
 
 const cardStyle = {
-  // padding:'1ch', marginBottom: '1ch',
+  // padding:'1ch',
+  paddingBottom: "0",
+  marginBottom: "0",
   borderRadius: "15px",
+  fontSize: "small",
   // backgroundColor:'ButtonFace',
   // opacity: '8'
 };
 
 const partStyle = {
-  padding: "1ch",
-  marginBottom: "1ch",
-  borderRadius: "15px",
+  padding: "2px",
+  paddingLeft: "4px",
+  marginBottom: "4px",
+  borderRadius: "10px",
   backgroundColor: "ButtonFace",
   // opacity: '8'
 };

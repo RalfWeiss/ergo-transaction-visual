@@ -9,10 +9,11 @@ const data = {
   ],
   outputs: [
     { address: "Z000001", value: 1000 },
+    { boxId: "001x", address: "B000001", value: 500 },
     { boxId: "000x", address: "A000001", value: 1000 },
     { boxId: "100x", address: "O000001", value: 1000 },
     { boxId: "001x", address: "A000001", value: 1000 },
   ],
 };
 
-export default () => <TxIoView width={800} height={800} ergoTx={data} />;
+export default () => <TxIoView width={800} height={800} ergoTx={data as any} />;

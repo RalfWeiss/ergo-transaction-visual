@@ -6,9 +6,10 @@ import { Handle, Position, NodeProps } from "react-flow-renderer";
 import { ErgoBoxCardContext } from "../ergo-box";
 
 const nodeStyles = (color: string) => ({
-  padding: "10px 15px",
-  border: "1px solid #ddd",
+  padding: "4px 4px",
+  // border: "1px solid #ddd",
   backgroundColor: color,
+  borderRadius: "10px",
 });
 
 type NodeType = "inputBox" | "outputBox";

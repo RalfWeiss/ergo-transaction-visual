@@ -13,4 +13,6 @@ export interface Store {
   colorMap: {
     [key: string]: string;
   };
+  // connectionsByBoxId?: [[string,string]]
+  connectionsByBoxId: any;
 }

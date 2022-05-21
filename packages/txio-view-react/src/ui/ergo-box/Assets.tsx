@@ -32,7 +32,7 @@ export const Assets = ({ ergoBox }: AssetsProps) => {
   return (
     <table>
       {/* <caption style={{textAlign:'left', fontSize: 'small'}}>assets</caption>         */}
-      <thead>
+      <thead style={{ fontSize: "x-small" }}>
         <tr style={{ width: "20ch" }}>
           <th style={{ width: "10ch" }}>name</th>
           <th style={{ width: "10ch" }}>type</th>
