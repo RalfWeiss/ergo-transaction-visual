@@ -63,3 +63,28 @@ npm ERR! code ENEEDAUTH
 npm ERR! need auth This command requires you to be logged in to https://registry.npmjs.org/
 npm ERR! need auth You need to authorize this machine using `npm adduser`
 
+- logged in to npm
+
+```
+npm adduser
+```
+
+try changing:
+
+```
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+to 
+
+```
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+-- create `.npmrc` in packages folder
+
+```
+//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+```

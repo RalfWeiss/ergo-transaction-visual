@@ -37,5 +37,5 @@ jobs:
 
       - run: pnpm -r publish  --filter "@ertravi/txio-view-react" --no-git-checks --access=public
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
