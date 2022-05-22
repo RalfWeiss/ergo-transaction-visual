@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/home/ralf/.cache/yarn/v5/npm-globals-13.15.0-38113218c907d2f7e98658af246cef8b77e90bac/node_modules/globals/globals.json' -> '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/@eslint/eslintrc/node_modules/globals/globals.json'
+  Error: ENOENT: no such file or directory, copyfile '/home/ralf/.cache/yarn/v5/npm-ms-2.0.0-5608aeadfc00be6c2901df5f9861788de0d597c8/node_modules/ms/index.js' -> '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/eslint-plugin-import/node_modules/ms/index.js'
 
 npm manifest: 
   {
@@ -29,18 +29,15 @@ npm manifest:
       "cypress": "cypress open"
     },
     "dependencies": {
-      "@cypress/react": "^5.12.5",
-      "@ertravi/txio-view-react": "*",
+      "@ertravi/txio-view-react": "*",       
       "next": "~12.1.6",
-      "react": "~17.0.2",
-      "react-dom": "~17.0.2"
+      "react": "~18.1.0",
+      "react-dom": "~18.1.0"
     },
     "devDependencies": {
-      "@cypress/webpack-dev-server": "^1.8.4",
       "@types/node": "~16.11.36",
-      "@types/react": "~17.0.2",
-      "@types/react-dom": "~17.0.2",
-      "cypress": "^9.6.1",
+      "@types/react": "~18.0.2",
+      "@types/react-dom": "~18.0.2",
       "html-webpack-plugin": "4",
       "rimraf": "~3.0.2",
       "typescript": "~4.6.0",

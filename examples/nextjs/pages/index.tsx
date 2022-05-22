@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react";
+import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 import data3 from "../fixtures/demo-3.json";
@@ -32,16 +32,16 @@ const mainStyle = {
   height: 800,
   display: "flex",
   flexDirection: "column",
-};
+} as React.CSSProperties;
 
 const headerStyle = {
   display: "flex",
   flexDirection: "row",
   padding: "4px",
-};
+} as any;
 
 const Buttons = ({ setTxData }) => {
-  const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout(true);
+  const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout();
   return (
     <>
       <button type="button" onClick={() => setTxData(data1 as any)}>
@@ -58,7 +58,7 @@ const Buttons = ({ setTxData }) => {
       </button>
       <button
         type="button"
-        onClick={toogleWithDagreLayout}
+        onClick={() => toogleWithDagreLayout()}
         style={{ marginLeft: "auto" }}
       >
         {withDagreLayout ? "No Dagre Layout" : "Use Dagre Layout"}
