@@ -27,7 +27,7 @@ Trace:
 npm manifest: 
   {
     "name": "@ertravi/txio-view-react",
-    "version": "0.0.10",
+    "version": "0.0.13",
     "main": "dist/index",
     "types": "dist/index",
     "license": "MIT",

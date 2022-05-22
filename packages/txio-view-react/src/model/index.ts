@@ -1,4 +1,4 @@
-export { Context, Provider, Store, defaultState } from "./StoreProvider";
+export { Context, TxioStoreProvider, Store, defaultState } from "./StoreProvider";
 export { ErgoBox, normalize } from "./ergoBox";
 export { ErgoTx } from "./ergoTx";
 export { getBoxById } from "./selectors";

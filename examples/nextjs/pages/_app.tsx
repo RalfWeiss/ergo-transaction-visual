@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Provider as TxioStoreProvider,
+  TxioStoreProvider,
   ReactFlowProvider,
 } from "@ertravi/txio-view-react";
 

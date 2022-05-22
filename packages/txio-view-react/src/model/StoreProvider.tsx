@@ -61,12 +61,12 @@ export const Context = createContext<IStoreContext>({
   setState: () => ({}),
 });
 
-export interface IProvider {
+export interface ITxioStoreProvider {
   // data?: Store;
   children: ReactNode;
 }
 
-export const Provider = ({ children }: IProvider) => {
+export const TxioStoreProvider = ({ children }: ITxioStoreProvider) => {
   const [state, setState] = useState(defaultState);
   const contextValue = useMemo(
     () => ({ state, setState } as IStoreContext),
