@@ -1,5 +1,5 @@
 import React from "react";
-import { TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
+import { Provider as TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
 
 export default function MyApp({ Component, pageProps }) {
   return (

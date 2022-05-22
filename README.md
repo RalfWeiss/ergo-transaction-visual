@@ -36,7 +36,7 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes:  index, demo-2, demo-3 and demo-4 to look at.
 
-As of now, with version v0.0.5, you should see sth. like this:
+As of now, with version v0.0.13, you should see sth. like this:
 
 ![](media/demo-output-v0-0-5.png)
 
