@@ -41,6 +41,7 @@ const headerStyle = {
 } as any;
 
 const Buttons = ({ setTxData }) => {
+  // const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout() ;
   const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout();
   return (
     <>
@@ -58,7 +59,7 @@ const Buttons = ({ setTxData }) => {
       </button>
       <button
         type="button"
-        onClick={() => toogleWithDagreLayout()}
+        onClick={() => (toogleWithDagreLayout as () => void)()}
         style={{ marginLeft: "auto" }}
       >
         {withDagreLayout ? "No Dagre Layout" : "Use Dagre Layout"}
