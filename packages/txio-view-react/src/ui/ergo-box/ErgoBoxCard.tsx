@@ -24,6 +24,7 @@ const partStyle = {
   marginBottom: "4px",
   borderRadius: "10px",
   backgroundColor: "ButtonFace",
+  color: "var(--chakra-colors-red-100)" // Todo: does not work that simple
   // opacity: '8'
 };
 
