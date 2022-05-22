@@ -20,6 +20,13 @@ const data4 = {
   ],
 };
 
+const demos = [
+  { title: "Demo-1", data: data1 },
+  { title: "Demo-2", data: data2 },
+  { title: "Demo-3", data: data3 },
+  { title: "Demo-4", data: data4 },
+];
+
 const screenStyle = {
   display: "flex",
   justifyContent: "center",
@@ -45,19 +52,17 @@ const Buttons = ({ setTxData }) => {
   const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout();
   return (
     <>
-      <button type="button" onClick={() => setTxData(data1 as any)}>
-        Demo-1
-      </button>
-      <button type="button" onClick={() => setTxData(data2 as any)}>
-        Demo-2
-      </button>
-      <button type="button" onClick={() => setTxData(data3 as any)}>
-        Demo-3
-      </button>
-      <button type="button" onClick={() => setTxData(data4 as any)}>
-        Demo-4
-      </button>
+      {demos.map(({ title, data }) => (
+        <button
+          key={title}
+          type="button"
+          onClick={() => setTxData(data as any)}
+        >
+          {title}
+        </button>
+      ))}
       <button
+        key="ToggleLayout"
         type="button"
         onClick={() => (toogleWithDagreLayout as () => void)()}
         style={{ marginLeft: "auto" }}
