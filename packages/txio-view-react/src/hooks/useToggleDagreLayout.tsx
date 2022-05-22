@@ -6,7 +6,14 @@ import {
 } from "../model";
 
 export const useToggleDagreLayout = () => {
-  const { state, setState } = useContext(StoreContext);
+  // const { state, setState } = useContext(StoreContext);
+  const {
+    state: {
+      config: { useDagreLayout },
+    },
+    setState,
+  } = useContext(StoreContext);
+  // const useDagreLayout = true
   // // const [value, setValue] = React.useState(initialValue);
 
   // const toggleLayout = React.useCallback(() => {
@@ -14,9 +21,12 @@ export const useToggleDagreLayout = () => {
   //   setState(setNoOfGraphLayouts(0))
   // }, [])
   const toggleLayout = React.useCallback(() => {
-    setState(setUseDagreLayout(!state.config.useDagreLayout));
+    // setState(setUseDagreLayout(!state.config.useDagreLayout));
+    setState(setUseDagreLayout(!useDagreLayout));
     setState(setNoOfGraphLayouts(0));
-  }, [state.config.useDagreLayout, setState]);
+  }, [useDagreLayout, setState]);
 
-  return [state.config.useDagreLayout, toggleLayout];
+  // return [state.config.useDagreLayout, toggleLayout];
+  // https://maecapozzi.com/custom-hooks-in-typescript/
+  return [useDagreLayout, toggleLayout] as const;
 };
