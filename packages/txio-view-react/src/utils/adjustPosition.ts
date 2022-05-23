@@ -21,6 +21,7 @@ export interface ObjWithKeyedPosition {
 }
 
 export const indexedReduce = R.addIndex(R.reduce);
+
 export const adjustPositions =
   (dimensions: ObjWithKeyedDimensions) => (input: ObjWithKeyedPosition) =>
     indexedReduce((acc, currKey, idx, arr) => {

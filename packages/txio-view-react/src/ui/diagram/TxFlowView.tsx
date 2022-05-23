@@ -83,6 +83,9 @@ const edgeForOutputToTx = (internalId: string) => ({
   },
 });
 
+const StartX = appConfig.nodeStartPosition.x
+const StartY = appConfig.nodeStartPosition.y
+
 const adjustNodePositions = (state) => {
   const { dimensions } = state;
   const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
@@ -90,12 +93,12 @@ const adjustNodePositions = (state) => {
   ) as number;
 
   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
-    x: 5,
-    y: 5,
+    x: StartX,
+    y: StartY,
   })(state.inputBoxIds) as any;
   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
     x: OffsetX + maxWidthFromInputBoxes,
-    y: 5,
+    y: StartY,
   })(state.outputBoxIds) as any;
 
   return {

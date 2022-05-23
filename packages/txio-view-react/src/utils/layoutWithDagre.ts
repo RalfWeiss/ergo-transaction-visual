@@ -6,32 +6,24 @@ import * as R from "ramda";
 
 const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
 
-// const getMinYOfInputs = (nodes: Node[]) =>
-//   R.pipe(
-//     R.filter(R.propEq("type", "inputBox")),
-//     R.map(R.path(["position", "y"])),
-//     R.reduce(R.min, Infinity)
-//   )(nodes);
+const onlyOutputNodes = R.filter(R.propEq("type", "outputBox"))
+const onlyInputNodes = R.filter(R.propEq("type", "inputBox"))
 
-export const layoutWithDagre =
-  (state: Store) => (nodes: Node[], edges: Edge[]) => {
-    const { dimensions } = state;
-    const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-      state.inputBoxIds
-    ) as number;
-    // if (R.equals(edges, prevEdges)) {
-    //   console.log("edges are the same")
-    //   return
-    // }
-    // console.log("nodes in layout: ", JSON.stringify(nodes, null,2))
-    if (edges.length === 0) {
-      return nodes;
-    }
 
-    // const minY = getMinYOfInputs(nodes);
-    // console.log("inputs minY before dagre: ", minY);
+const getMinY = (nodes: Node[]) =>
+  R.pipe(
+    R.map(R.path(["position", "y"])),
+    R.reduce(R.min, Infinity)
+  )(nodes);
 
-    const dagreGraph = new dagre.graphlib.Graph();
+//const getNodesSorted = (nodes: Node[]) => 
+const getNodesSorted = (nodes: Node[]) => R.sortWith([
+//  R.descend(R.prop('age')),
+  R.ascend(R.path(['position','y']))
+])(nodes)
+
+const initialGraphLayout =  (nodes: Node[], edges: Edge[]) => {
+     const dagreGraph = new dagre.graphlib.Graph();
     dagreGraph.setDefaultEdgeLabel(() => ({}));
 
     dagreGraph.setGraph({ rankdir: "LR" });
@@ -43,34 +35,73 @@ export const layoutWithDagre =
     });
 
     dagre.layout(dagreGraph);
+    return dagreGraph
+  }    
 
-    const layoutedNodes = nodes.map((node) => {
+export const layoutWithDagre =
+  (state: Store) => (nodes: Node[], edges: Edge[]) => {
+
+    const maxWidthFromInputBoxes = getMaxWidthFromDimensions(state.dimensions)(
+      state.inputBoxIds
+    ) as number;
+
+    if (edges.length === 0) {
+      return nodes;
+    }
+
+
+    // const dagreGraph = new dagre.graphlib.Graph();
+    // dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+    // dagreGraph.setGraph({ rankdir: "LR" });
+    // nodes.forEach((node) => {
+    //   dagreGraph.setNode(node.id, node);
+    // });
+    // edges.forEach((edge) => {
+    //   dagreGraph.setEdge(edge.source, edge.target);
+    // });
+
+    // dagre.layout(dagreGraph);
+
+    const dagreGraph = initialGraphLayout(nodes, edges)
+
+    let layoutedNodes = nodes.map((node) => {
       const nodeWithPosition = dagreGraph.node(node.id);
-    node.position = {          // eslint-disable-line
-        // x: nodeWithPosition.x + Math.random() / 1000,
-        // x:
-        //   node.type === "inputBox"
-        //     ? 5
-        //     : node.type === "outputBox"
-        //     ? OffsetX + maxWidthFromInputBoxes
-        //     : maxWidthFromInputBoxes,
-        x: R.cond([
-          [R.propEq("type", "inputBox"), () => 5],
-          [
-            R.propEq("type", "outputBox"),
-            () => OffsetX + maxWidthFromInputBoxes,
-          ],
-          [R.T, () => maxWidthFromInputBoxes],
-        ])(node),
-        y: nodeWithPosition.y,
-      };
-      return node;
+      return R.mergeDeepRight(node, ({
+          x: R.cond([
+            [R.propEq("type", "inputBox"), () => appConfig.nodeStartPosition.x],
+            [
+              R.propEq("type", "outputBox"),
+              () => OffsetX + maxWidthFromInputBoxes,
+            ],
+            [R.T, () => maxWidthFromInputBoxes],
+          ])(node),
+          y: nodeWithPosition.y,        
+        }))
     });
 
-    // const minYAfter = getMinYOfInputs(nodes);
-    // console.log("noOfGraphLayouts: ", state.noOfGraphLayouts);
-    // console.log("inputs minY after dagre: ", minYAfter);
+  
+    
+    // console.log(`noOfGraphLayouts: ${state.noOfGraphLayouts}  minYBefore: ${minYBefore} minYAfter: ${minYAfter}`);
+    if ((state.noOfGraphLayouts as number >= 4)) { // && (minYBefore !== minYAfter)) {
 
-    // console.log("dagre layouted Nodes: ", JSON.stringify(layoutedNodes,null,2))
+      const minYInputsAfter = R.o(getMinY, onlyInputNodes)(layoutedNodes)
+      const minYOutputsAfter = R.o(getMinY, onlyOutputNodes)(layoutedNodes)  
+      const minAfter = R.min(minYInputsAfter, minYOutputsAfter)
+
+      const deltaY = minAfter -  appConfig.nodeStartPosition.y
+      
+      layoutedNodes = nodes.map((node) => {
+        const nodeWithPosition = dagreGraph.node(node.id);
+        node.position.y = nodeWithPosition.y - deltaY //, appConfig.nodeStartPosition.y)
+        return node
+      })
+    }
+
+    if (state.noOfGraphLayouts >= 3) {
+      const sortedNodes = getNodesSorted(layoutedNodes)
+//      console.log("dagre sortedNodes: ", JSON.stringify(sortedNodes,null,2))
+    }
+
     return layoutedNodes;
   };

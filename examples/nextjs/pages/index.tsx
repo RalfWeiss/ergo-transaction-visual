@@ -8,18 +8,35 @@ import data3 from "../fixtures/demo-3.json";
 
 const data4 = {
   inputs: [
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 1000 },
-    { value: 1000 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1 },
+    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 2 },
+    { value: 3 },
   ],
   outputs: [
-    { address: "Z000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 500 },
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1000 },
-    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 1000 },
-    { value: 2000 },
+    { address: "Z000001", value: 4 },
+    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 5 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 6 },
+    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 7 },
+    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 8 },
+    { value: 9 },
   ],
+};
+
+const data5 = {
+  inputs: [
+    { address: "Z000001", value: 1 },
+    { boxId: "000x", ergoTree: "001et", address: "B000001", value: 2 },
+    { boxId: "001x", ergoTree: "000et", address: "A000001", value: 3 },
+    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 4 },
+    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 5 },
+    { value: 6 },
+  ],  
+  outputs: [
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 7 },
+    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 8 },
+    { value: 9 },
+  ],
+
 };
 
 const demos = [
@@ -27,6 +44,7 @@ const demos = [
   { title: "Demo-2", data: data2 },
   { title: "Demo-3", data: data3 },
   { title: "Demo Box Coloring", data: data4 },
+  { title: "Demo 5", data: data5 },
 ];
 
 const screenStyle = {

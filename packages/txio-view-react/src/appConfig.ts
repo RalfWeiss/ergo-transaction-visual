@@ -1,6 +1,7 @@
 export default {
   verticalDistanceBetweenBoxes: 40,
   horizontalDistanceBetweenInOutColumns: 120,
+  nodeStartPosition: { x: 5, y: 10},
   // rootPropsToShow: ['boxId', 'address', 'ergoTree', 'blockId', 'transactionId', 'value']
   rootPropsToShow: ["boxId", "address", "ergoTree", "blockId", "value"],
   // rootPropsToShow: ["boxId", "address", "value"],
