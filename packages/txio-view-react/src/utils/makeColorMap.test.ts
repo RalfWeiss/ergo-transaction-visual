@@ -6,7 +6,7 @@ describe("pickKeyValue", () => {
     const input = {
       inputs: [
         {
-          boxId: "f2295a",
+          boxId: "a8da67345cd0",
           transactionId:
             "a8da67345cd04b199069382c94000478b8f6d41eadbe0ea4e1aa893d2238b60b",
           blockId:
@@ -16,13 +16,13 @@ describe("pickKeyValue", () => {
           globalIndex: 16573729,
           creationHeight: 746660,
           settlementHeight: 746662,
-          ergoTree: "100204000400d193e4c6b2a4730000040ecbe4c6b2a5730100040e",
+          ergoTree: "f2295a",
           address: "CxP58V",
         },
       ],
       outputs: [
         {
-          boxId: "f2295b",
+          boxId: "a8da67345cd0",
           transactionId:
             "a8da67345cd04b199069382c94000478b8f6d41eadbe0ea4e1aa893d2238b60b",
           blockId:
@@ -32,12 +32,12 @@ describe("pickKeyValue", () => {
           globalIndex: 16573729,
           creationHeight: 746660,
           settlementHeight: 746662,
-          ergoTree: "100204000400d193e4c6b2a4730000040ecbe4c6b2a5730100040e",
+          ergoTree: "f2295b",
           address: "CxP58V",
         },
       ],
     };
-    expect(pickValues(["boxId", "address"])(input)).toEqual(expected);
+    expect(pickValues(["ergoTree", "address"])(input)).toEqual(expected);
   });
 });
 
@@ -51,7 +51,7 @@ describe("makeColorMap", () => {
     const input = {
       inputs: [
         {
-          boxId: "f2295a",
+          ergoTree: "f2295a",
           transactionId: "a8da67",
           blockId: "1cb4aeabf378",
           value: 100000,
@@ -60,7 +60,7 @@ describe("makeColorMap", () => {
       ],
       outputs: [
         {
-          boxId: "f2295b",
+          ergoTree: "f2295b",
           transactionId: "a8da67",
           blockId: "1cb4aea",
           value: 100000,
