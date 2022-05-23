@@ -37,7 +37,8 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
 
   // reset state on changed data
   useEffect(() => {
-    if (prevData && prevData !== data) {
+    // if (prevData && prevData !== data) {
+    if (prevData && !R.equals(prevData, data)) {
       setState(R.assoc("boxes", defaultState.boxes));
       setState(R.assoc("allBoxes", defaultState.allBoxes));
       setState(R.assoc("inputBoxIds", defaultState.inputBoxIds));
@@ -72,6 +73,10 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     );
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
+
+  // useEffect(() => {
+  //   console.log("TxDiagram allkeys: ", state.allBoxes);
+  // }, [state]);
 
   // const toggleLayout = () => {
   //   setState(setUseDagreLayout(!state.config.useDagreLayout));

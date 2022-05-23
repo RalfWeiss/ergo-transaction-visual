@@ -1,10 +1,15 @@
 import React, { useEffect, useContext } from "react";
-import { Context as StoreContext } from "../../model";
+import {
+  Context as StoreContext,
+  onlyInputNodes,
+  onlyOutputNodes,
+} from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
 import TxSimpleNode from "./TxSimpleNode";
 import { adjustpositionFromStartPos } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
+import { DimensionsByKey } from "../../model";
 import appConfig from "../../appConfig";
 import * as R from "ramda";
 import ReactFlow, {
@@ -83,29 +88,64 @@ const edgeForOutputToTx = (internalId: string) => ({
   },
 });
 
-const StartX = appConfig.nodeStartPosition.x
-const StartY = appConfig.nodeStartPosition.y
+const StartX = appConfig.nodeStartPosition.x;
+const StartY = appConfig.nodeStartPosition.y;
 
-const adjustNodePositions = (state) => {
-  const { dimensions } = state;
+// const adjustNodePositions = (state) => {
+//   const { dimensions } = state;
+//   const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
+//     state.inputBoxIds
+//   ) as number;
+
+//   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
+//     x: StartX,
+//     y: StartY,
+//   })(state.inputBoxIds) as any;
+//   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
+//     x: OffsetX + maxWidthFromInputBoxes,
+//     y: StartY,
+//   })(state.outputBoxIds) as any;
+
+//   return {
+//     ...adjustedInputPositions,
+//     ...adjustedOutputPositions,
+//   };
+// };
+
+interface AdjustNodePositionsProps {
+  inputBoxIds: string[];
+  outputBoxIds: string[];
+  dimensions: DimensionsByKey;
+}
+const adjustNodePositions = ({
+  inputBoxIds,
+  outputBoxIds,
+  dimensions,
+}: AdjustNodePositionsProps) => {
   const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-    state.inputBoxIds
+    inputBoxIds
   ) as number;
 
   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
     x: StartX,
     y: StartY,
-  })(state.inputBoxIds) as any;
+  })(inputBoxIds) as any;
   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
     x: OffsetX + maxWidthFromInputBoxes,
     y: StartY,
-  })(state.outputBoxIds) as any;
+  })(outputBoxIds) as any;
 
   return {
     ...adjustedInputPositions,
     ...adjustedOutputPositions,
   };
 };
+
+const getNodesSorted = (nodes: Node[]) =>
+  R.sortWith([
+    //  R.descend(R.prop('age')),
+    R.ascend(R.path(["position", "y"])),
+  ])(nodes);
 
 export const TxFlowView = ({
   initialNodes,
@@ -126,7 +166,12 @@ export const TxFlowView = ({
 
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
-    const adjustedPositions = adjustNodePositions(state);
+    // const adjustedPositions = adjustNodePositions(state);
+    const adjustedPositions = adjustNodePositions({
+      inputBoxIds: state.inputBoxIds,
+      outputBoxIds: state.outputBoxIds,
+      dimensions: state.dimensions,
+    });
 
     const layoutedNodes = R.pipe(
       R.map((node) => ({
@@ -159,7 +204,36 @@ export const TxFlowView = ({
     }
     // setNodes(layoutWithDagre)
     if (useDagreLayout) {
-      setNodes(layoutWithDagre(state)(nodes, edges));
+      const layoutedNodes = layoutWithDagre(state)(nodes, edges);
+      const inputNodeIds = R.compose(
+        R.pluck("id"),
+        getNodesSorted,
+        onlyInputNodes
+      )(layoutedNodes);
+      // console.log("inputNode: ", JSON.stringify(inputNodeIds, null, 2))
+      const outputNodeIds = R.compose(
+        R.pluck("id"),
+        getNodesSorted,
+        onlyOutputNodes
+      )(layoutedNodes);
+      // console.log("outputNode: ", JSON.stringify(outputNodeIds, null, 2))
+
+      const adjustedPositions = adjustNodePositions({
+        inputBoxIds: inputNodeIds,
+        outputBoxIds: outputNodeIds,
+        dimensions: state.dimensions,
+      });
+      // console.log("adjustedPositions: ", JSON.stringify(adjustedPositions, null, 2))
+
+      const repositionedNodes = R.map((node) => ({
+        ...node,
+        position:
+          adjustedPositions[node.data?.internalId]?.position || node.position,
+        // style: { borderRadius: "10px", border: "solid 1px lightgray" },
+      }))(layoutedNodes);
+
+      // setNodes(layoutedNodes);
+      setNodes(repositionedNodes);
     }
     // }, [state]);
 

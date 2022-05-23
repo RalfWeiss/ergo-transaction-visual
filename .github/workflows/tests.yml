@@ -35,8 +35,8 @@ jobs:
       - name: Test
         run: pnpm run test
 
-#      - name: Publish
-#        run: pnpm -r publish  --filter "@ertravi/txio-view-react" --no-git-checks --access=public
-#        env:
-#          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish
+        run: pnpm -r publish  --filter "@ertravi/txio-view-react" --no-git-checks --access=public
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

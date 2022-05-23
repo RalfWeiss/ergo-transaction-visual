@@ -1,1 +1,6 @@
+import * as R from "ramda";
+
 export { getBoxById } from "./getBoxById";
+
+export const onlyOutputNodes = R.filter(R.propEq("type", "outputBox"));
+export const onlyInputNodes = R.filter(R.propEq("type", "inputBox"));

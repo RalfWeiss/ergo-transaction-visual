@@ -18,17 +18,17 @@ interface ErgoBoxNodeProps extends NodeProps {
   nodeType: NodeType;
 }
 
-const addressById = (id: string) => R.path(["boxes", id, "address"]);
+// const addressById = (id: string) => R.path(["boxes", id, "address"]);
 // const boxIdById = (id: string) => R.path(["boxes", id, "boxId"]);
 const ergoTreeById = (id: string) => R.path(["boxes", id, "ergoTree"]);
 
 const colorForInternalId =
   (id: string) =>
   (state: Store): string => {
-    const address = addressById(id)(state) || "";
-    if (state.colorMap[address]) {
-      return state.colorMap[address];
-    }
+    // const address = addressById(id)(state) || "";
+    // if (state.colorMap[address]) {
+    //   return state.colorMap[address];
+    // }
     const ergoTree = ergoTreeById(id)(state) || "";
     if (state.colorMap[ergoTree]) {
       return state.colorMap[ergoTree];

@@ -4,7 +4,8 @@ import { Button } from "@chakra-ui/react";
 import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
-import data3 from "../fixtures/demo-3.json";
+// import data3 from "../fixtures/demo-3.json";
+import rentNft from "../fixtures/dappstep Rent NFT.json";
 
 const data4 = {
   inputs: [
@@ -30,19 +31,18 @@ const data5 = {
     { boxId: "100x", ergoTree: "100et", address: "O000001", value: 4 },
     { boxId: "001x", ergoTree: "001et", address: "A000001", value: 5 },
     { value: 6 },
-  ],  
+  ],
   outputs: [
     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 7 },
     { boxId: "001x", ergoTree: "001et", address: "O000001", value: 8 },
     { value: 9 },
   ],
-
 };
 
 const demos = [
   { title: "Demo-1", data: data1 },
   { title: "Demo-2", data: data2 },
-  { title: "Demo-3", data: data3 },
+  { title: "Rent NFT", data: rentNft },
   { title: "Demo Box Coloring", data: data4 },
   { title: "Demo 5", data: data5 },
 ];
