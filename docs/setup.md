@@ -6,6 +6,8 @@
 
 - [Topics requiring more details](#topics-requiring-more-details)
 - [Autopublish Packages](#autopublish-packages)
+- [pnpm workspaces](#pnpm-workspaces)
+  - [Development workflow example steps:](#development-workflow-example-steps)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -60,4 +62,37 @@ Based on [Publish packages from within a Monorepo](https://dev.to/menghif/publis
 
 
 And that worked! The next error free push will automatically publish a new version of `@ertravi/txio-view-react`.
+
+## [pnpm workspaces](https://pnpm.io/workspaces)
+
+File `pnpm-workspace.yaml` created in projects repo root with this content:
+
+```yaml
+packages:
+  # all packages in subdirs of packages/ and components/
+  - 'packages/**'
+  - 'components/**'
+  # exclude packages that are inside test directories
+  - '!**/test/**'
+```
+
+### Development workflow example steps:
+
+- run **development server** in **`examples\nextjs`**
+
+  ```
+  pnpm dev`
+  ```
+
+- start **build** in **`packages\txio-view-react`**
+
+  ```
+  pnpm build`
+  ```
+
+- **add local package** in **`examples\nextjs`**
+
+  ```
+  pnpm i @ertravi/txio-view-react@*
+  ```
 

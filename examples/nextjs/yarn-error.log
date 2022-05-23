@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EEXIST: file already exists, mkdir '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/doctoc/node_modules'
+  Error: ENOENT: no such file or directory, copyfile '/home/ralf/.cache/yarn/v5/npm-ms-2.0.0-5608aeadfc00be6c2901df5f9861788de0d597c8/node_modules/ms/index.js' -> '/home/ralf/Projekte/29-dappstep/ergo-transaction-visual/node_modules/eslint-plugin-import/node_modules/ms/index.js'
 
 npm manifest: 
   {

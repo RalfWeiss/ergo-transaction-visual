@@ -8,7 +8,7 @@ import data3 from "../fixtures/demo-3.json";
 
 const data4 = {
   inputs: [
-    { boxId: "000x", address: "A000001", value: 1000 },
+    { boxId: "000x", ergoTree: "ergoTree", address: "A000001", value: 1000 },
     { boxId: "001x", address: "O000001", value: 1000 },
     { value: 1000 },
   ],

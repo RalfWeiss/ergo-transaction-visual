@@ -105,7 +105,11 @@ const adjustNodePositions = (state) => {
   };
 };
 
-const layoutWithDagre = (nodes: Node[], edges: Edge[]) => {
+const layoutWithDagre =(state) => (nodes: Node[], edges: Edge[]) => {
+  const { dimensions } = state;
+  const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
+    state.inputBoxIds
+  ) as number;  
   // if (R.equals(edges, prevEdges)) {
   //   console.log("edges are the same")
   //   return
@@ -130,12 +134,16 @@ const layoutWithDagre = (nodes: Node[], edges: Edge[]) => {
   const layoutedNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
     node.position = {          // eslint-disable-line
-      x: nodeWithPosition.x + Math.random() / 1000,
+      //x: nodeWithPosition.x + Math.random() / 1000,
+      x: (node.type === 'inputBox') ? 5 : OffsetX + maxWidthFromInputBoxes,
       y: nodeWithPosition.y,
     };
 
+    
+
     return node;
   });
+  console.log("dagre layouted Nodes: ", JSON.stringify(layoutedNodes,null,2))
   return layoutedNodes;
 };
 
@@ -184,7 +192,7 @@ export const TxFlowView = ({
     }
     // setNodes(layoutWithDagre)
     if (useDagreLayout) {
-      setNodes(layoutWithDagre(nodes, edges));
+      setNodes(layoutWithDagre(state)(nodes, edges));
     }
     // }, [state]);
 

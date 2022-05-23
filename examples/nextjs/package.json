@@ -13,7 +13,7 @@
     "@chakra-ui/react": "^2.1.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@ertravi/txio-view-react": "*",
+    "@ertravi/txio-view-react": "workspace:*",
     "framer-motion": "^6",
     "i": "^0.3.7",
     "next": "~12.1.6",

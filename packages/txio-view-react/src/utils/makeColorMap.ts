@@ -1,15 +1,7 @@
 import * as R from "ramda";
+import appConfig from "../appConfig";
 
-// colorNames good for black text color
-// https://www.quackit.com/css/color/charts/css_color_names_chart.cfm
-const colorNames = [
-  "LightCoral",
-  "PaleGreen",
-  "NavajoWhite",
-  "Khaki",
-  "SkyBlue",
-  "MistyRose",
-];
+const colorNames = appConfig.colorNames
 
 export const pickValues = (propNames: string[]) =>
   R.pipe(

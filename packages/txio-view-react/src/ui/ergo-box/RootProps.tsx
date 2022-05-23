@@ -7,6 +7,8 @@ import {
   TruncatedLabeledValueEntry,
   ErgoExplorerAddressLink,
 } from "./components";
+import config from "../../appConfig"
+import appConfig from "../../appConfig";
 
 interface RootPropsProps {
   ergoBox: ErgoBox;
@@ -73,9 +75,10 @@ export const RootProps = ({ ergoBox }: RootPropsProps) => {
   // const Container = components["BaseInfoContainer"] as any
   // these keys should show up in base info section
   const BasicKeys = pickKeyValue(
-    // ['boxId', 'address', 'ergoTree', 'blockId', 'transactionId', 'value']
-    // ["boxId", "address", "ergoTree", "blockId", "value"]
-    ["boxId", "address", "value"]
+    //['boxId', 'address', 'ergoTree', 'blockId', 'transactionId', 'value']
+    //["boxId", "address", "ergoTree", "blockId", "value"]
+    //["boxId", "address", "value"]
+    appConfig.rootPropsToShow
   )(ergoBox).map(mapBaseProps(components));
   return (
     <table>

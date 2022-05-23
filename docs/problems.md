@@ -1,14 +1,5 @@
 # Problems
 
-- add `txio-view-react` during developemnt
-
-Goto `examples\nextjs` and use:
-
-```
-yarn add @ertravi/txio-view-react@*
-```
-
-
 - `flexDirection is not assignable to CSSProperties`
 
 > 
