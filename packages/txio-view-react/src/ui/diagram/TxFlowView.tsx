@@ -7,8 +7,6 @@ import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
 import appConfig from "../../appConfig";
 import * as R from "ramda";
-import dagre from "dagre";
-
 import ReactFlow, {
   NodeTypes,
   Node,
@@ -16,6 +14,7 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
+import { layoutWithDagre } from "../../utils";
 
 const nodeTypes: NodeTypes = {
   inputBox: (props) => <ErgoBoxNode {...{ ...props, nodeType: "inputBox" }} />, // eslint-disable-line
@@ -105,47 +104,6 @@ const adjustNodePositions = (state) => {
   };
 };
 
-const layoutWithDagre =(state) => (nodes: Node[], edges: Edge[]) => {
-  const { dimensions } = state;
-  const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-    state.inputBoxIds
-  ) as number;  
-  // if (R.equals(edges, prevEdges)) {
-  //   console.log("edges are the same")
-  //   return
-  // }
-  // console.log("nodes in layout: ", JSON.stringify(nodes, null,2))
-  if (edges.length === 0) {
-    return nodes;
-  }
-  const dagreGraph = new dagre.graphlib.Graph();
-  dagreGraph.setDefaultEdgeLabel(() => ({}));
-
-  dagreGraph.setGraph({ rankdir: "LR" });
-  nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, node);
-  });
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
-
-  dagre.layout(dagreGraph);
-
-  const layoutedNodes = nodes.map((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.position = {          // eslint-disable-line
-      //x: nodeWithPosition.x + Math.random() / 1000,
-      x: (node.type === 'inputBox') ? 5 : OffsetX + maxWidthFromInputBoxes,
-      y: nodeWithPosition.y,
-    };
-
-    
-
-    return node;
-  });
-  console.log("dagre layouted Nodes: ", JSON.stringify(layoutedNodes,null,2))
-  return layoutedNodes;
-};
 
 export const TxFlowView = ({
   initialNodes,
@@ -168,15 +126,23 @@ export const TxFlowView = ({
 
     const adjustedPositions = adjustNodePositions(state);
 
-    const layoutedNodes = nodes.map((node) => ({
-      ...node,
-      position:
-        adjustedPositions[node.data?.internalId]?.position || node.position,
-      style: { borderRadius: "10px", border: "solid 1px lightgray" },
-    })) as Node[];
+    const layoutedNodes = R.pipe(
+      R.map(
+        (node) => ({
+          ...node,
+          position:
+            adjustedPositions[node.data?.internalId]?.position || node.position,
+          style: { borderRadius: "10px", border: "solid 1px lightgray" },
+        })
+      ),
+      R.ifElse(     // add central TxNode for layouting if it doesn't exist
+        R.find(R.propEq('id', 'Tx')),
+        R.identity,
+        R.append(InitialTxNode)
+      )
+    )(nodes)
 
-    const layoutedNodesWithTx = R.append(InitialTxNode, layoutedNodes);
-    setNodes(layoutedNodesWithTx);
+    setNodes(layoutedNodes);
 
     // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     const edgesFromStore = [
