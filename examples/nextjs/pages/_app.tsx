@@ -1,5 +1,5 @@
 import React from "react";
-import { ChakraProvider } from "@chakra-ui/react"
+import { ChakraProvider } from "@chakra-ui/react";
 import { TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
 
 export default function MyApp({ Component, pageProps }) {
@@ -11,6 +11,6 @@ export default function MyApp({ Component, pageProps }) {
           />
         </ReactFlowProvider>
       </TxioStoreProvider>
-    </ChakraProvider>    
+    </ChakraProvider>
   );
 }

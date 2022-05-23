@@ -10,7 +10,6 @@ import * as R from "ramda";
 import ReactFlow, {
   NodeTypes,
   Node,
-  Edge,
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
@@ -40,7 +39,8 @@ const InitialTxNode: Node = {
     label: "txBox",
     internalId: "Tx",
   },
-  position: { x: 300, y: 200 },
+  position: { x: 100, y: 50 },
+  // node is only used for dagre calculations
   hidden: true,
 };
 
@@ -104,7 +104,6 @@ const adjustNodePositions = (state) => {
   };
 };
 
-
 export const TxFlowView = ({
   initialNodes,
   useDagreLayout,
@@ -127,20 +126,19 @@ export const TxFlowView = ({
     const adjustedPositions = adjustNodePositions(state);
 
     const layoutedNodes = R.pipe(
-      R.map(
-        (node) => ({
-          ...node,
-          position:
-            adjustedPositions[node.data?.internalId]?.position || node.position,
-          style: { borderRadius: "10px", border: "solid 1px lightgray" },
-        })
-      ),
-      R.ifElse(     // add central TxNode for layouting if it doesn't exist
-        R.find(R.propEq('id', 'Tx')),
+      R.map((node) => ({
+        ...node,
+        position:
+          adjustedPositions[node.data?.internalId]?.position || node.position,
+        style: { borderRadius: "10px", border: "solid 1px lightgray" },
+      })),
+      R.ifElse(
+        // add central TxNode for layouting if it doesn't exist
+        R.find(R.propEq("id", "Tx")),
         R.identity,
         R.append(InitialTxNode)
       )
-    )(nodes)
+    )(nodes);
 
     setNodes(layoutedNodes);
 

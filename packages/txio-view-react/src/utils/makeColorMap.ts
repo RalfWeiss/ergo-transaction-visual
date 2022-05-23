@@ -1,7 +1,7 @@
 import * as R from "ramda";
 import appConfig from "../appConfig";
 
-const colorNames = appConfig.colorNames
+const { colorNames } = appConfig;
 
 export const pickValues = (propNames: string[]) =>
   R.pipe(
@@ -27,6 +27,6 @@ export const mapValuesWithColors = (values: string[]) => {
 
 // maps unique boxId and adress values to colors
 export const makeColorMap = (input: any) => {
-  const values = pickValues(["boxId", "address"])(input);
+  const values = pickValues(["ergoTree", "address"])(input);
   return mapValuesWithColors(values);
 };

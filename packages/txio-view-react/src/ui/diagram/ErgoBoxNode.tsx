@@ -19,7 +19,8 @@ interface ErgoBoxNodeProps extends NodeProps {
 }
 
 const addressById = (id: string) => R.path(["boxes", id, "address"]);
-const boxIdById = (id: string) => R.path(["boxes", id, "boxId"]);
+// const boxIdById = (id: string) => R.path(["boxes", id, "boxId"]);
+const ergoTreeById = (id: string) => R.path(["boxes", id, "ergoTree"]);
 
 const colorForInternalId =
   (id: string) =>
@@ -28,9 +29,9 @@ const colorForInternalId =
     if (state.colorMap[address]) {
       return state.colorMap[address];
     }
-    const boxId = boxIdById(id)(state) || "";
-    if (state.colorMap[boxId]) {
-      return state.colorMap[boxId];
+    const ergoTree = ergoTreeById(id)(state) || "";
+    if (state.colorMap[ergoTree]) {
+      return state.colorMap[ergoTree];
     }
     return ""; // Todo: return a default color
   };

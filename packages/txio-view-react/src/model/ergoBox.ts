@@ -35,7 +35,7 @@ export const normalize = (input: any): ErgoBox => {
     assets: R.map(transformAsset),
     // address: truncateWithEllipses(10),
     // boxId: truncateWithEllipses(10),
-    //ergoTree: truncateWithEllipses(10),
+    // ergoTree: truncateWithEllipses(10),
     // value: ensureString,
   };
   return R.pipe(withDefaults, R.evolve(transformations) as any)(input) as any;

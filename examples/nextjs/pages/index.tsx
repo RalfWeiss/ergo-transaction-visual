@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "@chakra-ui/react"
+import { Button } from "@chakra-ui/react";
 import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
@@ -54,7 +54,9 @@ const Buttons = ({ setTxData }) => {
   return (
     <>
       {demos.map(({ title, data }) => (
-        <Button mr={2} size={"sm"}
+        <Button
+          mr={2}
+          size="sm"
           key={title}
           type="button"
           onClick={() => setTxData(data as any)}
@@ -62,7 +64,8 @@ const Buttons = ({ setTxData }) => {
           {title}
         </Button>
       ))}
-      <Button size={"sm"}
+      <Button
+        size="sm"
         key="ToggleLayout"
         type="button"
         onClick={() => (toogleWithDagreLayout as () => void)()}
