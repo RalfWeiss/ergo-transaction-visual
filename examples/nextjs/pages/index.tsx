@@ -8,16 +8,16 @@ import data3 from "../fixtures/demo-3.json";
 
 const data4 = {
   inputs: [
-    { boxId: "000x", ergoTree: "000x", address: "A000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001x", address: "O000001", value: 1000 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1000 },
+    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 1000 },
     { value: 1000 },
   ],
   outputs: [
     { address: "Z000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001x", address: "B000001", value: 500 },
-    { boxId: "000x", ergoTree: "000x", address: "A000001", value: 1000 },
-    { boxId: "100x", ergoTree: "100x", address: "O000001", value: 1000 },
-    { boxId: "001x", ergoTree: "001x", address: "A000001", value: 1000 },
+    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 500 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1000 },
+    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 1000 },
+    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 1000 },
     { value: 2000 },
   ],
 };
@@ -26,7 +26,7 @@ const demos = [
   { title: "Demo-1", data: data1 },
   { title: "Demo-2", data: data2 },
   { title: "Demo-3", data: data3 },
-  { title: "Demo-4", data: data4 },
+  { title: "Demo Box Coloring", data: data4 },
 ];
 
 const screenStyle = {
