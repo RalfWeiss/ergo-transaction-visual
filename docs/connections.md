@@ -87,7 +87,7 @@ Starting with this data:
 }
 ```
 
-8. Map each of these lists over it key:
+8. Map each of these lists over it key: mapValueListsOverKeys
 
 ```js
 {
