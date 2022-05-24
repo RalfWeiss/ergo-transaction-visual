@@ -3,7 +3,7 @@ import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store, defaultState } from "../../model";
-import { connectionsByBoxId, makeColorMap } from "../../utils";
+import { connectionsByBoxId, connectionsByTokenId, makeColorMap } from "../../utils";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
@@ -71,6 +71,10 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(
       R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
     );
+
+    const connByTokenId = connectionsByTokenId({ inputs, outputs })
+    console.log("connByTokenId: ", JSON.stringify(connByTokenId, null, 2))
+
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
 

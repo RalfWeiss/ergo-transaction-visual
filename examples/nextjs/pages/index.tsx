@@ -97,7 +97,7 @@ const Buttons = ({ setTxData }) => {
 };
 
 export default () => {
-  const [txData, setTxData] = useState(data4);
+  const [txData, setTxData] = useState(data1);
 
   return (
     <div style={screenStyle}>
