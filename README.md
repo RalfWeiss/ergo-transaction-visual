@@ -36,9 +36,9 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes demo data to look at.
 
-As of now, with version v0.0.22, you should see sth. like this:
+As of now, with version v0.0.23, you should see sth. like this:
 
-![](media/demo-output-v0-0-22.png)
+![](media/demo-output-v0-0-23.png)
 
 This means: 
 - **Auto-Layout** could rearrange connected boxes
