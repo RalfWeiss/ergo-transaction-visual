@@ -11,7 +11,7 @@ import {
 // import { Store, mergeStore } from './store'
 // import { Store } from "./store";
 import { ErgoBox } from "./ergoBox";
-import { DimensionsByKey } from "./dimensions";
+import { Dimensions, DimensionsByKey } from "./dimensions";
 
 export interface Store {
   boxes: {
@@ -21,7 +21,8 @@ export interface Store {
   allBoxes: string[];
   inputBoxIds: string[];
   outputBoxIds: string[];
-  dimensions: DimensionsByKey;
+  dimensions: DimensionsByKey; // dimensions by internalId
+  diagramDimensions: Dimensions;
   colorMap: {
     [key: string]: string;
   };
@@ -52,6 +53,7 @@ export const defaultState: Store = {
   connectionsByBoxId: [],
   connectionsByTokenId: [],
   noOfGraphLayouts: 0,
+  diagramDimensions: { width: 0, height: 0 },
   config: {
     useDagreLayout: true,
   },

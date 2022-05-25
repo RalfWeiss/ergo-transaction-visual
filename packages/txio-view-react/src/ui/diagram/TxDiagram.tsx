@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
-import { Store, defaultState } from "../../model";
+import { Store, defaultState, setDiagramDimensions } from "../../model";
 import { makeColorMap, logWhen } from "../../utils";
 import { connectionsByBoxId, connectionsByTokenId } from "../../logic";
 import * as R from "ramda";
@@ -48,6 +48,10 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       setState(R.assoc("outputBoxIds", defaultState.outputBoxIds));
     }
   }, [prevData, data, setState]);
+
+  useEffect(() => {
+    setState(setDiagramDimensions({ width, height }));
+  }, [width, height, setState]);
 
   // move data to state
   useEffect(() => {

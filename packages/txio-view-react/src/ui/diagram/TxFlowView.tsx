@@ -9,7 +9,7 @@ import TxSimpleNode from "./TxSimpleNode";
 import { adjustpositionFromStartPos, logWhen } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
-import { DimensionsByKey } from "../../model";
+import { Dimensions, DimensionsByKey } from "../../model";
 import appConfig from "../../appConfig";
 import * as R from "ramda";
 import ReactFlow, {
@@ -41,7 +41,8 @@ interface TxFlowViewProps {
   useDagreLayout?: boolean;
 }
 
-const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
+// const OffsetX = appConfig.horizontalDistanceBetweenInOutColumns;
+const PADDING_RIGHT = 15;
 
 const defaultEdgesInit = [];
 
@@ -60,39 +61,23 @@ const InitialTxNode: Node = {
 const StartX = appConfig.nodeStartPosition.x;
 const StartY = appConfig.nodeStartPosition.y;
 
-// const adjustNodePositions = (state) => {
-//   const { dimensions } = state;
-//   const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-//     state.inputBoxIds
-//   ) as number;
-
-//   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
-//     x: StartX,
-//     y: StartY,
-//   })(state.inputBoxIds) as any;
-//   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
-//     x: OffsetX + maxWidthFromInputBoxes,
-//     y: StartY,
-//   })(state.outputBoxIds) as any;
-
-//   return {
-//     ...adjustedInputPositions,
-//     ...adjustedOutputPositions,
-//   };
-// };
-
 interface AdjustNodePositionsProps {
   inputBoxIds: string[];
   outputBoxIds: string[];
   dimensions: DimensionsByKey;
+  diagramDimensions: Dimensions;
 }
 const adjustNodePositions = ({
   inputBoxIds,
   outputBoxIds,
   dimensions,
+  diagramDimensions,
 }: AdjustNodePositionsProps) => {
-  const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-    inputBoxIds
+  // const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
+  //   inputBoxIds
+  // ) as number;
+  const maxWidthFromOutputBoxes = getMaxWidthFromDimensions(dimensions)(
+    outputBoxIds
   ) as number;
 
   const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
@@ -100,7 +85,8 @@ const adjustNodePositions = ({
     y: StartY,
   })(inputBoxIds) as any;
   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
-    x: OffsetX + maxWidthFromInputBoxes,
+    // x: OffsetX + maxWidthFromInputBoxes,
+    x: diagramDimensions.width - PADDING_RIGHT - maxWidthFromOutputBoxes,
     y: StartY,
   })(outputBoxIds) as any;
 
@@ -143,6 +129,7 @@ export const TxFlowView = ({
       inputBoxIds: state.inputBoxIds,
       outputBoxIds: state.outputBoxIds,
       dimensions: state.dimensions,
+      diagramDimensions: state.diagramDimensions,
     });
     debugLog("adjustedPositions")(adjustedPositions);
 
@@ -199,6 +186,7 @@ export const TxFlowView = ({
         inputBoxIds: inputNodeIds,
         outputBoxIds: outputNodeIds,
         dimensions: state.dimensions,
+        diagramDimensions: state.diagramDimensions,
       });
       // console.log("adjustedPositions: ", JSON.stringify(adjustedPositions, null, 2))
 

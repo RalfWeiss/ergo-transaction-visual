@@ -9,3 +9,6 @@ export const setDimension =
     })(store) as Store;
     return newStore;
   };
+
+export const setDiagramDimensions = (dimensions: Dimensions) =>
+  R.assocPath(["diagramDimensions"])(dimensions);

@@ -7,6 +7,14 @@ export {
 export { ErgoBox, normalize } from "./ergoBox";
 export { ErgoTx } from "./ergoTx";
 export { getBoxById, onlyOutputNodes, onlyInputNodes } from "./selectors";
-export { DimensionsByKey, getMaxWidthFromDimensions } from "./dimensions";
+export {
+  Dimensions,
+  DimensionsByKey,
+  getMaxWidthFromDimensions,
+} from "./dimensions";
 export { setDimension } from "./actions";
-export { setUseDagreLayout, setNoOfGraphLayouts } from "./actions";
+export {
+  setDiagramDimensions,
+  setUseDagreLayout,
+  setNoOfGraphLayouts,
+} from "./actions";
