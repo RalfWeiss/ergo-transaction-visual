@@ -1,7 +1,10 @@
 import * as R from "ramda"
 import { ErgoTx } from "../model";
+import { logWhen } from "../utils"
 
-const notIsNil = R.o(R.not,)
+const debugLog = logWhen(false)
+
+// const notIsNil = R.o(R.not,R.isNil)
 
 export const tokenIdsGroupedByInternId = R.pipe(
   R.reject(R.isEmpty),
@@ -15,7 +18,8 @@ export const tokenIdsGroupedByInternId = R.pipe(
   R.map(R.map(R.pluck("tokenId"))),
   R.map(R.unnest),
   R.toPairs,
-  R.tap(d => console.log("tokenIdsGroupedByInternId result: ", JSON.stringify(d, null, 2))),
+  // R.tap(d => console.log("tokenIdsGroupedByInternId result: ", JSON.stringify(d, null, 2))),
+  debugLog("tokenIdsGroupedByInternId result")
 )
 
 export const keyValueListTupleToPairs = R.pipe(
@@ -27,6 +31,7 @@ export const keyValueListTupleToPairs = R.pipe(
   ),
   R.unnest,
   //R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
+  debugLog("keyValueListTupleToPairs result")
 )
 
 export const groupInputIdByTokenId = R.pipe(
@@ -36,6 +41,7 @@ export const groupInputIdByTokenId = R.pipe(
   // lines before freshly added
   R.groupBy(R.last),
   R.map(R.map(R.head)),
+  debugLog("groupInputIdByTokenId result")
   //R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
 )
 
@@ -43,8 +49,9 @@ export const replaceTokenIdsWithInputIdsByTokenId = inputIdsByTokenId => R.pipe(
   R.map(R.map(t => inputIdsByTokenId[t])),
   R.map(R.unnest), // Step 6.
   R.map(R.uniq),   // Step 7.
-  R.map(R.reject(R.isNil))
+  R.map(R.reject(R.isNil)),
   //R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
+  debugLog("replaceTokenIdsWithInputIdsByTokenId result")
 )
 
 export const mapValueListsOverKeys = R.pipe(
@@ -55,13 +62,14 @@ export const mapValueListsOverKeys = R.pipe(
     )(val)
   ),
   R.values,   // Step 10
-  R.tap(d => console.log("mapValueListsOverKeys values: ", JSON.stringify(d, null, 2))),  
+  //R.tap(d => console.log("mapValueListsOverKeys values: ", JSON.stringify(d, null, 2))),  
   //R.map(R.reject(R.isNil)), // newly added
   R.map(R.map( // replacing nils with empty list enables unnest later
     R.when (R.isNil) (R.always([])) 
   )),  
   R.unnest,   
-  R.tap(d => console.log("mapValueListsOverKeys result: ", JSON.stringify(d, null, 2))),
+  //R.tap(d => console.log("mapValueListsOverKeys result: ", JSON.stringify(d, null, 2))),
+  debugLog("mapValueListsOverKeys result")
 )
 
 export const connectionsByTokenId = (data: ErgoTx) => {
@@ -75,23 +83,23 @@ export const connectionsByTokenId = (data: ErgoTx) => {
     keyValueListTupleToPairs,
     //R.tap(d => console.log("connectionsByTokenId-inputIdsByTokenId keyValueListTupleToPairs: ", JSON.stringify(d, null, 2))),
     groupInputIdByTokenId,
-    R.tap(d => console.log("connectionsByTokenId-inputIdsByTokenId groupInputIdByTokenId: ", JSON.stringify(d, null, 2))),
+    //R.tap(d => console.log("connectionsByTokenId-inputIdsByTokenId groupInputIdByTokenId: ", JSON.stringify(d, null, 2))),
 
   )(data.inputs);
 
-  console.log("connectionsByTokenId-inputIdsByTokenId=", JSON.stringify(inputIdsByTokenId, null, 2))
-  if (!inputIdsByTokenId) return []
+  // console.log("connectionsByTokenId-inputIdsByTokenId=", JSON.stringify(inputIdsByTokenId, null, 2))
+  // if (!inputIdsByTokenId) return []
 
   const result = R.pipe(
-    R.tap(d => console.log("connectionsByTokenId-tokenIdsGroupedByInternId before: ", JSON.stringify(d, null, 2))),    
+    //R.tap(d => console.log("connectionsByTokenId-tokenIdsGroupedByInternId before: ", JSON.stringify(d, null, 2))),    
     tokenIdsGroupedByInternId,
-    R.tap(d => console.log("connectionsByTokenId-tokenIdsGroupedByInternId after: ", JSON.stringify(d, null, 2))),        
+    //R.tap(d => console.log("connectionsByTokenId-tokenIdsGroupedByInternId after: ", JSON.stringify(d, null, 2))),        
     R.fromPairs,
-    R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
+    //R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
     replaceTokenIdsWithInputIdsByTokenId(inputIdsByTokenId),
     //R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
     mapValueListsOverKeys,
-    R.tap(d => console.log("mapValueListsOverKeys: ", JSON.stringify(d, null, 2))),
+    //R.tap(d => console.log("mapValueListsOverKeys: ", JSON.stringify(d, null, 2))),
   )(data.outputs);
 
   return result

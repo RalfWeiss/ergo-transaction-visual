@@ -252,7 +252,7 @@ describe("5. replaceTokenIdsWithInputIdsByTokenId", () => {
       "Out-2": ["T1", "T2"],
     }
     const result = replaceTokenIdsWithInputIdsByTokenId(inputIdsByTokenId)(tokenIdsByOutputId);
-    console.log("result replace: ", JSON.stringify(result, null, 2))
+    //console.log("result replace: ", JSON.stringify(result, null, 2))
     expect(result).toEqual(expected);    
   })  
 })

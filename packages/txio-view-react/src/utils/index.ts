@@ -1,6 +1,6 @@
 export { adjustPositions, adjustpositionFromStartPos } from "./adjustPosition";
-export { connectionsByBoxId } from "./connectionsByBoxId";
-export { connectionsByTokenId } from "./connectionsByTokenId"
+
+export { logWhen } from "./debugLog"
 export { makeColorMap } from "./makeColorMap";
 export { truncateWithEllipses } from "./truncateWithEllipses";
 export { pickKeyValue } from "./pickKeyValue";
