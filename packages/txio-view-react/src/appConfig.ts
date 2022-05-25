@@ -15,4 +15,16 @@ export default {
     "SkyBlue",
     "MistyRose",
   ],
+  styleEdgeByBox: {
+    stroke: "darkblue", // '#f6ab6c',
+    strokeWidth: 3,
+  },
+  styleEdgeByTokenId: {
+    stroke: "coral",
+    strokeWidth: 3,
+  },
+  markerEnd: {
+    type: "arrowclosed",
+    color: "gray",
+  },
 };

@@ -19,6 +19,12 @@ import ReactFlow, {
   useNodesState,
 } from "react-flow-renderer";
 import { layoutWithDagre } from "../../utils";
+import {
+  edgeByBoxIdFromIdPair,
+  edgeByTokenIdFromIdPair,
+  edgeForInputToTx,
+  edgeForOutputToTx,
+} from "./edges";
 
 const debugLog = logWhen(false);
 
@@ -50,66 +56,6 @@ const InitialTxNode: Node = {
   // node is only used for dagre calculations
   hidden: true,
 };
-
-const edgeByBoxIdFromIdPair = ([inputId, outputId]: [string, string]) => ({
-  id: `boxId-${inputId}-${outputId}`,
-  source: inputId,
-  target: outputId,
-  sourceHandle: "right",
-  targetHandle: "left",
-  animated: true,
-  style: {
-    stroke: "darkblue", // '#f6ab6c',
-    strokeWidth: 3,
-  },
-  markerEnd: {
-    type: "arrowclosed",
-    color: "gray",
-  },
-});
-
-const edgeByTokenIdFromIdPair = ([inputId, outputId]: [string, string]) => ({
-  id: `tokenId-${inputId}-${outputId}`,
-  source: inputId,
-  target: outputId,
-  sourceHandle: "right",
-  targetHandle: "left",
-  animated: true,
-  style: {
-    stroke: "coral",
-    strokeWidth: 3,
-  },
-  markerEnd: {
-    type: "arrowclosed",
-    color: "gray",
-  },
-});
-
-const edgeForInputToTx = (internalId: string) => ({
-  id: `${internalId}-Tx`,
-  source: internalId,
-  target: "Tx",
-  sourceHandle: "right",
-  // targetHandle: "left",
-  // animated: true,
-  markerEnd: {
-    type: "arrowclosed",
-    color: "gray",
-  },
-});
-
-const edgeForOutputToTx = (internalId: string) => ({
-  id: `Tx-${internalId}`,
-  source: "Tx",
-  target: internalId,
-  // sourceHandle: "right",
-  targetHandle: "left",
-  // animated: true,
-  markerEnd: {
-    type: "arrowclosed",
-    color: "gray",
-  },
-});
 
 const StartX = appConfig.nodeStartPosition.x;
 const StartY = appConfig.nodeStartPosition.y;

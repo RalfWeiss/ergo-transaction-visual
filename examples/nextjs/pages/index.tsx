@@ -25,7 +25,7 @@ const data4 = {
 
 const data5 = {
   inputs: [
-    { address: "Z000001", value: 1 },
+    { address: "Z000001", value: 1, assets: [{ tokenId: "T1" }] },
     { boxId: "000x", ergoTree: "001et", address: "B000001", value: 2 },
     { boxId: "001x", ergoTree: "000et", address: "A000001", value: 3 },
     { boxId: "100x", ergoTree: "100et", address: "O000001", value: 4 },
@@ -34,7 +34,13 @@ const data5 = {
   ],
   outputs: [
     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 7 },
-    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 8 },
+    {
+      boxId: "001x",
+      ergoTree: "001et",
+      address: "O000001",
+      value: 8,
+      assets: [{ tokenId: "T1" }],
+    },
     { value: 9 },
   ],
 };
