@@ -1,2 +1,2 @@
 export { connectionsByBoxId } from "./connectionsByBoxId";
-export { connectionsByTokenId } from "./connectionsByTokenId"
+export { connectionsByTokenId } from "./connectionsByTokenId";

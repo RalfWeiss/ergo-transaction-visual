@@ -6,7 +6,7 @@ import {
 } from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
 import TxSimpleNode from "./TxSimpleNode";
-import { adjustpositionFromStartPos } from "../../utils";
+import { adjustpositionFromStartPos, logWhen } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
 import { usePrevious } from "../../hooks";
 import { DimensionsByKey } from "../../model";
@@ -19,6 +19,8 @@ import ReactFlow, {
   useNodesState,
 } from "react-flow-renderer";
 import { layoutWithDagre } from "../../utils";
+
+const debugLog = logWhen(false);
 
 const nodeTypes: NodeTypes = {
   inputBox: (props) => <ErgoBoxNode {...{ ...props, nodeType: "inputBox" }} />, // eslint-disable-line
@@ -49,13 +51,34 @@ const InitialTxNode: Node = {
   hidden: true,
 };
 
-const edgeFromIdPair = ([inputId, outputId]: [string, string]) => ({
-  id: `${inputId}-${outputId}`,
+const edgeByBoxIdFromIdPair = ([inputId, outputId]: [string, string]) => ({
+  id: `boxId-${inputId}-${outputId}`,
   source: inputId,
   target: outputId,
   sourceHandle: "right",
   targetHandle: "left",
   animated: true,
+  style: {
+    stroke: "darkblue", // '#f6ab6c',
+    strokeWidth: 3,
+  },
+  markerEnd: {
+    type: "arrowclosed",
+    color: "gray",
+  },
+});
+
+const edgeByTokenIdFromIdPair = ([inputId, outputId]: [string, string]) => ({
+  id: `tokenId-${inputId}-${outputId}`,
+  source: inputId,
+  target: outputId,
+  sourceHandle: "right",
+  targetHandle: "left",
+  animated: true,
+  style: {
+    stroke: "coral",
+    strokeWidth: 3,
+  },
   markerEnd: {
     type: "arrowclosed",
     color: "gray",
@@ -166,12 +189,16 @@ export const TxFlowView = ({
 
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
+    debugLog("nodes")(nodes);
+    debugLog("initialNodes")(initialNodes);
+
     // const adjustedPositions = adjustNodePositions(state);
     const adjustedPositions = adjustNodePositions({
       inputBoxIds: state.inputBoxIds,
       outputBoxIds: state.outputBoxIds,
       dimensions: state.dimensions,
     });
+    debugLog("adjustedPositions")(adjustedPositions);
 
     const layoutedNodes = R.pipe(
       R.map((node) => ({
@@ -186,13 +213,17 @@ export const TxFlowView = ({
         R.identity,
         R.append(InitialTxNode)
       )
-    )(nodes);
+      //    )(nodes);
+    )(initialNodes);
+
+    debugLog("layoutedNodes")(layoutedNodes);
 
     setNodes(layoutedNodes);
 
     // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     const edgesFromStore = [
-      ...R.map(edgeFromIdPair)(state.connectionsByBoxId),
+      ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
+      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
       ...R.map(edgeForInputToTx)(state.inputBoxIds),
       ...R.map(edgeForOutputToTx)(state.outputBoxIds),
     ];

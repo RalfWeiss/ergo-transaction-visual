@@ -3,13 +3,15 @@ import { Context as StoreContext } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store, defaultState } from "../../model";
-import { makeColorMap } from "../../utils";
+import { makeColorMap, logWhen } from "../../utils";
 import { connectionsByBoxId, connectionsByTokenId } from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
 
 import { Node } from "react-flow-renderer";
+
+const debugLog = logWhen(false);
 
 const initialNodesWithState =
   (state: Store) =>
@@ -64,17 +66,30 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       internalId: `output-${idx}`,
       boxType: "outputBox",
     }));
+
+    debugLog("TxDiagram inputs")(inputs);
+
     inputs.forEach((box) => setState(addInputBox(normalize(box))));
     outputs.forEach((box) => setState(addOutputBox(normalize(box))));
 
-    const colorMap = makeColorMap(data);
+    const colorMap = R.pipe(
+      makeColorMap
+      // debugLog("colorMap")
+    )(data);
+
     setState(R.assoc("colorMap", colorMap));
     setState(
       R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
     );
+    setState(
+      R.assoc("connectionsByTokenId", connectionsByTokenId({ inputs, outputs }))
+    );
 
-    const connByTokenId = connectionsByTokenId({ inputs, outputs })
-    console.log("connByTokenId: ", JSON.stringify(connByTokenId, null, 2))
+    // const connByTokenId = R.pipe(
+    //   connectionsByTokenId,
+    //   debugLog("connections by tokenId")
+    // )({ inputs, outputs })
+    // //console.log("connByTokenId: ", JSON.stringify(connByTokenId, null, 2))
 
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);

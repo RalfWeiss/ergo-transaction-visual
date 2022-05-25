@@ -63,12 +63,16 @@ export const adjustpositionFromStartPos =
       // console.log("currentKey: ", currentKey)
       // let accTyped = acc as ObjWithKeyedPosition
       const accTyped = R.assoc(currentKey, {}, acc) as ObjWithKeyedPosition;
+      // const accTyped = R.assoc(currentKey, acc, inputWithKeyedPositions) as ObjWithKeyedPosition;
+      // const accTyped = R.assoc(currentKey, acc, inputWithKeyedPositions) as ObjWithKeyedPosition;
       const prevKey = arr[idx - 1] as string;
-      const prevPosition = accTyped[prevKey].position;
-      const prevDimension = dimensions[prevKey];
-      if (!prevPosition || !prevDimension) {
-        return accTyped;
-      }
+      // const prevPosition = accTyped[prevKey].position;
+      const prevPosition = accTyped[prevKey].position || startPos;
+      const prevDimension = dimensions[prevKey] || { width: 100, height: 100 };
+      // 25.5.22 commented out
+      // if (!prevPosition || !prevDimension) {
+      //   return accTyped;
+      // }
       const newPosition = {
         x: prevPosition.x,
         y: prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes,

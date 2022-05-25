@@ -28,6 +28,6 @@ export const mapValuesWithColors = (values: string[]) => {
 // maps unique boxId and adress values to colors
 export const makeColorMap = (input: any) => {
   // const values = pickValues(["ergoTree", "address"])(input);
-  const values = pickValues(["ergoTree", "address"])(input);  
+  const values = pickValues(["ergoTree"])(input);
   return mapValuesWithColors(values);
 };

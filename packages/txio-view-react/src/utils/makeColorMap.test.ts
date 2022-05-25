@@ -45,8 +45,9 @@ describe("makeColorMap", () => {
   it("should make a color map", () => {
     const expected = {
       f2295a: "LightCoral",
-      CxP58V: "PaleGreen",
-      f2295b: "NavajoWhite",
+      f2295b: "PaleGreen",
+      //      CxP58V: "PaleGreen",
+      //      f2295b: "NavajoWhite",
     };
     const input = {
       inputs: [

@@ -27,6 +27,7 @@ export interface Store {
   };
   // connectionsByBoxId?: [[string,string]]
   connectionsByBoxId: any;
+  connectionsByTokenId: any;
   noOfGraphLayouts: 0;
   config: {
     useDagreLayout: true;
@@ -49,6 +50,7 @@ export const defaultState: Store = {
   dimensions: {},
   colorMap: {},
   connectionsByBoxId: [],
+  connectionsByTokenId: [],
   noOfGraphLayouts: 0,
   config: {
     useDagreLayout: true,
