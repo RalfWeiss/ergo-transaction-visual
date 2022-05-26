@@ -1,7 +1,7 @@
 {
   "name": "@ertravi/nextjs-example",
   "private": true,
-  "version": "0.0.23",
+  "version": "0.0.24",
   "scripts": {
     "clean": "rimraf .next",
     "dev": "next dev",

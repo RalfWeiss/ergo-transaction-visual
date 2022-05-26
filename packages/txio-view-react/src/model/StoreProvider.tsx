@@ -12,6 +12,7 @@ import {
 // import { Store } from "./store";
 import { ErgoBox } from "./ergoBox";
 import { Dimensions, DimensionsByKey } from "./dimensions";
+import * as R from "ramda";
 
 export interface Store {
   boxes: {
@@ -30,9 +31,7 @@ export interface Store {
   connectionsByBoxId: any;
   connectionsByTokenId: any;
   noOfGraphLayouts: 0;
-  config: {
-    useDagreLayout: true;
-  };
+  config: Partial<ITxioStoreProviderConfig>;
 }
 
 interface IStoreContext {
@@ -56,6 +55,17 @@ export const defaultState: Store = {
   diagramDimensions: { width: 0, height: 0 },
   config: {
     useDagreLayout: true,
+    rootPropsToShow: ["boxId", "address", "value"],
+    // colorNames good for black text color
+    // https://www.quackit.com/css/color/charts/css_color_names_chart.cfm
+    colorNames: [
+      "LightCoral",
+      "PaleGreen",
+      "NavajoWhite",
+      "Khaki",
+      "SkyBlue",
+      "MistyRose",
+    ],
   },
 };
 
@@ -65,13 +75,23 @@ export const Context = createContext<IStoreContext>({
   setState: () => ({}),
 });
 
+export interface ITxioStoreProviderConfig {
+  useDagreLayout: boolean;
+  rootPropsToShow: string[];
+  colorNames: string[]; // Todo: find a better name
+}
+
 export interface ITxioStoreProvider {
   // data?: Store;
+  config?: ITxioStoreProviderConfig;
   children: ReactNode;
 }
 
-export const TxioStoreProvider = ({ children }: ITxioStoreProvider) => {
-  const [state, setState] = useState(defaultState);
+// Todo: Is this the right place to add an config
+export const TxioStoreProvider = ({ config, children }: ITxioStoreProvider) => {
+  const [state, setState] = useState(
+    R.mergeDeepRight(defaultState, { config: config || {} })
+  );
   const contextValue = useMemo(
     () => ({ state, setState } as IStoreContext),
     [state, setState]

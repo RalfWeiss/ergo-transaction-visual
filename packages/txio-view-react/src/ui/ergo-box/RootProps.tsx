@@ -1,5 +1,9 @@
-import React from "react";
-import { ErgoBox } from "../../model";
+import React, { useContext } from "react";
+import {
+  ErgoBox,
+  Context as StoreContext,
+  selRootPropsToShow,
+} from "../../model";
 import { pickKeyValue } from "../../utils";
 import {
   LabeledValueEntry,
@@ -8,7 +12,7 @@ import {
   ErgoExplorerAddressLink,
 } from "./components";
 
-import appConfig from "../../appConfig";
+// import appConfig from "../../appConfig";
 
 interface RootPropsProps {
   ergoBox: ErgoBox;
@@ -71,6 +75,7 @@ const mapBaseProps =
 // }
 
 export const RootProps = ({ ergoBox }: RootPropsProps) => {
+  const { state } = useContext(StoreContext);
   // const { components } = useContext(GuiContext);
   // const Container = components["BaseInfoContainer"] as any
   // these keys should show up in base info section
@@ -78,7 +83,8 @@ export const RootProps = ({ ergoBox }: RootPropsProps) => {
     // ['boxId', 'address', 'ergoTree', 'blockId', 'transactionId', 'value']
     // ["boxId", "address", "ergoTree", "blockId", "value"]
     // ["boxId", "address", "value"]
-    appConfig.rootPropsToShow
+    // appConfig.rootPropsToShow
+    selRootPropsToShow(state)
   )(ergoBox).map(mapBaseProps(components));
   return (
     <table>

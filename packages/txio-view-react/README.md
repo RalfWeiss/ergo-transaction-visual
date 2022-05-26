@@ -42,15 +42,31 @@ yarn add @ertravi/txio-view-react
 
 ## Example **NextJS**
 
+This example shows:
+
+- the use of an optional config object to configure the visualisation
+
 - `pages\_app.tsx`
 
 ```tsx
 import React from "react";
 import { TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
 
+// use an optional config 
+const TxioViewConfig = {
+  rootPropsToShow: [
+    "boxId",
+    "address",
+    "ergoTree",
+    "blockId",
+    //    "transactionId",
+    "value",
+  ],
+};
+
 export default function MyApp({ Component, pageProps }) {
   return (
-    <TxioStoreProvider>
+    <TxioStoreProvider  config={TxioViewConfig}>
       <ReactFlowProvider>
         <Component {...pageProps} // eslint-disable-line
         />
@@ -100,3 +116,19 @@ export default () => {
   );
 };
 ```
+
+## Configuration
+
+### rootPropsToShow
+
+A list of `property` names to show up in the **root properties** section.
+
+Choose from these possibilities:
+
+- "boxId"
+- "address"
+- "ergoTree"
+- "blockId"
+- "transactionId"
+- "value"
+
