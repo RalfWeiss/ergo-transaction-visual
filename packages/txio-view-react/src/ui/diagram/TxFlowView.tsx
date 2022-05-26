@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from "react";
 import {
   Context as StoreContext,
-  onlyInputNodes,
-  onlyOutputNodes,
+  Selectors,
+  // onlyInputNodes,
+  // onlyOutputNodes,
 } from "../../model";
 import { ErgoBoxNode } from "./ErgoBoxNode";
 import TxSimpleNode from "./TxSimpleNode";
@@ -172,13 +173,13 @@ export const TxFlowView = ({
       const inputNodeIds = R.compose(
         R.pluck("id"),
         getNodesSorted,
-        onlyInputNodes
+        Selectors.onlyInputNodes
       )(layoutedNodes);
       // console.log("inputNode: ", JSON.stringify(inputNodeIds, null, 2))
       const outputNodeIds = R.compose(
         R.pluck("id"),
         getNodesSorted,
-        onlyOutputNodes
+        Selectors.onlyOutputNodes
       )(layoutedNodes);
       // console.log("outputNode: ", JSON.stringify(outputNodeIds, null, 2))
 

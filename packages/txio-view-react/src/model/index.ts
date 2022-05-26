@@ -6,12 +6,14 @@ export {
 } from "./StoreProvider";
 export { ErgoBox, normalize } from "./ergoBox";
 export { ErgoTx } from "./ergoTx";
-export {
-  getBoxById,
-  onlyOutputNodes,
-  onlyInputNodes,
-  selRootPropsToShow,
-} from "./selectors";
+// export {
+//   getBoxById,
+//   onlyOutputNodes,
+//   onlyInputNodes,
+//   selRootPropsToShow,
+//   selColorNames
+// } from "./selectors";
+export * as Selectors from "./selectors";
 export {
   Dimensions,
   DimensionsByKey,

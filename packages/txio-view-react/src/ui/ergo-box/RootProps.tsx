@@ -1,9 +1,5 @@
 import React, { useContext } from "react";
-import {
-  ErgoBox,
-  Context as StoreContext,
-  selRootPropsToShow,
-} from "../../model";
+import { ErgoBox, Context as StoreContext, Selectors } from "../../model";
 import { pickKeyValue } from "../../utils";
 import {
   LabeledValueEntry,
@@ -84,7 +80,7 @@ export const RootProps = ({ ergoBox }: RootPropsProps) => {
     // ["boxId", "address", "ergoTree", "blockId", "value"]
     // ["boxId", "address", "value"]
     // appConfig.rootPropsToShow
-    selRootPropsToShow(state)
+    Selectors.selRootPropsToShow(state)
   )(ergoBox).map(mapBaseProps(components));
   return (
     <table>

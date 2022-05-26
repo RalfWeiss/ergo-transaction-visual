@@ -1,7 +1,7 @@
 import dagre from "dagre";
 import { getMaxWidthFromDimensions, Store } from "../model";
 import { Node, Edge } from "react-flow-renderer";
-import { onlyInputNodes, onlyOutputNodes } from "../model";
+import { Selectors } from "../model";
 import appConfig from "../appConfig";
 import * as R from "ramda";
 
@@ -92,8 +92,14 @@ export const layoutWithDagre =
     if ((state.noOfGraphLayouts as number) >= 4) {
       // && (minYBefore !== minYAfter)) {
 
-      const minYInputsAfter = R.o(getMinY, onlyInputNodes)(layoutedNodes);
-      const minYOutputsAfter = R.o(getMinY, onlyOutputNodes)(layoutedNodes);
+      const minYInputsAfter = R.o(
+        getMinY,
+        Selectors.onlyInputNodes
+      )(layoutedNodes);
+      const minYOutputsAfter = R.o(
+        getMinY,
+        Selectors.onlyOutputNodes
+      )(layoutedNodes);
       const minAfter = R.min(minYInputsAfter, minYOutputsAfter);
 
       const deltaY = minAfter - appConfig.nodeStartPosition.y;

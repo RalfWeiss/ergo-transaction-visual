@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ErgoBox } from "../../model";
 import { Context as StoreContext } from "../../model";
 import { ErgoBoxCard } from "./ErgoBoxCard";
-import { getBoxById } from "../../model";
+import { Selectors } from "../../model";
 import * as R from "ramda";
 
 export interface IErgoBoxCardContext {
@@ -14,7 +14,7 @@ export const ErgoBoxCardContext = ({ internalId }: IErgoBoxCardContext) => {
   const [box, setBox] = useState({});
 
   useEffect(() => {
-    const box = getBoxById(internalId)(state) as ErgoBox;
+    const box = Selectors.getBoxById(internalId)(state) as ErgoBox;
     setBox(box);
   }, [internalId, state]);
 
