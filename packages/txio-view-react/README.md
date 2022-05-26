@@ -168,6 +168,7 @@ You can even use **Chakra's CSS Variables**
 
 **Example**:
 
+```js
 const TxioViewConfig = {
   ...
   boxColors: [
@@ -177,6 +178,8 @@ const TxioViewConfig = {
   ]  
 };
 var(--chakra-colors-green-600)
+```
+
 The default is:
 
 ```js
