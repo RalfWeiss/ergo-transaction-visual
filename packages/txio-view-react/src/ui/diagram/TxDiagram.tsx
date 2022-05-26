@@ -76,10 +76,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     inputs.forEach((box) => setState(addInputBox(normalize(box))));
     outputs.forEach((box) => setState(addOutputBox(normalize(box))));
 
-    const colorMap = R.pipe(
-      makeColorMap
-      // debugLog("colorMap")
-    )(data);
+    const colorMap = R.pipe(makeColorMap(state), debugLog("colorMap"))(data);
 
     setState(R.assoc("colorMap", colorMap));
     setState(

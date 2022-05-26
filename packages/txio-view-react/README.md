@@ -5,6 +5,9 @@
 - [Features](#features)
 - [Getting started](#getting-started)
 - [Example **NextJS**](#example-nextjs)
+- [Configuration](#configuration)
+  - [rootPropsToShow](#rootpropstoshow)
+  - [boxColors](#boxcolors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -59,9 +62,14 @@ const TxioViewConfig = {
     "address",
     "ergoTree",
     "blockId",
-    //    "transactionId",
+    "transactionId",
     "value",
   ],
+  boxColors: [
+    "var(--chakra-colors-green-600)",
+    "var(--chakra-colors-blue-300)",    
+    "var(--chakra-colors-red-300)",    
+  ]  
 };
 
 export default function MyApp({ Component, pageProps }) {
@@ -119,9 +127,13 @@ export default () => {
 
 ## Configuration
 
+
+
 ### rootPropsToShow
 
-A list of `property` names to show up in the **root properties** section.
+A list of `property` names to show up in the **root properties** section. 
+
+> The order of the names is used for display order.
 
 Choose from these possibilities:
 
@@ -132,3 +144,48 @@ Choose from these possibilities:
 - "transactionId"
 - "value"
 
+The default is:
+
+```js
+[
+  'boxId', 
+  'address', 
+  'ergoTree', 
+  'blockId', 
+  'transactionId', 
+  'value'
+]
+```
+
+### boxColors
+
+`boxColors` is a list of `Color` values. 
+
+- use any string that can be used as a `Color`.
+- use as many as you expect different values of `ergoTree`
+
+You can even use **Chakra's CSS Variables**
+
+**Example**:
+
+const TxioViewConfig = {
+  ...
+  boxColors: [
+    "var(--chakra-colors-green-600)", 
+    "LightCoral",    
+    "#996600",    
+  ]  
+};
+var(--chakra-colors-green-600)
+The default is:
+
+```js
+[
+  "LightCoral",
+  "PaleGreen",
+  "NavajoWhite",
+  "Khaki",
+  "SkyBlue",
+  "MistyRose",
+]
+```

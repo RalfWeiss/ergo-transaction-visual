@@ -12,6 +12,11 @@ const TxioViewConfig = {
     //    "transactionId",
     "value",
   ],
+  boxColors: [
+    "#996600",
+    "var(--chakra-colors-blue-300)",
+    "var(--chakra-colors-red-300)",
+  ],
 };
 
 export default function MyApp({ Component, pageProps }) {
