@@ -10,7 +10,7 @@ interface AssetRowProps {
   name: string;
   type: string;
   tokenId: string;
-  amount: string;
+  amount: number;
 }
 
 const TRUNCATE_MAXLEN = 10;

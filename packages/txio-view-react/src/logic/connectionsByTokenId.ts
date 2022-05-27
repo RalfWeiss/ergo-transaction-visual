@@ -106,8 +106,9 @@ export const connectionsByTokenId = (data: ErgoTx) => {
     // R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
     replaceTokenIdsWithInputIdsByTokenId(inputIdsByTokenId),
     // R.tap(d => console.log("data: ", JSON.stringify(d, null, 2))),
-    mapValueListsOverKeys
+    mapValueListsOverKeys,
     // R.tap(d => console.log("mapValueListsOverKeys: ", JSON.stringify(d, null, 2))),
+    debugLog("connectionsByTokenId-result")
   )(data.outputs);
 
   return result;

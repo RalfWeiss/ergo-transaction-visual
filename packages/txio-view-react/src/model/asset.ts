@@ -4,7 +4,7 @@ import * as R from "ramda";
 // using a class to ensure defaults
 export class Asset {
   constructor(
-    public amount = "",
+    public amount = 0,
     public name = "",
     public tokenId = "",
     public type = ""

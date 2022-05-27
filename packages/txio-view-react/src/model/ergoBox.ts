@@ -18,7 +18,8 @@ export class ErgoBox {
     public blockId = "",
     public ergoTree = "",
     public transactionId = "",
-    public value: string | number = "",
+    // public value: string | number = "",
+    public value: number = 0,
     public additionalRegisters = {},
     public boxType = ""
   ) {}
@@ -36,7 +37,8 @@ export const normalize = (input: any): ErgoBox => {
     // address: truncateWithEllipses(10),
     // boxId: truncateWithEllipses(10),
     // ergoTree: truncateWithEllipses(10),
-    // value: ensureString,
+    //    value: ensureString,
+    value: (v) => ~~v,    // eslint-disable-line
   };
   return R.pipe(withDefaults, R.evolve(transformations) as any)(input) as any;
 };

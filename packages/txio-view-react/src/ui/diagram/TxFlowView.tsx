@@ -74,17 +74,33 @@ const adjustNodePositions = ({
   dimensions,
   diagramDimensions,
 }: AdjustNodePositionsProps) => {
-  // const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
-  //   inputBoxIds
-  // ) as number;
+  const maxWidthFromInputBoxes = getMaxWidthFromDimensions(dimensions)(
+    inputBoxIds
+  ) as number;
   const maxWidthFromOutputBoxes = getMaxWidthFromDimensions(dimensions)(
     outputBoxIds
   ) as number;
 
-  const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
-    x: StartX,
-    y: StartY,
-  })(inputBoxIds) as any;
+  // const adjustedInputPositions = adjustpositionFromStartPos(dimensions)({
+  //   x: StartX,
+  //   y: StartY,
+  // })(inputBoxIds) as any;
+  const adjustedInputPositions = R.pipe(
+    adjustpositionFromStartPos(dimensions)({
+      x: StartX,
+      y: StartY,
+    }),
+    debugLog("adjustedInputPositions in"),
+    R.mapObjIndexed((v, k) =>
+      R.pipe(
+        R.assocPath(
+          ["position", "x"],
+          maxWidthFromInputBoxes - (dimensions[k]?.width || 0) + 5
+        )
+      )(v)
+    ),
+    debugLog("adjustedInputPositions out")
+  )(inputBoxIds) as any;
   const adjustedOutputPositions = adjustpositionFromStartPos(dimensions)({
     // x: OffsetX + maxWidthFromInputBoxes,
     x: diagramDimensions.width - PADDING_RIGHT - maxWidthFromOutputBoxes,
