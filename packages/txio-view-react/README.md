@@ -24,7 +24,7 @@
 
 > The main focus of this repo is making tools to help understand the **[Ergo](https://ergoplatform.org/)** blockchain. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
 
-As of now, with version v0.0.25, you could see sth. like this:
+As of now, with version v0.0.26, you could see sth. like this:
 
 ![](media/demo-output-v0-0-23.png)
 
@@ -149,12 +149,9 @@ The default is:
 
 ```js
 [
-  'boxId', 
-  'address', 
-  'ergoTree', 
-  'blockId', 
-  'transactionId', 
-  'value'
+  "value", 
+  "boxId", 
+  "address"
 ]
 ```
 
@@ -187,9 +184,9 @@ The default is:
 [
   "LightCoral",
   "PaleGreen",
-  "NavajoWhite",
-  "Khaki",
   "SkyBlue",
+  "NavajoWhite",
+  "Khaki",  
   "MistyRose",
 ]
 ```

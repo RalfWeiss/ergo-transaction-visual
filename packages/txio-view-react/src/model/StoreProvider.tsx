@@ -55,23 +55,23 @@ export const defaultState: Store = {
   diagramDimensions: { width: 0, height: 0 },
   config: {
     useDagreLayout: true,
-    // rootPropsToShow: ["boxId", "address", "value"],
-    rootPropsToShow: [
-      "boxId",
-      "address",
-      "ergoTree",
-      "blockId",
-      "transactionId",
-      "value",
-    ],
+    rootPropsToShow: ["value", "boxId", "address"],
+    // rootPropsToShow: [
+    //   "boxId",
+    //   "address",
+    //   "ergoTree",
+    //   "blockId",
+    //   "transactionId",
+    //   "value",
+    // ],
     // colorNames good for black text color
     // https://www.quackit.com/css/color/charts/css_color_names_chart.cfm
     boxColors: [
       "LightCoral",
       "PaleGreen",
+      "SkyBlue",
       "NavajoWhite",
       "Khaki",
-      "SkyBlue",
       "MistyRose",
     ],
   },
