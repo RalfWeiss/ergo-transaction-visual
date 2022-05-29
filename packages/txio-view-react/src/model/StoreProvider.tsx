@@ -71,8 +71,8 @@ export const defaultState: Store = {
       "PaleGreen",
       "SkyBlue",
       "Khaki",
-      "NavajoWhite",
       "MistyRose",
+      "NavajoWhite",
     ],
   },
 };
@@ -91,7 +91,7 @@ export interface ITxioStoreProviderConfig {
 
 export interface ITxioStoreProvider {
   // data?: Store;
-  config?: ITxioStoreProviderConfig;
+  config?: Partial<ITxioStoreProviderConfig>;
   children: ReactNode;
 }
 

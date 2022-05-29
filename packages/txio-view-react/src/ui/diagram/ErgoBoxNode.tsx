@@ -33,7 +33,7 @@ const colorForInternalId =
     if (state.colorMap[ergoTree]) {
       return state.colorMap[ergoTree];
     }
-    return ""; // Todo: return a default color
+    return "Silver"; // Todo: return a default color
   };
 
 export const ErgoBoxNode = ({ data, nodeType }: ErgoBoxNodeProps) => {

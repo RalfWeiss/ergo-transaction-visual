@@ -6,6 +6,7 @@ import {
   ErgoExplorerQueryLink,
   TruncatedLabeledValueEntry,
   ErgoExplorerAddressLink,
+  LabeledCurrency,
 } from "./components";
 
 // import appConfig from "../../appConfig";
@@ -39,6 +40,7 @@ const components: any = {
   boxId: TruncatedLabeledValueEntry,
   ergoTree: TruncatedLabeledValueEntry,
   transactionId: ErgoExplorerQueryLink,
+  value: LabeledCurrency,
   default: LabeledValueEntry,
 };
 

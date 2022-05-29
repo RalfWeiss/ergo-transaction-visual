@@ -42,22 +42,19 @@ const data4 = {
 const data5 = {
   inputs: [
     { address: "Z000001", value: 1, assets: [{ tokenId: "T1" }] },
-    { boxId: "000x", ergoTree: "001et", address: "B000001", value: 2 },
-    { boxId: "001x", ergoTree: "000et", address: "A000001", value: 3 },
-    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 4 },
-    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 5 },
-    { value: 6 },
+    { ergoTree: "001et", value: 2 },
+    { ergoTree: "002et", value: 3 },
+    { ergoTree: "003et", value: 4 },
+    { ergoTree: "004et", value: 5 },
   ],
   outputs: [
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 7 },
+    { ergoTree: "001et", value: 6 },
     {
-      boxId: "001x",
       ergoTree: "001et",
-      address: "O000001",
-      value: 8,
+      value: 1,
       assets: [{ tokenId: "T1" }],
     },
-    { value: 9 },
+    { ergoTree: "005et", value: 8 },
   ],
 };
 
@@ -112,7 +109,7 @@ const Buttons = ({ setTxData }) => {
         onClick={() => (toogleWithDagreLayout as () => void)()}
         style={{ marginLeft: "auto" }}
       >
-        {withDagreLayout ? "No Dagre Layout" : "Use Dagre Layout"}
+        {withDagreLayout ? "No Auto-Layout" : "Use Auto-Layout"}
       </Button>
     </>
   );

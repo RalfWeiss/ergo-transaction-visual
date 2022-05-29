@@ -42,7 +42,9 @@ const Part = ({ ergoBox, hideOn, openState, label, children }: PartProps) => {
   }
   return (
     <details open={openState} style={partStyle}>
-      <summary style={{ textAlign: "left", fontSize: "small" }}>
+      <summary
+        style={{ textAlign: "left", fontSize: "small", fontStyle: "italic" }}
+      >
         {label}
       </summary>
       {children}

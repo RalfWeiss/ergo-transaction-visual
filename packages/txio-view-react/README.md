@@ -26,9 +26,9 @@
 
 > The main focus of this repo is making tools to help understand the **[Ergo](https://ergoplatform.org/)** blockchain. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
 
-As of now, with version v0.0.26, you could see sth. like this:
+As of now, with version v0.0.27, you could see sth. like this:
 
-![](media/demo-output-v0-0-26.png)
+![](media/demo-output-v0-0-27.png)
 
 This means:
 - deep combinatory analysis
@@ -133,6 +133,46 @@ export default () => {
 
 ## Configuration
 
+### Chakra
+
+If you use [Chakra](https://chakra-ui.com/) as your component library you may want to use [Chakra Global Styles](https://chakra-ui.com/docs/styled-system/features/global-styles) as well in order to style the **address-link** to **Ergo-Explorer**.
+
+As an example for **NextJS** you might use the following approach in file `_app.tsx`:
+
+```tsx
+import React from "react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      "html, body": {
+        color: "gray.600",
+        lineHeight: "tall",
+      },
+      a: {
+        color: "blue.500",
+      },
+    },
+  },
+});
+
+...
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <ChakraProvider theme={theme}>
+      <TxioStoreProvider config={TxioViewConfig}>
+        <ReactFlowProvider>
+          <Component {...pageProps} // eslint-disable-line
+          />
+        </ReactFlowProvider>
+      </TxioStoreProvider>
+    </ChakraProvider>
+  );
+}
+```
 
 
 ### rootPropsToShow

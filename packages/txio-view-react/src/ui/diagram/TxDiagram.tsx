@@ -5,7 +5,7 @@ import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store, defaultState, setDiagramDimensions } from "../../model";
 import { makeColorMap, logWhen } from "../../utils";
 import {
-  connectionsByBoxId,
+  // connectionsByBoxId,
   //  connectionsByTokenId,
   allValidSamples,
   toIdPairs,
@@ -51,6 +51,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       setState(R.assoc("allBoxes", defaultState.allBoxes));
       setState(R.assoc("inputBoxIds", defaultState.inputBoxIds));
       setState(R.assoc("outputBoxIds", defaultState.outputBoxIds));
+      setState(
+        R.assoc("connectionsByTokenId", defaultState.connectionsByTokenId)
+      );
     }
   }, [prevData, data, setState]);
 
@@ -84,9 +87,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     const colorMap = R.pipe(makeColorMap(state), debugLog("colorMap"))(data);
 
     setState(R.assoc("colorMap", colorMap));
-    setState(
-      R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
-    );
+    // setState(
+    //   R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
+    // );
     // setState(
     //   R.assoc("connectionsByTokenId", connectionsByTokenId({ inputs, outputs }))
     // );
@@ -101,7 +104,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   }, [data, prevData, state, setState]);
 
   useEffect(() => {
-    if (state.noOfGraphLayouts > 1) {
+    if (state.noOfGraphLayouts > 0) {
       return;
     }
     // console.log("TxDiagram allkeys: ", state.allBoxes);

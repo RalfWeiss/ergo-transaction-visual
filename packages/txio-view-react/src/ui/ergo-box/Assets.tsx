@@ -24,7 +24,9 @@ const assetRow =
         {hasNames ? <td>{name}</td> : null}
         {hasTypes ? <td>{type}</td> : null}
         <td>{truncateWithEllipses(TRUNCATE_MAXLEN)(tokenId)}</td>
-        <td style={{ width: "10ch", textAlign: "right" }}>{amount}</td>
+        <td style={{ width: "12ch", textAlign: "right" }}>
+          {Number(amount).toLocaleString()}
+        </td>
       </tr>
     );
 
@@ -32,6 +34,7 @@ export const Assets = ({ ergoBox }: AssetsProps) => {
   if (!ergoBox.assets || ergoBox.assets.length === 0) {
     return null;
   }
+
   const hasNames =
     R.filter(R.propEq("name", ""))(ergoBox.assets).length !==
     ergoBox.assets.length;
