@@ -4,14 +4,14 @@ import { TxioStoreProvider, ReactFlowProvider } from "@ertravi/txio-view-react";
 
 // use an optional config
 const TxioViewConfig = {
-  // rootPropsToShow: [
-  //   "boxId",
-  //   "address",
-  //   "ergoTree",
-  //   "blockId",
-  //   //    "transactionId",
-  //   "value",
-  // ],
+  rootPropsToShow: [
+    "value",
+    "ergoTree",
+    "address",
+    //    "boxId",
+    //    "blockId",
+    //    "transactionId",
+  ],
   // boxColors: [
   //   "#996600",
   //   "var(--chakra-colors-blue-300)",

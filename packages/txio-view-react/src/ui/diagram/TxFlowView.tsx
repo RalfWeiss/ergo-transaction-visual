@@ -21,7 +21,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 import { layoutWithDagre } from "../../utils";
 import {
-  edgeByBoxIdFromIdPair,
+  //  edgeByBoxIdFromIdPair,
   edgeByTokenIdFromIdPair,
   edgeForInputToTx,
   edgeForOutputToTx,
@@ -173,7 +173,7 @@ export const TxFlowView = ({
     // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     const edgesFromStore = [
       ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
-      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
+      //      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
       ...R.map(edgeForInputToTx)(state.inputBoxIds),
       ...R.map(edgeForOutputToTx)(state.outputBoxIds),
     ];

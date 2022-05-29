@@ -7,19 +7,35 @@ import data2 from "../fixtures/demo-2.json";
 // import data3 from "../fixtures/demo-3.json";
 import rentNft from "../fixtures/dappstep Rent NFT.json";
 
+// const data4 = {
+//   inputs: [
+//     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1 },
+//     { boxId: "001x", ergoTree: "001et", address: "O000001", value: 2 },
+//     { value: 3 },
+//   ],
+//   outputs: [
+//     { address: "Z000001", value: 4 },
+//     { boxId: "001x", ergoTree: "001et", address: "B000001", value: 5 },
+//     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 6 },
+//     { boxId: "100x", ergoTree: "100et", address: "O000001", value: 7 },
+//     { boxId: "001x", ergoTree: "001et", address: "A000001", value: 8 },
+//     { value: 9 },
+//   ],
+// };
+
 const data4 = {
   inputs: [
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1 },
-    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 2 },
-    { value: 3 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 100 },
+    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 200 },
+    { value: 300 },
   ],
   outputs: [
-    { address: "Z000001", value: 4 },
-    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 5 },
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 6 },
-    { boxId: "100x", ergoTree: "100et", address: "O000001", value: 7 },
-    { boxId: "001x", ergoTree: "001et", address: "A000001", value: 8 },
-    { value: 9 },
+    { address: "Z000001", value: 100 },
+    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 150 },
+    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 200 },
+    { boxId: "100x", ergoTree: "003et", address: "O000001", value: 70 },
+    { boxId: "002x", ergoTree: "004et", address: "A000001", value: 80 },
+    // { value: 9 },
   ],
 };
 

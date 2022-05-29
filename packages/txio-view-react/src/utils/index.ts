@@ -6,3 +6,4 @@ export { truncateWithEllipses } from "./truncateWithEllipses";
 export { pickKeyValue } from "./pickKeyValue";
 export { layoutWithDagre } from "./layoutWithDagre";
 export { getCombsMinMax, getAllCombbs } from "./combinations";
+export { countPatches } from "./countPatches";

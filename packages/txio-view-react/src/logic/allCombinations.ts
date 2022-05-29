@@ -1,17 +1,23 @@
 import * as R from "ramda";
 // import { getCombsMinMax, getAllCombbs, logWhen } from "../utils"
-import { getCombsMinMax, logWhen } from "../utils";
+import { countPatches, getCombsMinMax, logWhen } from "../utils";
 
 const debugLog = logWhen(false);
 
 export const allInOutCombies = (txs) => {
-  const inCombies = R.pipe(R.filter(R.propEq("type", "input")), R.keys)(txs);
+  const inCombies = R.pipe(
+    R.filter(R.propEq("boxType", "inputBox")),
+    R.keys
+  )(txs);
   const countInboxes = inCombies.length;
 
-  const allOuts = R.pipe(R.filter(R.propEq("type", "output")), R.keys)(txs);
+  const allOuts = R.pipe(
+    R.filter(R.propEq("boxType", "outputBox")),
+    R.keys
+  )(txs);
 
   const outCombies = R.pipe(
-    R.filter(R.propEq("type", "output")),
+    R.filter(R.propEq("boxType", "outputBox")),
     R.keys,
     debugLog("outCombies tsx filtered"),
     (outIds) => getCombsMinMax(1, outIds.length, outIds)
@@ -60,7 +66,23 @@ export const allInOutSampleStructures = (txs) =>
 export const txSampler = (boxesById) => (txCombi) => {
   // _boxesById will be modified in place
   const _boxesById = R.clone(boxesById);
-
+  const countZeroValues = R.compose(
+    R.length,
+    R.filter(R.equals(0)),
+    R.pluck("value"),
+    R.unnest,
+    R.values,
+    // debugLog("pick sampleStructure"),
+    R.prop("sampleStructure")
+  );
+  const sumPatchesCount = R.compose(
+    R.sum,
+    R.pluck("patchesCount"),
+    R.unnest,
+    R.values,
+    // debugLog("pick sampleStructure"),
+    R.prop("sampleStructure")
+  );
   return R.pipe(
     R.evolve({
       outputCount: R.identity,
@@ -79,6 +101,10 @@ export const txSampler = (boxesById) => (txCombi) => {
             return {
               internalId: outKey,
               value: amount,
+              patchesCount: countPatches(
+                _boxesById[inKey].assets,
+                _boxesById[outKey].assets
+              ),
             };
           })(val)
         )
@@ -87,6 +113,33 @@ export const txSampler = (boxesById) => (txCombi) => {
     // R.assoc("balance", R.sum(R.pluck("value", R.values(_boxesById))))
     R.over(R.lensProp("balance"), () =>
       R.sum(R.pluck("value", R.values(_boxesById)))
-    )
+    ),
+    (d) => R.assoc("zeroValueCount", countZeroValues(d))(d),
+    // (d) => R.assoc("patchesCount", sumPatchesCount(d))(d)
+    R.ap(R.flip(R.assoc("patchesCount")), sumPatchesCount)
   )(txCombi);
 };
+
+export const allValidSamples = (txs) =>
+  R.pipe(
+    allInOutSampleStructures,
+    R.map(txSampler(txs)),
+    R.filter(R.propEq("balance", 0)),
+    R.filter(R.propEq("zeroValueCount", 0)),
+    R.sort(R.ascend(R.prop("patchesCount")))
+  )(txs);
+
+export const toIdPairs = (txs) =>
+  R.pipe(
+    R.ifElse(R.isEmpty)(R.identity)(
+      R.pipe(
+        R.head,
+        R.propOr({}, "sampleStructure"),
+        R.mapObjIndexed((v, inKey) =>
+          R.map((outObj) => [inKey, R.prop("internalId", outObj)])(v)
+        ),
+        R.values,
+        R.unnest
+      )
+    )
+  )(txs);

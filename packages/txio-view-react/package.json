@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "dagre": "^0.8.5",
+    "jsondiffpatch": "^0.4.1",
     "ramda": "^0.28.0",
     "react-flow-renderer": "^10.2.3"
   }

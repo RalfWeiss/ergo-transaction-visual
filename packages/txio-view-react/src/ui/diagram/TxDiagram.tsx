@@ -4,7 +4,12 @@ import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
 import { Store, defaultState, setDiagramDimensions } from "../../model";
 import { makeColorMap, logWhen } from "../../utils";
-import { connectionsByBoxId, connectionsByTokenId } from "../../logic";
+import {
+  connectionsByBoxId,
+  //  connectionsByTokenId,
+  allValidSamples,
+  toIdPairs,
+} from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
@@ -82,9 +87,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(
       R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
     );
-    setState(
-      R.assoc("connectionsByTokenId", connectionsByTokenId({ inputs, outputs }))
-    );
+    // setState(
+    //   R.assoc("connectionsByTokenId", connectionsByTokenId({ inputs, outputs }))
+    // );
 
     // const connByTokenId = R.pipe(
     //   connectionsByTokenId,
@@ -95,9 +100,17 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
 
-  // useEffect(() => {
-  //   console.log("TxDiagram allkeys: ", state.allBoxes);
-  // }, [state]);
+  useEffect(() => {
+    if (state.noOfGraphLayouts > 1) {
+      return;
+    }
+    // console.log("TxDiagram allkeys: ", state.allBoxes);
+    // Todo: new 29.05.2022
+    // console.log("boxes: ", JSON.stringify(state.boxes, null, 2))
+    const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+    // console.log("connections: ", JSON.stringify(connections, null, 2))
+    setState(R.assoc("connectionsByTokenId", connections));
+  }, [state, setState]);
 
   // const toggleLayout = () => {
   //   setState(setUseDagreLayout(!state.config.useDagreLayout));

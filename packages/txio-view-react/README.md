@@ -26,15 +26,18 @@
 
 As of now, with version v0.0.26, you could see sth. like this:
 
-![](media/demo-output-v0-0-23.png)
+![](media/demo-output-v0-0-26.png)
 
 This means:
+- deep combinatory analysis
+  - spreads values over boxes until it finds a reasonable solution (least changes)
+  - **drawback**: can take some time if the no of boxes rises
 - configure `boxColors` and `rootPropsToShow`
 - **Auto-Layout** could rearrange connected boxes
 - ability to toggle between **Auto-Layout** and simple positioning
-- related boxes share the same color.
-- boxes with same boxId are connected by an arrow line
-- boxes which have same tokenId are connected by an arrow line
+- related boxes (same value for `ergoTree`) share same color.
+- ~~boxes with same boxId are connected by an arrow line~~
+- ~~boxes which have same tokenId are connected by an arrow line~~
 
 ## Getting started
 
@@ -138,10 +141,10 @@ A list of `property` names to show up in the **root properties** section.
 
 Choose from these possibilities:
 
-- "boxId"
 - "address"
-- "ergoTree"
 - "blockId"
+- "boxId"
+- "ergoTree"
 - "transactionId"
 - "value"
 
@@ -185,8 +188,8 @@ The default is:
   "LightCoral",
   "PaleGreen",
   "SkyBlue",
-  "NavajoWhite",
-  "Khaki",  
+  "Khaki",
+  "NavajoWhite",    
   "MistyRose",
 ]
 ```

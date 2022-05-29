@@ -4,8 +4,11 @@ import { logWhen } from "../utils";
 import {
   allInOutCombies,
   allInOutSampleStructures,
+  allValidSamples,
+  toIdPairs,
   txSampler,
 } from "./allCombinations";
+import RentNftData from "../fixtures/dappstep Rent NFT state-boxes.json";
 
 // const debugLog = logWhen(false);
 
@@ -13,9 +16,9 @@ describe("allInOutCombies", () => {
   it("should work for 1-in 2-outs", () => {
     const data = {
       txs: {
-        "I-1": { internalId: "I-1", type: "input", value: 100 },
-        "O-1": { internalId: "O-1", type: "output", value: 50 },
-        "O-2": { internalId: "O-2", type: "output", value: 50 },
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
       },
     };
     const expected = [
@@ -31,11 +34,11 @@ describe("allInOutCombies", () => {
   it("should work for 2-in 3-outs", () => {
     const data = {
       txs: {
-        "I-1": { internalId: "I-1", type: "input", value: 100 },
-        "I-2": { internalId: "I-2", type: "input", value: 50 },
-        "O-1": { internalId: "O-1", type: "output", value: 50 },
-        "O-2": { internalId: "O-2", type: "output", value: 50 },
-        // "O-3": { internalId: "O-3", type: "output", value: 50},
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+        // "O-3": { internalId: "O-3", boxType: "outputBox", value: 50},
       },
     };
     const expected = [
@@ -62,9 +65,9 @@ describe("allInOutSampleStructures", () => {
   it("should work for 1-in 2-outs", () => {
     const data = {
       txs: {
-        "I-1": { internalId: "I-1", type: "input", value: 100 },
-        "O-1": { internalId: "O-1", type: "output", value: 50 },
-        "O-2": { internalId: "O-2", type: "output", value: 50 },
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
       },
     };
     const expected = [
@@ -82,11 +85,11 @@ describe("allInOutSampleStructures", () => {
   it("should work for 2-in 3-outs", () => {
     const data = {
       txs: {
-        "I-1": { internalId: "I-1", type: "input", value: 100 },
-        "I-2": { internalId: "I-2", type: "input", value: 50 },
-        "O-1": { internalId: "O-1", type: "output", value: 50 },
-        "O-2": { internalId: "O-2", type: "output", value: 50 },
-        "O-3": { internalId: "O-3", type: "output", value: 50 },
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+        "O-3": { internalId: "O-3", boxType: "outputBox", value: 50 },
       },
     };
 
@@ -277,7 +280,7 @@ describe("allInOutSampleStructures", () => {
   });
 });
 
-describe.only("txSampler", () => {
+describe("txSampler", () => {
   it("should spread inputBoxes accoring to sampleStructure", () => {
     const input = {
       outputCount: 3,
@@ -289,20 +292,22 @@ describe.only("txSampler", () => {
     const expected = {
       outputCount: 3,
       balance: 0, // if balance in result isn't 0 the sample isn't valid
+      zeroValueCount: 0,
+      patchesCount: 0,
       sampleStructure: {
         "I-1": [
-          { internalId: "O-1", value: 50 },
-          { internalId: "O-2", value: 50 },
+          { internalId: "O-1", value: 50, patchesCount: 0 },
+          { internalId: "O-2", value: 50, patchesCount: 0 },
         ],
-        "I-2": [{ internalId: "O-3", value: 50 }],
+        "I-2": [{ internalId: "O-3", value: 50, patchesCount: 0 }],
       },
     };
     const txs = {
-      "I-1": { internalId: "I-1", type: "input", value: 100 },
-      "I-2": { internalId: "I-2", type: "input", value: 50 },
-      "O-1": { internalId: "O-1", type: "output", value: 50 },
-      "O-2": { internalId: "O-2", type: "output", value: 50 },
-      "O-3": { internalId: "O-3", type: "output", value: 50 },
+      "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+      "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+      "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+      "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+      "O-3": { internalId: "O-3", boxType: "outputBox", value: 50 },
     };
     const txsAfter = R.clone(txs);
     // Todo: just for test; clone txs somewhere
@@ -313,14 +318,292 @@ describe.only("txSampler", () => {
   });
 });
 
+describe("allValidSamples", () => {
+  it("should work for 1-in and 2-outs", () => {
+    const data = {
+      txs: {
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+      },
+    };
+    const expected = [
+      {
+        outputCount: 2,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 0,
+        sampleStructure: {
+          "I-1": [
+            {
+              internalId: "O-1",
+              patchesCount: 0,
+              value: 50,
+            },
+            {
+              internalId: "O-2",
+              patchesCount: 0,
+              value: 50,
+            },
+          ],
+        },
+      },
+    ];
+
+    const debugLog = logWhen(false);
+    const result = R.pipe(
+      allValidSamples,
+      debugLog("allValidSamples")
+    )(data.txs);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("should work for 1-in and 2-outs (including assets)", () => {
+    const data = {
+      txs: {
+        "I-1": {
+          internalId: "I-1",
+          boxType: "inputBox",
+          value: 100,
+          assets: [{ name: "T1", amount: 5 }],
+        },
+        "O-1": {
+          internalId: "O-1",
+          boxType: "outputBox",
+          value: 50,
+          assets: [{ name: "T1", amount: 3 }],
+        },
+        "O-2": {
+          internalId: "O-2",
+          boxType: "outputBox",
+          value: 50,
+          assets: [{ name: "T1", amount: 2 }],
+        },
+      },
+    };
+    const expected = [
+      {
+        outputCount: 2,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 4,
+        sampleStructure: {
+          "I-1": [
+            {
+              internalId: "O-1",
+              patchesCount: 2,
+              value: 50,
+            },
+            {
+              internalId: "O-2",
+              patchesCount: 2,
+              value: 50,
+            },
+          ],
+        },
+      },
+    ];
+
+    const debugLog = logWhen(false);
+    const result = R.pipe(
+      allValidSamples,
+      debugLog("allValidSamples")
+    )(data.txs);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("should work for for 2-ins and 3-outs", () => {
+    const data = {
+      txs: {
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+        "O-3": { internalId: "O-3", boxType: "outputBox", value: 50 },
+      },
+    };
+
+    const expected = [
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 0,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 50, patchesCount: 0 },
+            { internalId: "O-2", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-3", value: 50, patchesCount: 0 }],
+        },
+      },
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 0,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 50, patchesCount: 0 },
+            { internalId: "O-3", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-2", value: 50, patchesCount: 0 }],
+        },
+      },
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 0,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-2", value: 50, patchesCount: 0 },
+            { internalId: "O-3", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-1", value: 50, patchesCount: 0 }],
+        },
+      },
+    ];
+
+    const debugLog = logWhen(false);
+    const result = R.pipe(
+      allValidSamples,
+      debugLog("allValidSamples")
+    )(data.txs);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("should work for for 2-ins and 3-outs (including assets)", () => {
+    const data = {
+      txs: {
+        "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+        "I-2": {
+          internalId: "I-2",
+          boxType: "inputBox",
+          value: 50,
+          assets: [{ name: "T1", amount: 5 }],
+        },
+
+        "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+        "O-2": {
+          internalId: "O-2",
+          boxType: "outputBox",
+          value: 50,
+          assets: [{ name: "T1", amount: 5 }],
+        },
+        "O-3": { internalId: "O-3", boxType: "outputBox", value: 50 },
+      },
+    };
+
+    const expected = [
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 2,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 50, patchesCount: 0 },
+            { internalId: "O-3", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-2", value: 50, patchesCount: 2 }],
+        },
+      },
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 4,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 50, patchesCount: 0 },
+            { internalId: "O-2", value: 50, patchesCount: 1 },
+          ],
+          "I-2": [{ internalId: "O-3", value: 50, patchesCount: 3 }],
+        },
+      },
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 4,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-2", value: 50, patchesCount: 1 },
+            { internalId: "O-3", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-1", value: 50, patchesCount: 3 }],
+        },
+      },
+    ];
+
+    const debugLog = logWhen(false);
+    const result = R.pipe(
+      allValidSamples,
+      debugLog("allValidSamples")
+    )(data.txs);
+
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("toIdPairs", () => {
+  it("returns empty array when there was no solution found", () => {
+    const input = [];
+    const expected = [];
+    const result = toIdPairs(input);
+    expect(result).toEqual(expected);
+  });
+  it("returns connection pairs for first solution", () => {
+    const input = [
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 2,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 50, patchesCount: 0 },
+            { internalId: "O-3", value: 50, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-2", value: 50, patchesCount: 2 }],
+        },
+      },
+    ];
+    const expected = [
+      ["I-1", "O-1"],
+      ["I-1", "O-3"],
+      ["I-2", "O-2"],
+    ];
+    const result = toIdPairs(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("get all connections", () => {
+  it("should work on state data", () => {
+    const input = RentNftData;
+    const expected = [
+      ["input-0", "output-1"],
+      ["input-1", "output-0"],
+      ["input-1", "output-2"],
+    ];
+    const result = R.pipe(allValidSamples, toIdPairs)(input);
+    expect(result).toEqual(expected);
+  });
+});
+
 // describe.skip("getCombs", () => {
 //   const data = {
 //     txs: {
-//       "I-1": { internalId: "I-1", type: "input", value: 100 },
-//       "I-2": { internalId: "I-2", type: "input", value: 50 },
-//       "O-1": { internalId: "O-1", type: "output", value: 50 },
-//       "O-2": { internalId: "O-2", type: "output", value: 50 },
-//       "O-3": { internalId: "O-3", type: "output", value: 50 },
+//       "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+//       "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+//       "O-1": { internalId: "O-1", boxType: "outputBox", value: 50 },
+//       "O-2": { internalId: "O-2", boxType: "outputBox", value: 50 },
+//       "O-3": { internalId: "O-3", boxType: "outputBox", value: 50 },
 //     },
 //   };
 
@@ -438,13 +721,13 @@ describe.only("txSampler", () => {
 //       //   "O-3": { internalId: "O-3", type:"output", value:   1},
 //       // }
 //       const txs = {
-//         "I-1": { internalId: "I-1", type: "input", value: 100 },
-//         "I-2": { internalId: "I-2", type: "input", value: 50 },
+//         "I-1": { internalId: "I-1", boxType: "inputBox", value: 100 },
+//         "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
 //         // "I-3": { internalId: "I-3", type:"input",  value:  30},
-//         "O-1": { internalId: "O-1", type: "output", value: 100 },
-//         "O-2": { internalId: "O-2", type: "output", value: 20 },
-//         "O-3": { internalId: "O-3", type: "output", value: 29 },
-//         "O-4": { internalId: "O-4", type: "output", value: 1 },
+//         "O-1": { internalId: "O-1", boxType: "outputBox", value: 100 },
+//         "O-2": { internalId: "O-2", boxType: "outputBox", value: 20 },
+//         "O-3": { internalId: "O-3", boxType: "outputBox", value: 29 },
+//         "O-4": { internalId: "O-4", boxType: "outputBox", value: 1 },
 //       };
 
 //       const allTxCombies = getTxPosibilities(txs);
@@ -461,13 +744,13 @@ describe.only("txSampler", () => {
 
 //     it("should find all tx combies 3 inputs", () => {
 //       const txs = {
-//         "I-1": { internalId: "I-1", type: "input", value: 70 },
-//         "I-2": { internalId: "I-2", type: "input", value: 50 },
-//         "I-3": { internalId: "I-3", type: "input", value: 30 },
-//         "O-1": { internalId: "O-1", type: "output", value: 100 },
-//         "O-2": { internalId: "O-2", type: "output", value: 20 },
-//         "O-3": { internalId: "O-3", type: "output", value: 29 },
-//         "O-4": { internalId: "O-4", type: "output", value: 1 },
+//         "I-1": { internalId: "I-1", boxType: "inputBox", value: 70 },
+//         "I-2": { internalId: "I-2", boxType: "inputBox", value: 50 },
+//         "I-3": { internalId: "I-3", boxType: "inputBox", value: 30 },
+//         "O-1": { internalId: "O-1", boxType: "outputBox", value: 100 },
+//         "O-2": { internalId: "O-2", boxType: "outputBox", value: 20 },
+//         "O-3": { internalId: "O-3", boxType: "outputBox", value: 29 },
+//         "O-4": { internalId: "O-4", boxType: "outputBox", value: 1 },
 //       };
 
 //       const allTxCombies = getTxPosibilities(txs);
