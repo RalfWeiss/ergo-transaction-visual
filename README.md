@@ -19,6 +19,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+----
+
 ## Features
 
 > The main focus of this repo is making tools to help understand the **[Ergo](https://ergoplatform.org/)** blockchain. As a starting point you'll find the **txio-view-react** which tries to map inputs to outputs in a visual appealing way usable within a **React** app.
@@ -36,16 +38,20 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes demo data to look at.
 
-As of now, with version v0.0.23, you should see sth. like this:
+As of now, with version v0.0.26, you could see sth. like this:
 
-![](media/demo-output-v0-0-23.png)
+![](media/demo-output-v0-0-26.png)
 
-This means: 
+This means:
+- deep combinatory analysis
+  - spreads values over boxes until it finds a reasonable solution (least changes)
+  - **drawback**: can take some time if the no of boxes rises
+- configure `boxColors` and `rootPropsToShow`
 - **Auto-Layout** could rearrange connected boxes
 - ability to toggle between **Auto-Layout** and simple positioning
-- related boxes share the same color.
-- boxes with same boxId are connected by an arrow line
-- boxes which have same tokenId are connected by an arrow line
+- related boxes (same value for `ergoTree`) share same color.
+- ~~boxes with same boxId are connected by an arrow line~~
+- ~~boxes which have same tokenId are connected by an arrow line~~
 
 ## Setup
 

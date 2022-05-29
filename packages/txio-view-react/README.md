@@ -1,3 +1,12 @@
+<!--suppress HtmlDeprecatedAttribute -->
+<div align="center">
+
+**ertravi** = Ergo Transactions Visuals
+
+</div>
+
+----
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of content**
@@ -10,13 +19,6 @@
   - [boxColors](#boxcolors)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!--suppress HtmlDeprecatedAttribute -->
-<div align="center">
-
-**ertravi** = Ergo Transactions Visuals
-
-</div>
 
 ----
 
