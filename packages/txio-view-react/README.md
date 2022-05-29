@@ -15,6 +15,7 @@
 - [Getting started](#getting-started)
 - [Example **NextJS**](#example-nextjs)
 - [Configuration](#configuration)
+  - [Chakra](#chakra)
   - [rootPropsToShow](#rootpropstoshow)
   - [boxColors](#boxcolors)
 

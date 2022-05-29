@@ -38,9 +38,9 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes demo data to look at.
 
-As of now, with version v0.0.26, you could see sth. like this:
+As of now, with version v0.0.27, you could see sth. like this:
 
-![](media/demo-output-v0-0-26.png)
+![](media/demo-output-v0-0-27.png)
 
 This means:
 - deep combinatory analysis
