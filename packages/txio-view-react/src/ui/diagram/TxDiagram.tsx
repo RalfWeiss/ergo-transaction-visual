@@ -13,8 +13,10 @@ import {
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious } from "../../hooks";
-
+// import { useWorker, WORKER_STATUS } from "@koale/useworker";
+// import type { Option } from "@koale/useworker";
 import { Node } from "react-flow-renderer";
+// import { countPatches, getCombsMinMax } from "../../utils";
 
 const debugLog = logWhen(false);
 
@@ -38,6 +40,10 @@ interface TxDiagramProps {
     outputs: any[];
   };
 }
+
+// const findConnections = R.pipe(allValidSamples, toIdPairs)
+// const findConnections = (data) => R.pipe(allValidSamples, toIdPairs)(data);
+// const findConnections = data => [["input-0", "output-1"]]
 
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const prevData = usePrevious(data);
@@ -103,14 +109,33 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
 
+  // const [findConnectionsWorker] = useWorker(findConnections, {
+  //   localDependencies: () => [allValidSamples, toIdPairs, countPatches, getCombsMinMax, logWhen],
+  //   remoteDependencies: [
+  //     "https://cdnjs.cloudflare.com/ajax/libs/ramda/0.28.0/ramda.min.js"
+  //   ]
+  // } as any);
+
   useEffect(() => {
     if (state.noOfGraphLayouts > 0) {
       return;
     }
+    if (R.isEmpty(state.boxes)) {
+      return;
+    }
+
     // console.log("TxDiagram allkeys: ", state.allBoxes);
     // Todo: new 29.05.2022
     // console.log("boxes: ", JSON.stringify(state.boxes, null, 2))
     const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+
+    // const runFindConnections = async () => {
+    //   const connections = await findConnectionsWorker(state.boxes); // non-blocking UI
+    //   console.log("End runFindConnections: ", connections);
+    //   setState(R.assoc("connectionsByTokenId", connections));
+    // };
+
+    // runFindConnections()
     // console.log("connections: ", JSON.stringify(connections, null, 2))
     setState(R.assoc("connectionsByTokenId", connections));
   }, [state, setState]);

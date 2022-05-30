@@ -10,7 +10,8 @@
     "esModuleInterop": true,
     "types": [],
     "jsx": "react",
-    "noEmit": false
+    "noEmit": false,
+    "lib": [ "es2020", "dom" ]
   },
   "exclude": [
     "node_modules",

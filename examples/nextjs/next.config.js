@@ -38,10 +38,21 @@ module.exports = {
   //   externalDir: true,
   // },
   webpack: (config) => {
+    // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (isNext12(config)) {
       return updateNextGreaterThan12Config(config);
     }
 
     return updateNextLessThan12Config(config);
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/ergoexplorer/en/transactions/:path*",
+        // destination: 'https://api.example.com/:path*',
+        // destination: 'https://explorer.ergoplatform.com/:path'
+        destination: "https://api.ergoplatform.com/transactions/:path*",
+      },
+    ];
   },
 };

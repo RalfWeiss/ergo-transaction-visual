@@ -19,7 +19,8 @@ export class ErgoBox {
     public ergoTree = "",
     public transactionId = "",
     // public value: string | number = "",
-    public value: number = 0,
+    // public value: number = 0,
+    public value: bigint = BigInt(0),
     public additionalRegisters = {},
     public boxType = ""
   ) {}
@@ -38,7 +39,9 @@ export const normalize = (input: any): ErgoBox => {
     // boxId: truncateWithEllipses(10),
     // ergoTree: truncateWithEllipses(10),
     //    value: ensureString,
-    value: (v) => ~~v,    // eslint-disable-line
+    // value: (v) => ~~v,    // eslint-disable-line
+    // value: (v) => Number(v)
+    value: (v) => BigInt(v),
   };
   return R.pipe(withDefaults, R.evolve(transformations) as any)(input) as any;
 };

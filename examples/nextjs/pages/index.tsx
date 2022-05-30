@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
+
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 // import data3 from "../fixtures/demo-3.json";
