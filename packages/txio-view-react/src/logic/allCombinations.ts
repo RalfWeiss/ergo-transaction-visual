@@ -41,7 +41,7 @@ export const allInOutCombies = (txs) => {
         countInboxes,
         countInboxes,
         R.xprod(inCombies, outCombies)
-      ), // alle combis which have data for each inputBox
+      ), // all combis which have data for each inputBox
     R.map(R.fromPairs),
     R.filter(R.compose(R.equals(countInboxes), R.length, R.keys)), // only get objects which have outputBoxes for each inputBox
     debugLog("allInOutCombies filtered"),
@@ -123,10 +123,15 @@ export const txSampler = (boxesById) => (txCombi) => {
 export const allValidSamples = (txs) =>
   R.pipe(
     allInOutSampleStructures,
+    debugLog("allInOutSampleStructures"),
     R.map(txSampler(txs)),
+    debugLog("txSamples"),
     R.filter(R.propEq("balance", 0)),
+    debugLog("with balance 0"),
     R.filter(R.propEq("zeroValueCount", 0)),
-    R.sort(R.ascend(R.prop("patchesCount")))
+    debugLog("with zeroValueCount 0"),
+    R.sort(R.ascend(R.prop("patchesCount"))),
+    debugLog("sorted patchesCount")
   )(txs);
 
 export const toIdPairs = (txs) =>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import {
-  Context as StoreContext,
+  TxioStoreContext,
   setUseDagreLayout,
   setNoOfGraphLayouts,
 } from "../model";
@@ -12,7 +12,7 @@ export const useToggleDagreLayout = () => {
       config: { useDagreLayout },
     },
     setState,
-  } = useContext(StoreContext);
+  } = useContext(TxioStoreContext);
 
   const toggleLayout = React.useCallback(() => {
     setState(setUseDagreLayout(!useDagreLayout));

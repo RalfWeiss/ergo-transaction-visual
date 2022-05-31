@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ErgoBox } from "../../model";
-import { Context as StoreContext } from "../../model";
+import { TxioStoreContext } from "../../model";
 import { ErgoBoxCard } from "./ErgoBoxCard";
 import { Selectors } from "../../model";
 import * as R from "ramda";
@@ -10,7 +10,7 @@ export interface IErgoBoxCardContext {
 }
 
 export const ErgoBoxCardContext = ({ internalId }: IErgoBoxCardContext) => {
-  const { state } = useContext(StoreContext);
+  const { state } = useContext(TxioStoreContext);
   const [box, setBox] = useState({});
 
   useEffect(() => {

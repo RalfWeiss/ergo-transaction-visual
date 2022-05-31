@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useLayoutEffect } from "react";
-import { Context as StoreContext } from "../../model";
+import { TxioStoreContext } from "../../model";
 import { ErgoBox } from "../../model";
 import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";
@@ -58,7 +58,7 @@ interface ErgoBoxCardProps {
 
 export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   const prevErgoBox = usePrevious(ergoBox);
-  const { state, setState } = useContext(StoreContext);
+  const { state, setState } = useContext(TxioStoreContext);
   const ref: any = useRef(null);
 
   useLayoutEffect(() => {

@@ -1,7 +1,7 @@
 {
   "name": "@ertravi/nextjs-example",
   "private": true,
-  "version": "0.0.27",
+  "version": "0.0.28",
   "scripts": {
     "clean": "rimraf .next",
     "dev": "next dev",
@@ -15,6 +15,7 @@
     "@emotion/styled": "^11",
     "@ertravi/txio-view-react": "workspace:*",
     "@shopify/react-web-worker": "^5.0.0",
+    "@shopify/web-worker": "^5.0.0",
     "framer-motion": "^6",
     "i": "^0.3.7",
     "next": "~12.1.6",
@@ -31,6 +32,7 @@
     "rimraf": "~3.0.2",
     "typescript": "~4.6.0",
     "webpack": "4",
-    "webpack-dev-server": "3"
+    "webpack-dev-server": "3",
+    "webpack-virtual-modules": "^0.4.3"
   }
 }

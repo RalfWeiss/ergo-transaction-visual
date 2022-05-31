@@ -1,8 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "@chakra-ui/react";
-import { TxDiagram, useToggleDagreLayout } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
+import {
+  TxDiagram,
+  useToggleDagreLayout,
+  //  TxioStoreContext,
+} from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 
+// Todo: these imports don't work anymore after modifying next.config.js
 import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 // import data3 from "../fixtures/demo-3.json";
@@ -90,6 +95,7 @@ const headerStyle = {
 const Buttons = ({ setTxData }) => {
   // const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout() ;
   const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout();
+  // const { state, setState } = useContext(TxioStoreContext);
   return (
     <>
       {demos.map(({ title, data }) => (
@@ -118,6 +124,7 @@ const Buttons = ({ setTxData }) => {
 
 export default () => {
   const [txData, setTxData] = useState(data1);
+  // const [txData, setTxData] = useState(data4);
 
   return (
     <div style={screenStyle}>

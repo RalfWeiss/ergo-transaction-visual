@@ -31,6 +31,7 @@ export interface Store {
   connectionsByBoxId: any;
   connectionsByTokenId: any;
   noOfGraphLayouts: 0;
+  searchConnections: boolean;
   config: Partial<ITxioStoreProviderConfig>;
 }
 
@@ -52,6 +53,7 @@ export const defaultState: Store = {
   connectionsByBoxId: [],
   connectionsByTokenId: [],
   noOfGraphLayouts: 0,
+  searchConnections: false,
   diagramDimensions: { width: 0, height: 0 },
   config: {
     useDagreLayout: true,
@@ -77,7 +79,7 @@ export const defaultState: Store = {
   },
 };
 
-export const Context = createContext<IStoreContext>({
+export const TxioStoreContext = createContext<IStoreContext>({
   state: defaultState,
   // setState: () => mergeStore({})
   setState: () => ({}),
@@ -104,5 +106,9 @@ export const TxioStoreProvider = ({ config, children }: ITxioStoreProvider) => {
     () => ({ state, setState } as IStoreContext),
     [state, setState]
   );
-  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
+  return (
+    <TxioStoreContext.Provider value={contextValue}>
+      {children}
+    </TxioStoreContext.Provider>
+  );
 };

@@ -1,3 +1,7 @@
+// import {WebWorkerPlugin} from '@shopify/web-worker/webpack';
+
+const { WebWorkerPlugin } = require("@shopify/web-worker/webpack");
+
 const isNext12 = (config) => !!config.module.rules.find((rule) => rule.oneOf);
 
 const updateNextGreaterThan12Config = (config) => {
@@ -37,9 +41,24 @@ module.exports = {
   // experimental: {
   //   externalDir: true,
   // },
+  // webpack: (config) => {
+  // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
   webpack: (config) => {
-    // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     if (isNext12(config)) {
+      config.plugins.push(new WebWorkerPlugin());
+      config.module.rules.push({
+        test: /\.js$/, // without $ in .js$ the json-loader won't work anymore
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              babelrc: false,
+              plugins: [require.resolve("@shopify/web-worker/babel")],
+            },
+          },
+        ],
+      });
       return updateNextGreaterThan12Config(config);
     }
 

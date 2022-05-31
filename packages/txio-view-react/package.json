@@ -1,6 +1,6 @@
 {
   "name": "@ertravi/txio-view-react",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "main": "dist/index",
   "types": "dist/index",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "dagre": "^0.8.5",
     "jsondiffpatch": "^0.4.1",
     "ramda": "^0.28.0",
-    "react-flow-renderer": "^10.2.3"
+    "react-flow-renderer": "^10.2.3",
+    "usehooks-ts": "^2.5.3"
   }
 }

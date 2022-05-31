@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ErgoBox, Context as StoreContext, Selectors } from "../../model";
+import { ErgoBox, TxioStoreContext, Selectors } from "../../model";
 import { pickKeyValue } from "../../utils";
 import {
   LabeledValueEntry,
@@ -73,7 +73,7 @@ const mapBaseProps =
 // }
 
 export const RootProps = ({ ergoBox }: RootPropsProps) => {
-  const { state } = useContext(StoreContext);
+  const { state } = useContext(TxioStoreContext);
   // const { components } = useContext(GuiContext);
   // const Container = components["BaseInfoContainer"] as any
   // these keys should show up in base info section

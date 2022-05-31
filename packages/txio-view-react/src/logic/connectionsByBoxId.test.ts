@@ -173,7 +173,7 @@ describe("connections by boxId", () => {
       ],
     };
 
-    const result = connectionsByBoxId(data);
+    const result = connectionsByBoxId(data as any);
     expect(result).toEqual(expected);
   });
 });

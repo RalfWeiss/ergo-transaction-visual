@@ -1,11 +1,11 @@
 export {
-  Context,
+  TxioStoreContext,
   TxioStoreProvider,
   Store,
   defaultState,
 } from "./StoreProvider";
 export { ErgoBox, normalize } from "./ergoBox";
-export { ErgoTx } from "./ergoTx";
+export { ErgoTx, toState } from "./ergoTx";
 // export {
 //   getBoxById,
 //   onlyOutputNodes,
@@ -24,4 +24,6 @@ export {
   setDiagramDimensions,
   setUseDagreLayout,
   setNoOfGraphLayouts,
+  setSearchConnections,
+  clearConnections,
 } from "./actions";

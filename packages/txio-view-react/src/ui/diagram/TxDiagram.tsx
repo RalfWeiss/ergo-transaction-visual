@@ -1,8 +1,13 @@
 import React, { useEffect, useContext } from "react";
-import { Context as StoreContext } from "../../model";
+import { TxioStoreContext, toState } from "../../model";
 import { normalize } from "../../model/ergoBox";
 import { addInputBox, addOutputBox } from "../../model/actions/addBox";
-import { Store, defaultState, setDiagramDimensions } from "../../model";
+import {
+  Store,
+  defaultState,
+  setDiagramDimensions,
+  setSearchConnections,
+} from "../../model";
 import { makeColorMap, logWhen } from "../../utils";
 import {
   // connectionsByBoxId,
@@ -18,7 +23,24 @@ import { usePrevious } from "../../hooks";
 import { Node } from "react-flow-renderer";
 // import { countPatches, getCombsMinMax } from "../../utils";
 
+import { useIsMounted } from "usehooks-ts";
+
 const debugLog = logWhen(false);
+
+// const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+const findConnections = (boxes) =>
+  new Promise((resolve) =>
+    setTimeout(() => {        // eslint-disable-line
+      const res = R.pipe(allValidSamples, toIdPairs)(boxes);
+      // console.log(
+      //   "boxes: ",
+      //   R.keys(boxes).length,
+      //   " connections: ",
+      //   res.length
+      // );
+      resolve(res);
+    }, 200)
+  );
 
 const initialNodesWithState =
   (state: Store) =>
@@ -45,12 +67,20 @@ interface TxDiagramProps {
 // const findConnections = (data) => R.pipe(allValidSamples, toIdPairs)(data);
 // const findConnections = data => [["input-0", "output-1"]]
 
+const useOldInitialize = false;
+
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
+  const { state, setState } = useContext(TxioStoreContext);
+  const isMounted = useIsMounted();
   const prevData = usePrevious(data);
-  const { state, setState } = useContext(StoreContext);
+  // const prevConnections = usePrevious(state.connectionsByTokenId)
 
   // reset state on changed data
   useEffect(() => {
+    if (!useOldInitialize) {
+      return;
+    }
+
     // if (prevData && prevData !== data) {
     if (prevData && !R.equals(prevData, data)) {
       setState(R.assoc("boxes", defaultState.boxes));
@@ -63,36 +93,62 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     }
   }, [prevData, data, setState]);
 
+  // move data to state
   useEffect(() => {
+    if (useOldInitialize) {
+      return;
+    }
+
+    if (R.equals(prevData, data)) {
+      return;
+    }
+    // console.log("initializing state");
+    setState(() => toState(data));
+    setState(setDiagramDimensions({ width, height }));
+    // console.log("toState: ", JSON.stringify(toState(data), null, 2))
+    // const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+    // setState(R.assoc("connectionsByTokenId", connections));
+    // setSearchingConnections(true)
+    // setState(setSearchConnections(true));
+  }, [data, prevData, setState, width, height]);
+
+  useEffect(() => {
+    if (!useOldInitialize) {
+      return;
+    }
     setState(setDiagramDimensions({ width, height }));
   }, [width, height, setState]);
 
-  // move data to state
   useEffect(() => {
     // immediate return on equal data
     if (R.equals(prevData, data)) {
       return;
     }
 
-    const inputs = data.inputs.map((box, idx) => ({
-      ...box,
-      internalId: `input-${idx}`,
-      boxType: "inputBox",
-    }));
-    const outputs = data.outputs.map((box, idx) => ({
-      ...box,
-      internalId: `output-${idx}`,
-      boxType: "outputBox",
-    }));
+    if (useOldInitialize) {
+      const inputs = data.inputs.map((box, idx) => ({
+        ...box,
+        internalId: `input-${idx}`,
+        boxType: "inputBox",
+      }));
+      const outputs = data.outputs.map((box, idx) => ({
+        ...box,
+        internalId: `output-${idx}`,
+        boxType: "outputBox",
+      }));
 
-    debugLog("TxDiagram inputs")(inputs);
+      debugLog("TxDiagram inputs")(inputs);
 
-    inputs.forEach((box) => setState(addInputBox(normalize(box))));
-    outputs.forEach((box) => setState(addOutputBox(normalize(box))));
+      inputs.forEach((box) => setState(addInputBox(normalize(box))));
+      outputs.forEach((box) => setState(addOutputBox(normalize(box))));
+    }
+    // setState(() => toState(data))
+    // console.log("toState: ", JSON.stringify(toState(data), null, 2))
 
     const colorMap = R.pipe(makeColorMap(state), debugLog("colorMap"))(data);
 
     setState(R.assoc("colorMap", colorMap));
+    debugLog("state.boxes")(state.boxes);
     // setState(
     //   R.assoc("connectionsByBoxId", connectionsByBoxId({ inputs, outputs }))
     // );
@@ -116,29 +172,75 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   //   ]
   // } as any);
 
+  // useEffect(() => {
+  //   console.log("noOfGraphLayouts: ", state.noOfGraphLayouts);
+  //   // if (state.noOfGraphLayouts < 6)
+  //   //   return
+  //   // if (!useOldInitialize) return
+  //   if (state.noOfGraphLayouts > 0) {
+  //     return;
+  //   }
+  //   if (R.isEmpty(state.boxes)) {
+  //   }
+
+  //   // // console.log("TxDiagram allkeys: ", state.allBoxes);
+  //   // // Todo: new 29.05.2022
+  //   // // console.log("boxes: ", JSON.stringify(state.boxes, null, 2))
+  //   // const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+
+  //   // // const runFindConnections = async () => {
+  //   // //   const connections = await findConnectionsWorker(state.boxes); // non-blocking UI
+  //   // //   console.log("End runFindConnections: ", connections);
+  //   // //   setState(R.assoc("connectionsByTokenId", connections));
+  //   // // };
+
+  //   // // runFindConnections()
+  //   // // console.log("connections: ", JSON.stringify(connections, null, 2))
+  //   // setState(R.assoc("connectionsByTokenId", connections));
+  // }, [state, setState]);
+
   useEffect(() => {
-    if (state.noOfGraphLayouts > 0) {
+    // if (R.isEmpty(state.boxes) && !R.isEmpty(state.connectionsByTokenId)) return
+    if (R.isEmpty(state.boxes) || state.searchConnections) {
       return;
     }
-    if (R.isEmpty(state.boxes)) {
+    if (!R.isEmpty(state.connectionsByTokenId)) {
       return;
     }
 
-    // console.log("TxDiagram allkeys: ", state.allBoxes);
-    // Todo: new 29.05.2022
-    // console.log("boxes: ", JSON.stringify(state.boxes, null, 2))
-    const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+    debugLog("useUpdateEffect boxes")(R.keys(state.boxes));
+    debugLog("useUpdateEffect connections")(R.keys(state.connectionsByTokenId));
+    // if (R.equals(prevData, data)) {
+    //   debugLog("useUpdateEffect data are equal")(R.keys(state.boxes))
+    //   //return
+    // }
+    // else {
+    //   debugLog("useUpdateEffect data are not equal")(R.keys(state.boxes))
+    // }
+    // if (R.equals(prevData, data) || state.searchConnections) {
+    //   return;
+    // }
+    // if (R.isEmpty(state.boxes)) return
 
-    // const runFindConnections = async () => {
-    //   const connections = await findConnectionsWorker(state.boxes); // non-blocking UI
-    //   console.log("End runFindConnections: ", connections);
-    //   setState(R.assoc("connectionsByTokenId", connections));
-    // };
+    debugLog("Start searching connections")(state.connectionsByTokenId);
+    setState(setSearchConnections(true));
 
-    // runFindConnections()
-    // console.log("connections: ", JSON.stringify(connections, null, 2))
-    setState(R.assoc("connectionsByTokenId", connections));
-  }, [state, setState]);
+    // // const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);
+    // // setState(R.assoc("connectionsByTokenId", connections));
+    // // setState(R.assoc("noOfGraphLayouts", 0));
+    // // setState(setSearchConnections(false));
+
+    findConnections(state.boxes).then((connections: any[]) => {
+      if (isMounted()) {
+        debugLog("Stop searching! Connections found")(connections.length);
+        if (!R.equals(connections, state.connectionsByTokenId)) {
+          setState(R.assoc("connectionsByTokenId", connections));
+          setState(R.assoc("noOfGraphLayouts", 0));
+        }
+        setState(setSearchConnections(false));
+      }
+    });
+  }, [isMounted, state, setState, prevData, data]);
 
   // const toggleLayout = () => {
   //   setState(setUseDagreLayout(!state.config.useDagreLayout));
@@ -151,10 +253,15 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
         <div>No nodes</div>
       ) : (
         //        : <DappstepFlow initialNodes={state.allBoxes.map(initializeNode)}/>
-        <TxFlowView
-          initialNodes={state.allBoxes.map(initialNodesWithState(state))}
-          useDagreLayout={state.config.useDagreLayout}
-        />
+        <>
+          <TxFlowView
+            initialNodes={state.allBoxes.map(initialNodesWithState(state))}
+            useDagreLayout={state.config.useDagreLayout}
+          />
+          {state.searchConnections ? (
+            <div>Analyzing transaction ...</div>
+          ) : null}
+        </>
       )}
     </div>
   );

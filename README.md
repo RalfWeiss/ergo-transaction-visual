@@ -3,6 +3,8 @@
 
 **ertravi** = Ergo Transactions Visuals
 
+This is an <b>alpha</b> version!
+
 [![tests](https://github.com/RalfWeiss/ergo-transaction-visual/actions/workflows/tests.yml/badge.svg)](https://github.com/RalfWeiss/ergo-transaction-visual/actions/workflows/tests.yml)
 
 </div>
@@ -38,14 +40,16 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes demo data to look at.
 
-As of now, with version v0.0.27, you could see sth. like this:
+As of now, with version v0.0.28, you could see sth. like this:
 
-![](media/demo-output-v0-0-27.png)
+![](media/demo-output-v0-0-28.png)
 
 This means:
 - deep combinatory analysis
   - spreads values over boxes until it finds a reasonable solution (least changes)
-  - **drawback**: can take some time if the no of boxes rises
+  - **drawbacks**: 
+    - can take some time if the no of boxes rises
+    - blocks UI while performing analysis
 - configure `boxColors` and `rootPropsToShow`
 - **Auto-Layout** could rearrange connected boxes
 - ability to toggle between **Auto-Layout** and simple positioning
