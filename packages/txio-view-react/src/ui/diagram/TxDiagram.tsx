@@ -248,7 +248,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   // };
 
   return (
-    <div style={{ width, height }}>
+    <div className="txio-diagram" style={{ width, height }}>
       {state.allBoxes.length === 0 ? (
         <div>No nodes</div>
       ) : (

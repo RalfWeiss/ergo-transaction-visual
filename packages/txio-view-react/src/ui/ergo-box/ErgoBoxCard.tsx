@@ -14,9 +14,14 @@ const cardStyle = {
   marginBottom: "0",
   borderRadius: "15px",
   fontSize: "small",
-  // backgroundColor:'ButtonFace',
+  //backgroundColor:'ButtonFace',
+  backgroundColor:'inherit',
+  //bgColor: "inherit",
   // opacity: '8'
-};
+  display: "flex",
+  flexDirection: "column",
+  position: "relative"
+} as React.CSSProperties;
 
 const partStyle = {
   padding: "2px",
@@ -41,13 +46,14 @@ const Part = ({ ergoBox, hideOn, openState, label, children }: PartProps) => {
     return null;
   }
   return (
-    <details open={openState} style={partStyle}>
+    <details open={openState} style={partStyle}>      
       <summary
         style={{ textAlign: "left", fontSize: "small", fontStyle: "italic" }}
       >
         {label}
       </summary>
       {children}
+      
     </details>
   );
 };
@@ -91,13 +97,15 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   // don't hide root props anymore
   // hideOn={R.o(R.isEmpty, R.prop('value'))}
   return (
-    <div ref={ref} style={cardStyle}>
+    <div ref={ref} style={cardStyle}>      
+      <span className="badge">Box-Badge</span>
       <Part
         ergoBox={ergoBox}
         openState
         hideOn={R.always(false)}
         label="root properties"
       >
+        
         <RootProps ergoBox={ergoBox} />
       </Part>
       <Part
