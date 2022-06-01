@@ -1,5 +1,5 @@
 import React from "react";
-import { TxIoView } from "@ertravi/txio-view-react";
+import { TxIoView, useStore } from "@ertravi/txio-view-react";
 // import { useFetch } from 'usehooks-ts'
 import { useFetch } from "../hooks/useFetch";
 // import data from "../fixtures/demo-2.json";
@@ -18,6 +18,7 @@ baf44dba0b91a7105cb2648f0ad75c820c2b55e39eb315dd400e46768b16c206
 */
 
 export default () => {
+  const { state } = useStore()  
   const { data, error } = useFetch(
     "/ergoexplorer/en/transactions/2cb6ed530859a3f1c638278d66aea66ce81b750e776a8da46711803d13972198"
   );
@@ -32,7 +33,10 @@ export default () => {
 
   return (
     <div>
-      <TxIoView width={800} height={800} ergoTx={data as any} />
+{/*       <TxIoView width={800} height={800} ergoTx={data as any} /> */}
+      <div>state form useStore</div>
+      <pre>{JSON.stringify(state.config, null, 2)}</pre>
+      <div>data from ErgoExplorer</div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   setUseDagreLayout,
   setNoOfGraphLayouts,
 } from "../model";
+import { useStore } from "../hooks"
 
 export const useToggleDagreLayout = () => {
   // Todo: make clear if there are some drawbacks of using object destructuring here
@@ -12,7 +13,8 @@ export const useToggleDagreLayout = () => {
       config: { useDagreLayout },
     },
     setState,
-  } = useContext(TxioStoreContext);
+//  } = useContext(TxioStoreContext);
+} = useStore();
 
   const toggleLayout = React.useCallback(() => {
     setState(setUseDagreLayout(!useDagreLayout));

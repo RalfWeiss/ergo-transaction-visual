@@ -8,6 +8,7 @@ import {
   ErgoExplorerAddressLink,
   LabeledCurrency,
 } from "./components";
+import { useStore } from "../../hooks"
 
 // import appConfig from "../../appConfig";
 
@@ -73,7 +74,8 @@ const mapBaseProps =
 // }
 
 export const RootProps = ({ ergoBox }: RootPropsProps) => {
-  const { state } = useContext(TxioStoreContext);
+  //const { state } = useContext(TxioStoreContext);
+  const { state } = useStore();
   // const { components } = useContext(GuiContext);
   // const Container = components["BaseInfoContainer"] as any
   // these keys should show up in base info section

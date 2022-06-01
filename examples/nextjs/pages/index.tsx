@@ -5,6 +5,7 @@ import {
   TxDiagram,
   useToggleDagreLayout,
   //  TxioStoreContext,
+  useStore
 } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 
 // Todo: these imports don't work anymore after modifying next.config.js
@@ -96,6 +97,7 @@ const Buttons = ({ setTxData }) => {
   // const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout() ;
   const [withDagreLayout, toogleWithDagreLayout] = useToggleDagreLayout();
   // const { state, setState } = useContext(TxioStoreContext);
+  
   return (
     <>
       {demos.map(({ title, data }) => (
@@ -125,7 +127,7 @@ const Buttons = ({ setTxData }) => {
 export default () => {
   const [txData, setTxData] = useState(data1);
   // const [txData, setTxData] = useState(data4);
-
+  const {state} = useStore()
   return (
     <div style={screenStyle}>
       <div style={mainStyle}>
@@ -136,6 +138,9 @@ export default () => {
         <div>
           <TxDiagram width={800} height={800} data={txData} />
         </div>
+        <pre>
+          {JSON.stringify(state.config, null, 2)}
+        </pre>
       </div>
     </div>
   );

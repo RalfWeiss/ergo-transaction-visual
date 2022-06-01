@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // based on: https://felixgerschau.com/react-typescript-context/
 import {
   createContext,
@@ -13,6 +13,9 @@ import {
 import { ErgoBox } from "./ergoBox";
 import { Dimensions, DimensionsByKey } from "./dimensions";
 import * as R from "ramda";
+import { logWhen } from "../utils";
+
+const debugLog = logWhen(true);
 
 export interface Store {
   boxes: {
@@ -35,7 +38,7 @@ export interface Store {
   config: Partial<ITxioStoreProviderConfig>;
 }
 
-interface IStoreContext {
+export interface IStoreContext {
   state: Store; // | undefined,
   // setState: (state:Store) => Store
   setState: Dispatch<SetStateAction<Store>>;
@@ -69,7 +72,7 @@ export const defaultState: Store = {
     // colorNames good for black text color
     // https://www.quackit.com/css/color/charts/css_color_names_chart.cfm
     boxColors: [
-      "LightCoral",
+//      "LightCoral",
       "PaleGreen",
       "SkyBlue",
       "Khaki",
@@ -79,11 +82,13 @@ export const defaultState: Store = {
   },
 };
 
-export const TxioStoreContext = createContext<IStoreContext>({
-  state: defaultState,
-  // setState: () => mergeStore({})
-  setState: () => ({}),
-});
+// export const TxioStoreContext = createContext<IStoreContext>({
+//   state: defaultState,
+//   // setState: () => mergeStore({})
+//   setState: () => ({}),
+// });
+
+export const TxioStoreContext = createContext<IStoreContext>(null);
 
 export interface ITxioStoreProviderConfig {
   useDagreLayout: boolean;
@@ -100,14 +105,21 @@ export interface ITxioStoreProvider {
 // Todo: Is this the right place to add an config
 export const TxioStoreProvider = ({ config, children }: ITxioStoreProvider) => {
   const [state, setState] = useState(
-    R.mergeDeepRight(defaultState, { config: config || {} })
+    R.pipe(
+      () => R.mergeDeepRight(defaultState, { config }),
+      debugLog("state set for provider")
+    )()
   );
   const contextValue = useMemo(
     () => ({ state, setState } as IStoreContext),
     [state, setState]
   );
+  // useEffect(() => {
+  //   setState(R.mergeDeepRight(state, { config }))
+  // }, [config, setState])
+
   return (
-    <TxioStoreContext.Provider value={contextValue}>
+    <TxioStoreContext.Provider value={{ state, setState }}>
       {children}
     </TxioStoreContext.Provider>
   );

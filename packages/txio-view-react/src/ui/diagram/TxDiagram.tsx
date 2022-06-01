@@ -17,7 +17,7 @@ import {
 } from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
-import { usePrevious } from "../../hooks";
+import { usePrevious, useStore } from "../../hooks";
 // import { useWorker, WORKER_STATUS } from "@koale/useworker";
 // import type { Option } from "@koale/useworker";
 import { Node } from "react-flow-renderer";
@@ -70,7 +70,8 @@ interface TxDiagramProps {
 const useOldInitialize = false;
 
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
-  const { state, setState } = useContext(TxioStoreContext);
+  //const { state, setState } = useContext(TxioStoreContext);
+  const {state, setState} = useStore()
   const isMounted = useIsMounted();
   const prevData = usePrevious(data);
   // const prevConnections = usePrevious(state.connectionsByTokenId)
@@ -103,7 +104,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       return;
     }
     // console.log("initializing state");
-    setState(() => toState(data));
+    // Todo: falsche initialisierung des state
+    //setState(() => toState(data));
+    setState(() => R.assoc("config", state.config, toState(data)));
     setState(setDiagramDimensions({ width, height }));
     // console.log("toState: ", JSON.stringify(toState(data), null, 2))
     // const connections = R.pipe(allValidSamples, toIdPairs)(state.boxes);

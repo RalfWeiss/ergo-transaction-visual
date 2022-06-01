@@ -1,6 +1,7 @@
 export {
   TxioStoreContext,
   TxioStoreProvider,
+  IStoreContext,
   Store,
   defaultState,
 } from "./StoreProvider";

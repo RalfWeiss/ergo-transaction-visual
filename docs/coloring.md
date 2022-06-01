@@ -1,4 +1,13 @@
+# Categorizing Boxes
+
+Names for the categories could be: [Alice, Bob, Carol, Dave](https://www.elektronik-kompendium.de/sites/net/1909021.htm).
+
+
+
 # Coloring
+
+
+
 
 Boxes with the same `ergoTree` or `address` value should share same color:
 

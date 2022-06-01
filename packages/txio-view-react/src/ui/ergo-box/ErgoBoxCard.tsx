@@ -5,7 +5,7 @@ import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";
 import { Registers } from "./Registers";
 import { setDimension } from "../../model";
-import { usePrevious } from "../../hooks";
+import { usePrevious, useStore } from "../../hooks";
 import * as R from "ramda";
 
 const cardStyle = {
@@ -14,13 +14,13 @@ const cardStyle = {
   marginBottom: "0",
   borderRadius: "15px",
   fontSize: "small",
-  //backgroundColor:'ButtonFace',
-  backgroundColor:'inherit',
-  //bgColor: "inherit",
+  // backgroundColor:'ButtonFace',
+  backgroundColor: "inherit",
+  // bgColor: "inherit",
   // opacity: '8'
   display: "flex",
   flexDirection: "column",
-  position: "relative"
+  position: "relative",
 } as React.CSSProperties;
 
 const partStyle = {
@@ -46,14 +46,13 @@ const Part = ({ ergoBox, hideOn, openState, label, children }: PartProps) => {
     return null;
   }
   return (
-    <details open={openState} style={partStyle}>      
+    <details open={openState} style={partStyle}>
       <summary
         style={{ textAlign: "left", fontSize: "small", fontStyle: "italic" }}
       >
         {label}
       </summary>
       {children}
-      
     </details>
   );
 };
@@ -64,7 +63,8 @@ interface ErgoBoxCardProps {
 
 export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   const prevErgoBox = usePrevious(ergoBox);
-  const { state, setState } = useContext(TxioStoreContext);
+  //const { state, setState } = useContext(TxioStoreContext);
+  const { state, setState } = useStore();
   const ref: any = useRef(null);
 
   useLayoutEffect(() => {
@@ -97,7 +97,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   // don't hide root props anymore
   // hideOn={R.o(R.isEmpty, R.prop('value'))}
   return (
-    <div ref={ref} style={cardStyle}>      
+    <div ref={ref} style={cardStyle}>
       <span className="badge">Box-Badge</span>
       <Part
         ergoBox={ergoBox}
@@ -105,7 +105,6 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
         hideOn={R.always(false)}
         label="root properties"
       >
-        
         <RootProps ergoBox={ergoBox} />
       </Part>
       <Part

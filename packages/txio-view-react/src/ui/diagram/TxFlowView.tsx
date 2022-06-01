@@ -9,7 +9,7 @@ import { ErgoBoxNode } from "./ErgoBoxNode";
 import TxSimpleNode from "./TxSimpleNode";
 import { adjustpositionFromStartPos, logWhen } from "../../utils";
 import { getMaxWidthFromDimensions } from "../../model";
-import { usePrevious } from "../../hooks";
+import { usePrevious, useStore } from "../../hooks";
 import { Dimensions, DimensionsByKey } from "../../model";
 import appConfig from "../../appConfig";
 import * as R from "ramda";
@@ -150,7 +150,8 @@ export const TxFlowView = ({
   initialNodes,
   useDagreLayout,
 }: TxFlowViewProps) => {
-  const { state, setState } = useContext(TxioStoreContext);
+  //const { state, setState } = useContext(TxioStoreContext);
+  const { state, setState } = useStore();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(defaultEdgesInit);
   // const isMounted = useIsMounted();

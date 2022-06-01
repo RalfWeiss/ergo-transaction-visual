@@ -1,9 +1,15 @@
 import * as R from "ramda";
+import { logWhen } from "../../utils";
+
+const debugLog = logWhen(true);
 
 export { getBoxById } from "./getBoxById";
 
 export const onlyOutputNodes = R.filter(R.propEq("type", "outputBox"));
 export const onlyInputNodes = R.filter(R.propEq("type", "inputBox"));
 
-export const selRootPropsToShow = R.path(["config", "rootPropsToShow"]);
+export const selRootPropsToShow = R.pipe(
+  R.path(["config", "rootPropsToShow"]),
+  debugLog("Selector rootPropsToShow from state")
+);
 export const selColorNames = R.path(["config", "boxColors"]);

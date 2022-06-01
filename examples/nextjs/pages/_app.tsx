@@ -16,27 +16,27 @@ const theme = extendTheme({
         bgColor: "gray.300",
         pt: "0",
         "& .react-flow__container": {
-          pt: "4"
+          pt: "4",
         },
         "& .badge": {
           bgColor: "inherit",
-          color: "gray.700",      
-          //fontWeight: "bold",  
-          fontSize: "x-small", 
+          color: "gray.700",
+          // fontWeight: "bold",
+          fontSize: "x-small",
           fontStyle: "italic",
           position: "absolute",
           paddingX: "8px",
           paddingY: "4px",
           paddingBottom: "2px",
           top: "-16px",
-          //right: "-12px",
+          // right: "-12px",
           right: "4px",
-          //height: 10,
-          //border: "1px solid blue",
+          // height: 10,
+          // border: "1px solid blue",
           borderRadius: "15px",
-          //borderColor: "inherit"
-        }
-      }
+          // borderColor: "inherit"
+        },
+      },
     },
   },
 });
@@ -47,12 +47,12 @@ const TxioViewConfig = {
     "value",
     "ergoTree",
     "address",
-    //    "boxId",
+    "boxId",
     //    "blockId",
     //    "transactionId",
   ],
   boxColors: [
-    //"#996600",
+    // "#996600",
     "var(--chakra-colors-red-200)",
     "var(--chakra-colors-green-200)",
     "var(--chakra-colors-blue-200)",

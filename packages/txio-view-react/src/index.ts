@@ -1,6 +1,6 @@
 export { TxIoView } from "./ui";
 export { TxDiagram } from "./ui";
-export { useToggleDagreLayout } from "./hooks";
+export { useToggleDagreLayout, useStore } from "./hooks";
 export {
   TxioStoreProvider,
   TxioStoreContext,
