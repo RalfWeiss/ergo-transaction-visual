@@ -13,6 +13,8 @@ transaction-IDs that worked:
 1ab31add256ef431d9e15a26bea4f5ebc69b1c6aec89a48d42ac21d29032b7db
 a9165c2e40a27024a3bda3012bb5796dd39a16be9d6488868f2294424e752342
 
+ cd06edc33550d5755a0a872d3bf8a139da0b0bd211445abd6c69b7e524d19ea3
+
 too big:
 baf44dba0b91a7105cb2648f0ad75c820c2b55e39eb315dd400e46768b16c206
 */
@@ -20,7 +22,7 @@ baf44dba0b91a7105cb2648f0ad75c820c2b55e39eb315dd400e46768b16c206
 export default () => {
   const { state } = useStore();
   const { data, error } = useFetch(
-    "/ergoexplorer/en/transactions/2cb6ed530859a3f1c638278d66aea66ce81b750e776a8da46711803d13972198"
+    "/ergoexplorer/en/transactions/08209bbe01ab119d7a10688ab406e1b7cf2c939bc6266aeec68aa73c9b8241bf"
   );
 
   if (error) {

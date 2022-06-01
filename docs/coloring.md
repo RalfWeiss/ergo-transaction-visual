@@ -4,6 +4,51 @@ Names for the categories could be: [Alice, Bob, Carol, Dave](https://www.elektro
 
 Context is based on: https://felixgerschau.com/react-typescript-context/
 
+## Addresses
+
+Address types are (semantics described below):
+
+    0x01 - Pay-to-PublicKey(P2PK) address
+    0x02 - Pay-to-Script-Hash(P2SH)
+    0x03 - Pay-to-Script(P2S)
+
+Hey ilyalbn,
+
+hope things went well with your presentation.
+
+Regarding your labeling suggestions, I've got some questions.
+
+Right now the boxes are colored based on different values in field: ergoTree.
+I do not look at the value of the address field.
+I'm talking about the field address in the transaction data:
+
+According to the docs we have P2PK, P2SH and P2S addresses coded in the address field. Right?
+
+Do you want me to do the following?
+
+- If it is a P2PK address label it as Alice, Bob, etc.?
+- If it is a P2SH or P2S label it as Contract?
+
+By the way, what is the difference between P2SH and P2S?
+
+
+{
+  "course": "Layman Design Course",
+  "organizedBy": "DeCo",
+  "awardedTo": "ralf#9965",
+  "team": "Tensile",
+  "leadBy": "Auggie",
+  "assistedBy": "Zalvures",
+  "courseCompleted": true,
+  "completedDate": "25th May 2022",
+  "finalProject": "Tensile",
+  "batch": 1,
+  "remarks": "This is to award ${awardedTo} for persevering and completing the DeCo: Layman Design Course.",
+  "studentQuote": "Entertaining format that learned me a lot."
+}
+
+
+
 # Coloring
 
 
