@@ -2,6 +2,7 @@ import React from "react";
 import { ErgoBox } from "../../model";
 import * as R from "ramda";
 import { truncateWithEllipses } from "../../utils";
+import {formatAddress} from "../../utils"
 
 interface AssetsProps {
   ergoBox: ErgoBox;
@@ -14,7 +15,7 @@ interface AssetRowProps {
   amount: number;
 }
 
-const TRUNCATE_MAXLEN = 10;
+const TRUNCATE_MAXLEN = 14;
 
 const assetRow =
   ({ hasNames, hasTypes }) =>
@@ -23,7 +24,7 @@ const assetRow =
       <tr key={tokenId}>
         {hasNames ? <td>{name}</td> : null}
         {hasTypes ? <td>{type}</td> : null}
-        <td>{truncateWithEllipses(TRUNCATE_MAXLEN)(tokenId)}</td>
+        <td>{truncateWithEllipses(TRUNCATE_MAXLEN)(formatAddress(tokenId))}</td>
         <td style={{ width: "12ch", textAlign: "right" }}>
           {Number(amount).toLocaleString()}
         </td>

@@ -15,7 +15,7 @@ import { Dimensions, DimensionsByKey } from "./dimensions";
 import * as R from "ramda";
 import { logWhen } from "../utils";
 
-const debugLog = logWhen(true);
+const debugLog = logWhen(false);
 
 export interface Store {
   boxes: {

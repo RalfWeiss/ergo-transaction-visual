@@ -1,5 +1,6 @@
 import React from "react";
 import { truncateWithEllipses } from "../../../utils";
+import {formatAddress} from "../../../utils"
 
 export interface LabeledValueEntryProps {
   label: string;
@@ -21,7 +22,7 @@ export const TruncatedLabeledValueEntry = ({
 }: LabeledValueEntryProps) => (
   <LabeledValueEntry
     label={label}
-    value={truncateWithEllipses(TRUNCATE_MAXLEN)(value)}
+    value={truncateWithEllipses(TRUNCATE_MAXLEN)(formatAddress(value))}
   />
   // <tr key={label}>
   //   <td style={{textAlign:'right'}}>{label}:</td>

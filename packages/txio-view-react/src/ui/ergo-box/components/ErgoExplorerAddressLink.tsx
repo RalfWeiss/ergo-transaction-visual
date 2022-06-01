@@ -2,6 +2,7 @@ import React from "react";
 import { truncateWithEllipses } from "../../../utils";
 import { LabeledValueEntry, LabeledValueEntryProps } from "./LabeledValueEntry";
 // import { TRUNCATE_MAXLEN } from ''
+import {formatAddress} from "../../../utils"
 
 const TRUNCATE_MAXLEN = 25;
 
@@ -18,7 +19,7 @@ export const ErgoExplorerAddressLink = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {truncateWithEllipses(TRUNCATE_MAXLEN)(value)}
+        {truncateWithEllipses(TRUNCATE_MAXLEN)(formatAddress(value))}
       </a>
     }
   />
