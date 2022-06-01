@@ -75,9 +75,10 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(R.assoc("colorMap", colorMap));
     debugLog("state.boxes")(state.boxes);
 
-    setState(R.assoc("noOfGraphLayouts", 0));
+    // setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
 
+  // Todo: there is an endless loop if no connections could be found
   useEffect(() => {
     if (R.isEmpty(state.boxes) || state.searchConnections) {
       return;
@@ -106,16 +107,14 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       {state.allBoxes.length === 0 ? (
         <div>No nodes</div>
       ) : (
-        <>
-          <TxFlowView
-            initialNodes={state.allBoxes.map(initialNodesWithState(state))}
-            useDagreLayout={state?.config?.useDagreLayout}
-          />
-          {state.searchConnections ? (
-            <div>Analyzing transaction ...</div>
-          ) : null}
-        </>
+        <TxFlowView
+          initialNodes={state.allBoxes.map(initialNodesWithState(state))}
+          useDagreLayout={state?.config?.useDagreLayout}
+        />
       )}
+      {state.searchConnections ? (
+        <div className="indicator">Analyzing transaction ...</div>
+      ) : null}
     </div>
   );
 };

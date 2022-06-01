@@ -15,6 +15,9 @@ const theme = extendTheme({
       ".txio-diagram": {
         bgColor: "gray.300",
         pt: "0",
+        display: "flex",
+        flexDirection: "column",
+        position: "relative",
         "& .react-flow__container": {
           pt: "4",
         },
@@ -35,6 +38,13 @@ const theme = extendTheme({
           // border: "1px solid blue",
           borderRadius: "15px",
           // borderColor: "inherit"
+        },
+        "& .indicator": {
+          bgColor: "yellow.300",
+          // display: "inline-box",
+          // position: "absolute",
+          // top: "50",
+          // left: "100"
         },
       },
     },

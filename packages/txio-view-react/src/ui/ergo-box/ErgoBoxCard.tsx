@@ -97,7 +97,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   // hideOn={R.o(R.isEmpty, R.prop('value'))}
   return (
     <div ref={ref} style={cardStyle}>
-      <span className="badge">Box-Badge</span>
+      {/* <span className="badge">Box-Badge</span> */}
       <Part
         ergoBox={ergoBox}
         openState
