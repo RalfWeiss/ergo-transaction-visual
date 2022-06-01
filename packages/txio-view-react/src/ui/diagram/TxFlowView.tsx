@@ -159,7 +159,7 @@ export const TxFlowView = ({
   const prevConnections = usePrevious(state.connectionsByTokenId);
 
   useEffect(() => {
-    if (state.noOfGraphLayouts >= 5) {
+    if (state.noOfGraphLayouts > 7) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
@@ -208,7 +208,7 @@ export const TxFlowView = ({
     //   return;
     // }
     // if (state.noOfGraphLayouts >= 3) {
-    if (state.noOfGraphLayouts === 4) {
+    if (state.noOfGraphLayouts >= 4) {
       // setNodes(layoutWithDagre)
       if (useDagreLayout) {
         const layoutedNodes = layoutWithDagre(state)(nodes, edges);

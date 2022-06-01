@@ -12,4 +12,4 @@ export const selRootPropsToShow = R.pipe(
   R.path(["config", "rootPropsToShow"]),
   debugLog("Selector rootPropsToShow from state")
 );
-export const selColorNames = R.pathOr([],["config", "boxColors"]);
+export const selColorNames = R.pathOr([], ["config", "boxColors"]);

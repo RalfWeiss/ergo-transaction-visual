@@ -3,7 +3,7 @@ import React from "react";
 import { TxioStoreProvider, ErgoTx } from "../../model";
 import { TxDiagram } from "./";
 import { ReactFlowProvider } from "react-flow-renderer";
-import { defaultState } from "../../model"
+import { defaultState } from "../../model";
 
 interface TxIoViewProps {
   width: number;

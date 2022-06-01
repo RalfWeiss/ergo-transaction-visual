@@ -33,7 +33,7 @@ export default () => {
 
   return (
     <div>
-      <TxIoView width={800} height={800} ergoTx={data as any} /> 
+      <TxIoView width={800} height={800} ergoTx={data as any} />
       <div>state form useStore</div>
       <pre>{JSON.stringify(state?.config, null, 2)}</pre>
       <div>data from ErgoExplorer</div>
