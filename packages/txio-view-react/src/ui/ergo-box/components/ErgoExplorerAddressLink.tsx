@@ -2,7 +2,7 @@ import React from "react";
 import { truncateWithEllipses } from "../../../utils";
 import { LabeledValueEntry, LabeledValueEntryProps } from "./LabeledValueEntry";
 // import { TRUNCATE_MAXLEN } from ''
-import {formatAddress} from "../../../utils"
+import { formatAddress } from "../../../utils";
 
 const TRUNCATE_MAXLEN = 25;
 

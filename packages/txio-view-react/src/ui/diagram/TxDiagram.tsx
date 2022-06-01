@@ -70,8 +70,8 @@ interface TxDiagramProps {
 const useOldInitialize = false;
 
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
-  //const { state, setState } = useContext(TxioStoreContext);
-  const {state, setState} = useStore()
+  // const { state, setState } = useContext(TxioStoreContext);
+  const { state, setState } = useStore();
   const isMounted = useIsMounted();
   const prevData = usePrevious(data);
   // const prevConnections = usePrevious(state.connectionsByTokenId)
@@ -105,7 +105,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     }
     // console.log("initializing state");
     // Todo: falsche initialisierung des state
-    //setState(() => toState(data));
+    // setState(() => toState(data));
     setState(() => R.assoc("config", state.config, toState(data)));
     setState(setDiagramDimensions({ width, height }));
     // console.log("toState: ", JSON.stringify(toState(data), null, 2))
@@ -238,7 +238,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
         debugLog("Stop searching! Connections found")(connections.length);
         if (!R.equals(connections, state.connectionsByTokenId)) {
           setState(R.assoc("connectionsByTokenId", connections));
-          setState(R.assoc("noOfGraphLayouts", 0));
+          setState(R.assoc("noOfGraphLayouts", 3));
         }
         setState(setSearchConnections(false));
       }
@@ -259,7 +259,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
         <>
           <TxFlowView
             initialNodes={state.allBoxes.map(initialNodesWithState(state))}
-            useDagreLayout={state.config.useDagreLayout}
+            useDagreLayout={state?.config?.useDagreLayout}
           />
           {state.searchConnections ? (
             <div>Analyzing transaction ...</div>

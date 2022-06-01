@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { TxioStoreContext, Store } from "../../model";
-import { useStore } from "../../hooks"
+import { useStore } from "../../hooks";
 import * as R from "ramda";
 
 import { Handle, Position, NodeProps } from "react-flow-renderer";
@@ -38,7 +38,7 @@ const colorForInternalId =
   };
 
 export const ErgoBoxNode = ({ data, nodeType }: ErgoBoxNodeProps) => {
-  //const { state } = useContext(TxioStoreContext);
+  // const { state } = useContext(TxioStoreContext);
   const { state } = useStore();
 
   if (!state.boxes[data.internalId]) {

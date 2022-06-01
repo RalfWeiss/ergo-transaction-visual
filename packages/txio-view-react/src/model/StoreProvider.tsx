@@ -33,7 +33,7 @@ export interface Store {
   // connectionsByBoxId?: [[string,string]]
   connectionsByBoxId: any;
   connectionsByTokenId: any;
-  noOfGraphLayouts: 0;
+  noOfGraphLayouts: number;
   searchConnections: boolean;
   config: Partial<ITxioStoreProviderConfig>;
 }
@@ -72,7 +72,7 @@ export const defaultState: Store = {
     // colorNames good for black text color
     // https://www.quackit.com/css/color/charts/css_color_names_chart.cfm
     boxColors: [
-//      "LightCoral",
+      //      "LightCoral",
       "PaleGreen",
       "SkyBlue",
       "Khaki",

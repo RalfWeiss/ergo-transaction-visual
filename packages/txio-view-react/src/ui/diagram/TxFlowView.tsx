@@ -150,7 +150,7 @@ export const TxFlowView = ({
   initialNodes,
   useDagreLayout,
 }: TxFlowViewProps) => {
-  //const { state, setState } = useContext(TxioStoreContext);
+  // const { state, setState } = useContext(TxioStoreContext);
   const { state, setState } = useStore();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(defaultEdgesInit);
@@ -159,84 +159,71 @@ export const TxFlowView = ({
   const prevConnections = usePrevious(state.connectionsByTokenId);
 
   useEffect(() => {
-    // if (R.equals(prevConnections, state.connectionsByTokenId)) return
-
-    // if (R.equals(prevInitialNodes, initialNodes)) {
-    //   return;
-    // }
-    if (state.noOfGraphLayouts > 5) {
-      // 5
+    if (state.noOfGraphLayouts >= 5) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
 
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
-    // debugLog("nodes")(nodes);
-    // debugLog("initialNodes")(initialNodes);
+    // initial rendering with adjusted positions based on ErgoBoxCard dimensions
+    if (state.noOfGraphLayouts == 1) {
+      // const adjustedPositions = adjustNodePositions(state);
+      const adjustedPositions = adjustNodePositions({
+        inputBoxIds: state.inputBoxIds,
+        outputBoxIds: state.outputBoxIds,
+        dimensions: state.dimensions,
+        diagramDimensions: state.diagramDimensions,
+      });
+      // debugLog("adjustedPositions")(adjustedPositions);
 
-    // const adjustedPositions = adjustNodePositions(state);
-    const adjustedPositions = adjustNodePositions({
-      inputBoxIds: state.inputBoxIds,
-      outputBoxIds: state.outputBoxIds,
-      dimensions: state.dimensions,
-      diagramDimensions: state.diagramDimensions,
-    });
-    // debugLog("adjustedPositions")(adjustedPositions);
+      const layoutedNodes = R.pipe(
+        R.map((node) => ({
+          ...node,
+          position:
+            adjustedPositions[node.data?.internalId]?.position || node.position,
+          style: { borderRadius: "10px", border: "solid 1px lightgray" },
+        })),
+        R.ifElse(
+          // add central TxNode for layouting if it doesn't exist
+          R.find(R.propEq("id", "Tx")),
+          R.identity,
+          R.append(InitialTxNode)
+        )
+      )(initialNodes);
 
-    const layoutedNodes = R.pipe(
-      R.map((node) => ({
-        ...node,
-        position:
-          adjustedPositions[node.data?.internalId]?.position || node.position,
-        style: { borderRadius: "10px", border: "solid 1px lightgray" },
-      })),
-      R.ifElse(
-        // add central TxNode for layouting if it doesn't exist
-        R.find(R.propEq("id", "Tx")),
-        R.identity,
-        R.append(InitialTxNode)
-      )
-      //    )(nodes);
-    )(initialNodes);
+      setNodes(layoutedNodes);
 
-    // debugLog("layoutedNodes")(layoutedNodes);
+      const edgesFromStore = [
+        ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
+        //      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
+        ...R.map(edgeForInputToTx)(state.inputBoxIds),
+        ...R.map(edgeForOutputToTx)(state.outputBoxIds),
+      ];
 
-    setNodes(layoutedNodes);
-
-    // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
-    const edgesFromStore = [
-      ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
-      //      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
-      ...R.map(edgeForInputToTx)(state.inputBoxIds),
-      ...R.map(edgeForOutputToTx)(state.outputBoxIds),
-    ];
-
-    setEdges(edgesFromStore);
-
-    if (state.noOfGraphLayouts < 3) {
-      return;
+      setEdges(edgesFromStore);
     }
-    // setNodes(layoutWithDagre)
-    if (useDagreLayout) {
-      const layoutedNodes = layoutWithDagre(state)(nodes, edges);
 
-      const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
-      // console.log("adjustedPositions: ", JSON.stringify(adjustedPositions, null, 2))
+    // if (state.noOfGraphLayouts < 3) {
+    //   return;
+    // }
+    // if (state.noOfGraphLayouts >= 3) {
+    if (state.noOfGraphLayouts === 4) {
+      // setNodes(layoutWithDagre)
+      if (useDagreLayout) {
+        const layoutedNodes = layoutWithDagre(state)(nodes, edges);
 
-      const repositionedNodes = R.map((node) => ({
-        ...node,
-        position:
-          adjustedPositions[node.data?.internalId]?.position || node.position,
-        // style: { borderRadius: "10px", border: "solid 1px lightgray" },
-      }))(layoutedNodes);
+        const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
 
-      // setNodes(layoutedNodes);
-      setNodes(repositionedNodes);
+        const repositionedNodes = R.map((node) => ({
+          ...node,
+          position:
+            adjustedPositions[node.data?.internalId]?.position || node.position,
+        }))(layoutedNodes);
+
+        setNodes(repositionedNodes);
+      }
     }
-    // }, [state]);
-
-    // Todo: wrong dependency array
   }, [
     initialNodes,
     prevInitialNodes,
@@ -249,57 +236,10 @@ export const TxFlowView = ({
     useDagreLayout,
   ]);
 
-  // useEffect(() => {
-  //   if (R.equals(initialNodes, prevInitialNodes)) {
-  //     console.log("useEffect: initialNodes are the same")
-  //   }
-  //   if (R.equals(nodes, prevNodes)) {
-  //     console.log("useEffect: nodes are the same")
-  //   }
-  //   if (R.equals(edges, prevEdges)) {
-  //     console.log("useEffect: nodes are the same")
-  //   }
-  //   console.log("noOfGraphLayouts: ", state.noOfGraphLayouts)
-  //   if (state.noOfGraphLayouts < 3) {
-  //     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts+1))
-  //   }
-  //   //if (edges.length > 0 ) setNodes(layout())
-  // },[nodes, edges, state])
-
   useUpdateEffect(() => {
     if (R.equals(prevConnections, state.connectionsByTokenId)) {
       return;
     }
-    // console.log("Connections have changed");
-
-    // const adjustedPositions = adjustNodePositions({
-    //   inputBoxIds: state.inputBoxIds,
-    //   outputBoxIds: state.outputBoxIds,
-    //   dimensions: state.dimensions,
-    //   diagramDimensions: state.diagramDimensions,
-    // });
-
-    // // new
-    // const layoutedNodes = R.pipe(
-    //   R.map((node) => ({
-    //     ...node,
-    //     position:
-    //       adjustedPositions[node.data?.internalId]?.position || node.position,
-    //     style: { borderRadius: "10px", border: "solid 1px lightgray" },
-    //   })),
-    //   R.ifElse(
-    //     // add central TxNode for layouting if it doesn't exist
-    //     R.find(R.propEq("id", "Tx")),
-    //     R.identity,
-    //     R.append(InitialTxNode)
-    //   )
-    //   //    )(nodes);
-    // )(initialNodes);
-
-    // debugLog("layoutedNodes")(layoutedNodes);
-
-    // setNodes(layoutedNodes);
-
     // const edgesFromStore = state.connectionsByBoxId.map(edgeFromPair);
     const edgesFromStore = [
       ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
@@ -309,34 +249,6 @@ export const TxFlowView = ({
     ];
 
     setEdges(edgesFromStore);
-    // end of new
-
-    /*       if (useDagreLayout) {
-        console.log("Connections have changed: useDagreLayout")
-        const layoutedNodes = layoutWithDagre(state)(nodes, edges);
-  
-        const adjustedPositions = getAdjustedPositions(state)(layoutedNodes)
-        // console.log("adjustedPositions: ", JSON.stringify(adjustedPositions, null, 2))
-  
-        const repositionedNodes = R.map((node) => ({
-          ...node,
-          position:
-            adjustedPositions[node.data?.internalId]?.position || node.position,
-          // style: { borderRadius: "10px", border: "solid 1px lightgray" },
-        }))(layoutedNodes);
-  
-        // setNodes(layoutedNodes);
-        setNodes(repositionedNodes);
-      } */
-
-    // const edgesFromStore = [
-    //   ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
-    //   // //      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
-    //   ...R.map(edgeForInputToTx)(state.inputBoxIds),
-    //   ...R.map(edgeForOutputToTx)(state.outputBoxIds),
-    // ];
-
-    // setEdges(edgesFromStore);
   }, [prevConnections, nodes, edges, setNodes, state, setState]);
 
   // // useEffect

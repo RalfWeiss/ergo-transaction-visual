@@ -8,14 +8,14 @@ import * as R from "ramda";
 import { useUpdateEffect } from "usehooks-ts";
 import { usePrevious, useStore } from "../../hooks";
 
-const debugLog = logWhen(true);
+const debugLog = logWhen(false);
 
 export interface IErgoBoxCardContext {
   internalId: string;
 }
 
 export const ErgoBoxCardContext = ({ internalId }: IErgoBoxCardContext) => {
-  //const { state } = useContext(TxioStoreContext);
+  // const { state } = useContext(TxioStoreContext);
   const { state, setState } = useStore();
   const [box, setBox] = useState({});
 

@@ -63,7 +63,7 @@ interface ErgoBoxCardProps {
 
 export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   const prevErgoBox = usePrevious(ergoBox);
-  //const { state, setState } = useContext(TxioStoreContext);
+  // const { state, setState } = useContext(TxioStoreContext);
   const { state, setState } = useStore();
   const ref: any = useRef(null);
 

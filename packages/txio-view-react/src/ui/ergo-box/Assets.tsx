@@ -2,7 +2,7 @@ import React from "react";
 import { ErgoBox } from "../../model";
 import * as R from "ramda";
 import { truncateWithEllipses } from "../../utils";
-import {formatAddress} from "../../utils"
+import { formatAddress } from "../../utils";
 
 interface AssetsProps {
   ergoBox: ErgoBox;

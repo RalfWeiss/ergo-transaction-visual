@@ -1,5 +1,5 @@
-import {useContext} from "react"
-import { IStoreContext, TxioStoreContext } from "../model"
+import { useContext } from "react";
+import { IStoreContext, TxioStoreContext } from "../model";
 
 export const useStore = (): IStoreContext => {
   const storeState = useContext(TxioStoreContext);

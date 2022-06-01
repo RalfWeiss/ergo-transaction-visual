@@ -1,6 +1,6 @@
 import React from "react";
 import { truncateWithEllipses } from "../../../utils";
-import {formatAddress} from "../../../utils"
+import { formatAddress } from "../../../utils";
 
 export interface LabeledValueEntryProps {
   label: string;

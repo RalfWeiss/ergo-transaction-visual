@@ -3,6 +3,7 @@ import React from "react";
 import { TxioStoreProvider, ErgoTx } from "../../model";
 import { TxDiagram } from "./";
 import { ReactFlowProvider } from "react-flow-renderer";
+import { defaultState } from "../../model"
 
 interface TxIoViewProps {
   width: number;
@@ -11,7 +12,7 @@ interface TxIoViewProps {
 }
 
 export const TxIoView = ({ width, height, ergoTx }: TxIoViewProps) => (
-  <TxioStoreProvider>
+  <TxioStoreProvider config={defaultState.config}>
     <ReactFlowProvider>
       <TxDiagram width={width} height={height} data={ergoTx} />
     </ReactFlowProvider>
