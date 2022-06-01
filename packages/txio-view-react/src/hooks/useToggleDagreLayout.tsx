@@ -1,9 +1,5 @@
-import React, { useContext } from "react";
-import {
-  TxioStoreContext,
-  setUseDagreLayout,
-  setNoOfGraphLayouts,
-} from "../model";
+import React from "react";
+import { setUseDagreLayout, setNoOfGraphLayouts } from "../model";
 import { useStore } from "../hooks";
 
 export const useToggleDagreLayout = () => {

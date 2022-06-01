@@ -1,5 +1,4 @@
-import React, { useRef, useContext, useLayoutEffect } from "react";
-import { TxioStoreContext } from "../../model";
+import React, { useRef, useLayoutEffect } from "react";
 import { ErgoBox } from "../../model";
 import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";

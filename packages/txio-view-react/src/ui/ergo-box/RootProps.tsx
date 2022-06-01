@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ErgoBox, TxioStoreContext, Selectors } from "../../model";
+import React from "react";
+import { ErgoBox, Selectors } from "../../model";
 import { pickKeyValue } from "../../utils";
 import {
   LabeledValueEntry,

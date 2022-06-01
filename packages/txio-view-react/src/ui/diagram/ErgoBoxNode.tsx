@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { TxioStoreContext, Store } from "../../model";
+import React from "react";
+import { Store } from "../../model";
 import { useStore } from "../../hooks";
 import * as R from "ramda";
 

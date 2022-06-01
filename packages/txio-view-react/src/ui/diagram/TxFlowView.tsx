@@ -1,6 +1,5 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import {
-  TxioStoreContext,
   Selectors,
   // onlyInputNodes,
   // onlyOutputNodes,
@@ -144,6 +143,8 @@ const getAdjustedPositions = (state) => (layoutedNodes) => {
   });
 };
 
+const MaxNoOfGraphLayouts = 7;
+
 // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const TxFlowView = ({
@@ -159,7 +160,7 @@ export const TxFlowView = ({
   const prevConnections = usePrevious(state.connectionsByTokenId);
 
   useEffect(() => {
-    if (state.noOfGraphLayouts > 7) {
+    if (state.noOfGraphLayouts > MaxNoOfGraphLayouts) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
@@ -167,7 +168,7 @@ export const TxFlowView = ({
     setState(R.assoc("noOfGraphLayouts", state.noOfGraphLayouts + 1));
 
     // initial rendering with adjusted positions based on ErgoBoxCard dimensions
-    if (state.noOfGraphLayouts == 1) {
+    if (state.noOfGraphLayouts === 1) {
       // const adjustedPositions = adjustNodePositions(state);
       const adjustedPositions = adjustNodePositions({
         inputBoxIds: state.inputBoxIds,

@@ -1,12 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ErgoBox } from "../../model";
-import { TxioStoreContext } from "../../model";
 import { ErgoBoxCard } from "./ErgoBoxCard";
 import { Selectors } from "../../model";
 import { logWhen } from "../../utils";
 import * as R from "ramda";
 import { useUpdateEffect } from "usehooks-ts";
-import { usePrevious, useStore } from "../../hooks";
+import { useStore } from "../../hooks";
 
 const debugLog = logWhen(false);
 
@@ -15,8 +14,7 @@ export interface IErgoBoxCardContext {
 }
 
 export const ErgoBoxCardContext = ({ internalId }: IErgoBoxCardContext) => {
-  // const { state } = useContext(TxioStoreContext);
-  const { state, setState } = useStore();
+  const { state } = useStore();
   const [box, setBox] = useState({});
 
   useUpdateEffect(() => {

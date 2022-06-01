@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-// based on: https://felixgerschau.com/react-typescript-context/
+import React from "react";
 import {
   createContext,
   ReactNode,
@@ -114,12 +113,9 @@ export const TxioStoreProvider = ({ config, children }: ITxioStoreProvider) => {
     () => ({ state, setState } as IStoreContext),
     [state, setState]
   );
-  // useEffect(() => {
-  //   setState(R.mergeDeepRight(state, { config }))
-  // }, [config, setState])
 
   return (
-    <TxioStoreContext.Provider value={{ state, setState }}>
+    <TxioStoreContext.Provider value={contextValue}>
       {children}
     </TxioStoreContext.Provider>
   );

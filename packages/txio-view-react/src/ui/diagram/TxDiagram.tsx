@@ -1,15 +1,8 @@
 import React, { useEffect } from "react";
 import { toState } from "../../model";
-import {
-  Store,
-  setDiagramDimensions,
-  setSearchConnections,
-} from "../../model";
+import { Store, setDiagramDimensions, setSearchConnections } from "../../model";
 import { makeColorMap, logWhen } from "../../utils";
-import {
-  allValidSamples,
-  toIdPairs,
-} from "../../logic";
+import { allValidSamples, toIdPairs } from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious, useStore } from "../../hooks";
@@ -26,7 +19,7 @@ const findConnections = (boxes) =>
   new Promise((resolve) =>
     setTimeout(() => {        // eslint-disable-line
       const res = R.pipe(allValidSamples, toIdPairs)(boxes);
-      debugLog("found connections")(res)
+      debugLog("found connections")(res);
 
       resolve(res);
     }, 200)
@@ -60,14 +53,12 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
 
   // move data to state
   useEffect(() => {
-
     if (R.equals(prevData, data)) {
       return;
     }
     setState(() => R.assoc("config", state.config, toState(data)));
     setState(setDiagramDimensions({ width, height }));
-
-  }, [data, prevData, setState, width, height]);
+  }, [data, prevData, setState, width, height, state.config]);
 
   useEffect(() => {
     setState(setDiagramDimensions({ width, height }));
@@ -84,10 +75,8 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     setState(R.assoc("colorMap", colorMap));
     debugLog("state.boxes")(state.boxes);
 
-
     setState(R.assoc("noOfGraphLayouts", 0));
   }, [data, prevData, state, setState]);
-
 
   useEffect(() => {
     if (R.isEmpty(state.boxes) || state.searchConnections) {
@@ -111,7 +100,6 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       }
     });
   }, [isMounted, state, setState, prevData, data]);
-
 
   return (
     <div className="txio-diagram" style={{ width, height }}>

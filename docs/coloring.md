@@ -2,7 +2,7 @@
 
 Names for the categories could be: [Alice, Bob, Carol, Dave](https://www.elektronik-kompendium.de/sites/net/1909021.htm).
 
-
+Context is based on: https://felixgerschau.com/react-typescript-context/
 
 # Coloring
 
