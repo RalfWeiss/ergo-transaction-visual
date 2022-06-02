@@ -171,7 +171,7 @@ const TransactionViewWrapper = ({ txId }) => {
 export default () => {
   const { state } = useStore();
   const [txId2View, setTxId2View] = React.useState("");
-  const [txId, setTxId] = React.useState("");
+  const [txId, setTxId] = React.useState("95c9ffdf0bfc4e4f904dfba2f516bb8e3929a2fb369c59b7a5a93087ba7730ef");
   const handleChange = (event) => setTxId(event.target.value);
 
   return (

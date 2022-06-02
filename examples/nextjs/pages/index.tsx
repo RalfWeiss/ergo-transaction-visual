@@ -13,6 +13,7 @@ import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 // import data3 from "../fixtures/demo-3.json";
 import rentNft from "../fixtures/dappstep Rent NFT.json";
+import TwoP2PK from "../fixtures/two-p2pk.json"
 
 // const data4 = {
 //   inputs: [
@@ -70,7 +71,7 @@ const demos = [
   { title: "Demo-2", data: data2 },
   { title: "Rent NFT", data: rentNft },
   { title: "Demo Box Coloring", data: data4 },
-  { title: "Demo 5", data: data5 },
+  { title: "Two P2PK's", data: TwoP2PK },
 ];
 
 const screenStyle = {
@@ -136,7 +137,7 @@ export default () => {
           />
         </div>
         <div>
-          <TxDiagram width={800} height={800} data={txData} />
+          <TxDiagram width={1200} height={1200} data={txData} />
         </div>
         <pre>{JSON.stringify(state, null, 2)}</pre>
       </div>

@@ -62,6 +62,14 @@ const getLabel = (store) => (ergoTree) => {
   if (!store || !ergoTree) {
     return "";
   }
+  const t = store?.colorMap[ergoTree]?.label;
+  return t || "";
+};
+
+const getType = (store) => (ergoTree) => {
+  if (!store || !ergoTree) {
+    return "";
+  }
   const t = store?.colorMap[ergoTree]?.type;
   return t || "";
 };
@@ -84,6 +92,7 @@ export const TypeBadge = ({ ergoTree }) => {
   const { state } = useStore();
 
   // FaFileContract
+  const badgeType = getType(state)(ergoTree);
   const badgeText = getLabel(state)(ergoTree);
   const Icon = R.cond([
     [
@@ -97,7 +106,7 @@ export const TypeBadge = ({ ergoTree }) => {
       R.always(() => <FaMoneyBill style={{ fontSize: "large" }} />),
     ],
     [R.T, R.always(() => <BiFace style={{ fontSize: "large" }} />)],
-  ])(badgeText);
+  ])(badgeType);
   return (
     <div className="badges">
       {badgeText && badgeText !== "" ? (

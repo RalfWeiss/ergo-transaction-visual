@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { toState } from "../../model";
 import { Store, setDiagramDimensions, setSearchConnections } from "../../model";
-import { makeColorMap, logWhen } from "../../utils";
+import { addLabelsToColorMap, makeColorMap, logWhen } from "../../utils";
 import { allValidSamples, toIdPairs } from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
@@ -90,6 +90,7 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     const colorMap = R.pipe(
       debugLog("colorMap input"),
       makeColorMap(state),
+      addLabelsToColorMap,
       debugLog("colorMap")
     )({
       inputs: R.values(state.boxes),

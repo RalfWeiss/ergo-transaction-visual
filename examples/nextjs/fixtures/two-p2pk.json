@@ -1,0 +1,116 @@
+{
+    "inputs": [
+        {
+            "boxId": "39287e527231d0f3b12ed9ecfff11385dc0c965fc053a7830301ea4c59a56128",
+            "transactionId": "5fada545898c83eadd85cf1f7283e4969361a2fd7405bef60500c637a3b12974",
+            "blockId": "c06347f96676497921914bb53cd211e34ae973c78b54ebd9129e5192b5503cac",
+            "value": "200000",
+            "index": 0,
+            "globalIndex": 17311345,
+            "creationHeight": 761338,
+            "settlementHeight": 761340,
+            "ergoTree": "100604000400040204040580bab7030580bab703d812d601b2a4730000d602b2a5730100d603c67202070ed604e67203d605c672020805d606e67205d607e4c67201040ed60893e4c67202040e7207d609b2a5730200d60ac2b2a599b1a5730300d60bdb6903db6503fed60ce4c672010605d60d9a720b720cd60ee4c672010505d60f9683070193c272097207ed720493e47203720aeded720691e4720599720d7304ed72068fe472059a720d730593c17209720e720893e4c672020505720e93e4c672020605720cd61093720a7207d611c672010805d612ede672118fe47211720b95efe6c67201070e957210d1968303017208ef7204ef7206d1720f957210d17212d1eded93e47203720a720fef7212",
+            "address": "kQnHML2GMSx6qvzVPfEaUCZqmgQT5mWDEyf6RXEf31dtPBY2y2TCyVATtinrftSwBc1uhibccZAJ4nqi8P7vPeCWLgzDuHU2CtrZurR8DXik1snmCRQ7DG1LqoeZ434dhbhErCX8XXxjP91TphCYZo4nSuGdssZEehiBe85BYfo2NSVpecqQLyaFd8HQexcc18BaG5XJ81L12ibk3PiXa3W7oM4PPVqXM6M5RnGExZJSWbG7ikTRVnaKW7QN5N8qg8QtB9gMnpJ8DZBSGkBhuHRu1B7r4E9N3pPE8FdWywHjoGeZjGf77Xp5GYtRyo8tQu6BnFSc6HAHXdFoNxJNREBHQd6tHhfRT8J8dsJ16UFSc4ePK2DzEWk6H6UZ",
+            "assets": [
+                {
+                    "tokenId": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+                    "index": 0,
+                    "amount": 1,
+                    "name": "COMET",
+                    "decimals": 0,
+                    "type": "EIP-004"
+                }
+            ],
+            "additionalRegisters": {
+                "R4": "0e240008cd03bce97a3de134b1f85afe530caa42b0f8618e7883c4b389bb9f4def5d8245a8c4",
+                "R5": "0580b48913",
+                "R6": "0580f0b252"
+            },
+            "spentTransactionId": null,
+            "mainChain": true,
+            "extension": {}
+        },
+        {
+            "boxId": "bfa920a2db8540bcd5b07b06af20404f9a9d135f969af6588aeb54f777a4e938",
+            "transactionId": "c9efab23371330ea35a60f5f59e96e58ea9ebc9cce8783e23aa936be4abe20dc",
+            "index": 2,
+            "ergoTree": "0008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913",
+            "creationHeight": 761263,
+            "value": "908950010",
+            "assets": [
+                {
+                    "tokenId": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+                    "amount": "1973"
+                }
+            ],
+            "additionalRegisters": {},
+            "confirmed": true,
+            "extension": {}
+        }
+    ],
+    "outputs": [
+        {
+            "additionalRegisters": {
+                "R4": "0e240008cd03bce97a3de134b1f85afe530caa42b0f8618e7883c4b389bb9f4def5d8245a8c4",
+                "R5": "0580b48913",
+                "R6": "0580f0b252",
+                "R7": "0e240008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913",
+                "R8": "058ea0ee9fa560"
+            },
+            "boxId": "39287e527231d0f3b12ed9ecfff11385dc0c965fc053a7830301ea4c59a56128",
+            "transactionId": "5fada545898c83eadd85cf1f7283e4969361a2fd7405bef60500c637a3b12974",
+            "blockId": "c06347f96676497921914bb53cd211e34ae973c78b54ebd9129e5192b5503cac",
+            "value": "200000",
+            "index": 0,
+            "globalIndex": 17311345,
+            "creationHeight": 761338,
+            "settlementHeight": 761340,
+            "ergoTree": "100604000400040204040580bab7030580bab703d812d601b2a4730000d602b2a5730100d603c67202070ed604e67203d605c672020805d606e67205d607e4c67201040ed60893e4c67202040e7207d609b2a5730200d60ac2b2a599b1a5730300d60bdb6903db6503fed60ce4c672010605d60d9a720b720cd60ee4c672010505d60f9683070193c272097207ed720493e47203720aeded720691e4720599720d7304ed72068fe472059a720d730593c17209720e720893e4c672020505720e93e4c672020605720cd61093720a7207d611c672010805d612ede672118fe47211720b95efe6c67201070e957210d1968303017208ef7204ef7206d1720f957210d17212d1eded93e47203720a720fef7212",
+            "address": "kQnHML2GMSx6qvzVPfEaUCZqmgQT5mWDEyf6RXEf31dtPBY2y2TCyVATtinrftSwBc1uhibccZAJ4nqi8P7vPeCWLgzDuHU2CtrZurR8DXik1snmCRQ7DG1LqoeZ434dhbhErCX8XXxjP91TphCYZo4nSuGdssZEehiBe85BYfo2NSVpecqQLyaFd8HQexcc18BaG5XJ81L12ibk3PiXa3W7oM4PPVqXM6M5RnGExZJSWbG7ikTRVnaKW7QN5N8qg8QtB9gMnpJ8DZBSGkBhuHRu1B7r4E9N3pPE8FdWywHjoGeZjGf77Xp5GYtRyo8tQu6BnFSc6HAHXdFoNxJNREBHQd6tHhfRT8J8dsJ16UFSc4ePK2DzEWk6H6UZ",
+            "assets": [
+                {
+                    "tokenId": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+                    "index": 0,
+                    "amount": 1,
+                    "name": "COMET",
+                    "decimals": 0,
+                    "type": "EIP-004"
+                }
+            ],
+            "spentTransactionId": null,
+            "mainChain": true,
+            "extension": {}
+        },
+        {
+            "additionalRegisters": {},
+            "value": "20000000",
+            "ergoTree": "0008cd03bce97a3de134b1f85afe530caa42b0f8618e7883c4b389bb9f4def5d8245a8c4",
+            "assets": [],
+            "creationHeight": 763258,
+            "extension": {}
+        },
+        {
+            "value": "887950010",
+            "ergoTree": "0008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913",
+            "assets": [
+                {
+                    "tokenId": "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
+                    "amount": 1973
+                }
+            ],
+            "additionalRegisters": {},
+            "creationHeight": 763258,
+            "extension": {}
+        },
+        {
+            "value": "1000000",
+            "creationHeight": 763258,
+            "ergoTree": "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+            "assets": [],
+            "additionalRegisters": {},
+            "extension": {}
+        }
+    ],
+    "fee": "1000000",
+    "dataInputs": []
+}

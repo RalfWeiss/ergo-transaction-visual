@@ -64,6 +64,7 @@ const theme = extendTheme({
           right: "4px",
           borderRadius: "15px",
           fontSize: "small",
+          fontWeight: "bold"
           // borderColor: "inherit"
         },
         "& .indicator": {

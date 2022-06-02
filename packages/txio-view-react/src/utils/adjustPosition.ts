@@ -75,7 +75,8 @@ export const adjustpositionFromStartPos =
       // }
       const newPosition = {
         x: prevPosition.x,
-        y: prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes,
+        //y: prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes,
+        y: R.max(prevPosition.y, prevPosition.y + prevDimension.height + VerticalDistanceBetweenBoxes),
       };
       accTyped[currentKey].position = newPosition as XYPosition;
       return accTyped;

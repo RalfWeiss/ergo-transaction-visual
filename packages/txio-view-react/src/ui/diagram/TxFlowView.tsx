@@ -224,6 +224,7 @@ export const TxFlowView = ({
         }))(layoutedNodes);
 
         setNodes(repositionedNodes);
+        //setNodes(layoutedNodes);
       }
     }
   }, [
