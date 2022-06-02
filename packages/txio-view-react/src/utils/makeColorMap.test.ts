@@ -1,5 +1,5 @@
-// import { makeColorMap, pickValues } from "./makeColorMap";
-import { pickValues } from "./makeColorMap";
+import { makeColorMap, pickValues } from "./makeColorMap";
+// import { pickValues } from "./makeColorMap";
 
 describe("pickKeyValue", () => {
   it("should omit empties and preserve order", () => {
@@ -42,35 +42,57 @@ describe("pickKeyValue", () => {
   });
 });
 
-// describe("makeColorMap", () => {
-//   it("should make a color map", () => {
-//     const expected = {
-//       f2295a: "LightCoral",
-//       f2295b: "PaleGreen",
-//       //      CxP58V: "PaleGreen",
-//       //      f2295b: "NavajoWhite",
-//     };
-//     const input = {
-//       inputs: [
-//         {
-//           ergoTree: "f2295a",
-//           transactionId: "a8da67",
-//           blockId: "1cb4aeabf378",
-//           value: 100000,
-//           address: "CxP58V",
-//         },
-//       ],
-//       outputs: [
-//         {
-//           ergoTree: "f2295b",
-//           transactionId: "a8da67",
-//           blockId: "1cb4aea",
-//           value: 100000,
-//           address: "CxP58V",
-//         },
-//       ],
-//     };
-//     const result = makeColorMap(state)(input);
-//     expect(result).toEqual(expected);
-//   });
-// });
+describe("makeColorMap", () => {
+  it("should make a color map", () => {
+    const state = {
+      config: {
+        boxColors: ["LightCoral", "PaleGreen", "yellow"],
+      },
+    } as any;
+    const expected = {
+      f2295a: {
+        color: "LightCoral",
+        type: "SC",
+      },
+      "0008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913":
+        {
+          color: "PaleGreen",
+          type: "P2PK",
+        },
+      "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304":
+        {
+          color: "yellow",
+          type: "Fee",
+        },
+      //      CxP58V: "PaleGreen",
+      //      f2295b: "NavajoWhite",
+    };
+    const input = {
+      inputs: [
+        {
+          ergoTree: "f2295a",
+          transactionId: "a8da67",
+          blockId: "1cb4aeabf378",
+          value: 100000,
+          address: "CxP58V",
+        },
+      ],
+      outputs: [
+        {
+          ergoTree:
+            "0008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913",
+          transactionId: "a8da67",
+          blockId: "1cb4aea",
+          value: 100000,
+          address: "CxP58V",
+        },
+        {
+          ergoTree:
+            "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304",
+        },
+      ],
+    };
+    const result = makeColorMap(state)(input);
+    expect(result).toEqual(expected);
+  });
+});

@@ -209,7 +209,8 @@ export const TxFlowView = ({
     //   return;
     // }
     // if (state.noOfGraphLayouts >= 3) {
-    if (state.noOfGraphLayouts >= 4) { // 4
+    if (state.noOfGraphLayouts >= 4) {
+      // 4
       // setNodes(layoutWithDagre)
       if (useDagreLayout) {
         const layoutedNodes = layoutWithDagre(state)(nodes, edges);

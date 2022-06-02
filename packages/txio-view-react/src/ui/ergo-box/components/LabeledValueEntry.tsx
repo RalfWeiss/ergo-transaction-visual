@@ -10,7 +10,7 @@ export interface LabeledValueEntryProps {
 export const LabeledValueEntry = ({ label, value }: LabeledValueEntryProps) => (
   <tr key={label}>
     <td style={{ textAlign: "right" }}>{label}:</td>
-    <td style={{ paddingLeft: "1ch" }}>{value}</td>
+    <td style={{ paddingLeft: "1ch", fontFamily: "monospace" }}>{value}</td>
   </tr>
 );
 

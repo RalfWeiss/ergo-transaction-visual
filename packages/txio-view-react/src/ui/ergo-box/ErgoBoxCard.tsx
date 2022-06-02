@@ -1,10 +1,12 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import { ErgoBox } from "../../model";
 import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";
 import { Registers } from "./Registers";
 import { setDimension } from "../../model";
 import { usePrevious, useStore } from "../../hooks";
+import { FaFileContract, FaMoneyBill } from "react-icons/fa";
+import { BiFace } from "react-icons/bi";
 import * as R from "ramda";
 
 const cardStyle = {
@@ -56,9 +58,61 @@ const Part = ({ ergoBox, hideOn, openState, label, children }: PartProps) => {
   );
 };
 
+const getLabel = (store) => (ergoTree) => {
+  if (!store || !ergoTree) {
+    return "";
+  }
+  const t = store?.colorMap[ergoTree]?.type;
+  return t || "";
+};
+
 interface ErgoBoxCardProps {
   ergoBox: ErgoBox;
 }
+
+const badgeIconStyle = {
+  backgroundColor: "inherit",
+  // paddingLeft: "4px",
+  // paddingBottom: "2px"
+};
+
+const badgeLabelStyle = {
+  //  paddingLeft: "2px"
+};
+
+export const TypeBadge = ({ ergoTree }) => {
+  const { state } = useStore();
+
+  // FaFileContract
+  const badgeText = getLabel(state)(ergoTree);
+  const Icon = R.cond([
+    [
+      R.equals("SC"),
+      R.always(() => (
+        <FaFileContract style={{ fontSize: "large", paddingBottom: "2px" }} />
+      )),
+    ],
+    [
+      R.equals("Fee"),
+      R.always(() => <FaMoneyBill style={{ fontSize: "large" }} />),
+    ],
+    [R.T, R.always(() => <BiFace style={{ fontSize: "large" }} />)],
+  ])(badgeText);
+  return (
+    <div className="badges">
+      {badgeText && badgeText !== "" ? (
+        <div style={badgeIconStyle}>
+          <Icon />
+        </div>
+      ) : null}
+      {badgeText && badgeText !== "" ? ( // && badgeText !== "Fee")
+        <div style={badgeLabelStyle}>
+          <span>{badgeText}&nbsp;</span>
+        </div>
+      ) : null}
+    </div>
+  );
+};
 
 export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   const prevErgoBox = usePrevious(ergoBox);
@@ -97,7 +151,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
   // hideOn={R.o(R.isEmpty, R.prop('value'))}
   return (
     <div ref={ref} style={cardStyle}>
-      {/* <span className="badge">Box-Badge</span> */}
+      <TypeBadge ergoTree={ergoBox.ergoTree} />
       <Part
         ergoBox={ergoBox}
         openState

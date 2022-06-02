@@ -14,6 +14,7 @@ const edgeFromIdPair =
     targetHandle: "left",
     animated: true,
     style,
+    // label: "0 ERG",
     markerEnd: appConfig.markerEnd,
   });
 

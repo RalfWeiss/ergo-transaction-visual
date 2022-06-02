@@ -12,40 +12,15 @@ Address types are (semantics described below):
     0x02 - Pay-to-Script-Hash(P2SH)
     0x03 - Pay-to-Script(P2S)
 
-Hey ilyalbn,
-
-hope things went well with your presentation.
-
-Regarding your labeling suggestions, I've got some questions.
-
-Right now the boxes are colored based on different values in field: ergoTree.
-I do not look at the value of the address field.
-I'm talking about the field address in the transaction data:
-
-According to the docs we have P2PK, P2SH and P2S addresses coded in the address field. Right?
-
-Do you want me to do the following?
-
-- If it is a P2PK address label it as Alice, Bob, etc.?
-- If it is a P2SH or P2S label it as Contract?
-
-By the way, what is the difference between P2SH and P2S?
 
 
-{
-  "course": "Layman Design Course",
-  "organizedBy": "DeCo",
-  "awardedTo": "ralf#9965",
-  "team": "Tensile",
-  "leadBy": "Auggie",
-  "assistedBy": "Zalvures",
-  "courseCompleted": true,
-  "completedDate": "25th May 2022",
-  "finalProject": "Tensile",
-  "batch": 1,
-  "remarks": "This is to award ${awardedTo} for persevering and completing the DeCo: Layman Design Course.",
-  "studentQuote": "Entertaining format that learned me a lot."
-}
+Assuming that the ergoTree value: 0008cd025e6f22d4ba36bd53adbfe449cf85ab11067cfd265b11a8e8faf6d100bd1c2913 
+is a standard length address the length is 72.
+Each ergoTree with a length of 72 will be handled as a P2PK-Address and labeled as Alice, Bob, etc.
+
+An ergoTree value of: 1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304 will be seen as the fee.
+
+Any other ergoTree value is a Smart Contract.
 
 
 

@@ -46,20 +46,21 @@ interface TxDiagramProps {
   };
 }
 
-const MaxBoxes = 5
+const MaxBoxes = 5;
 
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const { state, setState } = useStore();
   const isMounted = useIsMounted();
   const prevData = usePrevious(data);
 
-  if ((data.inputs.length > MaxBoxes) ||
-      (data.outputs.length > MaxBoxes )) {
-        return (<div>
+  if (data.inputs.length > MaxBoxes || data.outputs.length > MaxBoxes) {
+    return (
+      <div>
         At present I can only handle <br />
         max {MaxBoxes} inputs to max {MaxBoxes} outputs.
-        </div>)
-      }
+      </div>
+    );
+  }
 
   // move data to state
   useEffect(() => {
@@ -76,11 +77,23 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
 
   useEffect(() => {
     // immediate return on equal data
-    if (R.equals(prevData, data)) {
+    // if (R.equals(prevData, data)) {
+    //   return;
+    // }
+    if (state.noOfGraphLayouts > 0) {
       return;
     }
 
-    const colorMap = R.pipe(makeColorMap(state), debugLog("colorMap"))(data);
+    // const debugLog = logWhen(true);
+    // Todo: This must be changed.
+    // const colorMap = R.pipe(makeColorMap(state), debugLog("colorMap"))(data);
+    const colorMap = R.pipe(
+      debugLog("colorMap input"),
+      makeColorMap(state),
+      debugLog("colorMap")
+    )({
+      inputs: R.values(state.boxes),
+    });
 
     setState(R.assoc("colorMap", colorMap));
     debugLog("state.boxes")(state.boxes);
@@ -96,7 +109,9 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
     // else {
     //   console.log("useEffect data has changed: ", state.noOfGraphLayouts)
     // }
-    if (state.noOfGraphLayouts > 0) return
+    if (state.noOfGraphLayouts > 0) {
+      return;
+    }
     if (R.isEmpty(state.boxes) || state.searchConnections) {
       return;
     }

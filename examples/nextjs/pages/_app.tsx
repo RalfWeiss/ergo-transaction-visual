@@ -39,6 +39,33 @@ const theme = extendTheme({
           borderRadius: "15px",
           // borderColor: "inherit"
         },
+        "& .xxxbadge": {
+          // bgColor: "inherit",
+          // borderRadius: "15px",
+          marginLeft: 2,
+          paddingBottom: 1,
+          // paddingX: "8px",
+          // paddingY: "4px",
+          // paddingBottom: "2px",
+        },
+        "& .badges": {
+          bgColor: "inherit",
+          color: "gray.600",
+          display: "flex",
+          flexDirection: "row-reverse",
+          flexWrap: "no-wrap",
+          alignItems: "center",
+          position: "absolute",
+          paddingX: "8px",
+          paddingY: "4px",
+          paddingBottom: "2px",
+          top: "-16px",
+          // right: "-12px",
+          right: "4px",
+          borderRadius: "15px",
+          fontSize: "small",
+          // borderColor: "inherit"
+        },
         "& .indicator": {
           bgColor: "yellow.300",
           // display: "inline-box",

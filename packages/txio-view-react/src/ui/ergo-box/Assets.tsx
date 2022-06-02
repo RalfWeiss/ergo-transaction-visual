@@ -24,7 +24,9 @@ const assetRow =
       <tr key={tokenId}>
         {hasNames ? <td>{name}</td> : null}
         {hasTypes ? <td>{type}</td> : null}
-        <td>{truncateWithEllipses(TRUNCATE_MAXLEN)(formatAddress(tokenId))}</td>
+        <td style={{ fontFamily: "monospace" }}>
+          {truncateWithEllipses(TRUNCATE_MAXLEN)(formatAddress(tokenId))}
+        </td>
         <td style={{ width: "12ch", textAlign: "right" }}>
           {Number(amount).toLocaleString()}
         </td>

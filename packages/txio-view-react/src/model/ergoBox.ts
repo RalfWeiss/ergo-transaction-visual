@@ -2,8 +2,8 @@ import * as R from "ramda";
 // import { ensureString, truncateWithEllipses } from '../utils'
 // import { ensureString } from '../utils'
 import { Asset, transform as transformAsset } from "./asset";
-import bs58 from 'bs58';
-import { Buffer } from 'buffer';
+import bs58 from "bs58";
+import { Buffer } from "buffer";
 
 export const enum BoxType {
   "inputBox",
@@ -45,19 +45,15 @@ export const normalize = (input: any): ErgoBox => {
     // value: (v) => Number(v)
     value: (v) => BigInt(v),
   };
-  return R.pipe(
-    withDefaults, 
-    R.evolve(transformations) as any,
-    box => {
-      if (box.address !== "" && box.ergoTree === "") {
-        // restore ergoTree from address
-        const bytes = bs58.decode(box.address)
-        const ergoTree = Buffer.from(bytes).toString('hex')
-        // remove prefix and checksum
-        // see: https://docs.ergoplatform.com/dev/wallet/address/
-        box.ergoTree = ergoTree.substring(2, ergoTree.length-8)
-      }
-      return box
+  return R.pipe(withDefaults, R.evolve(transformations) as any, (box) => {
+    if (box.address !== "" && box.ergoTree === "") {
+      // restore ergoTree from address
+      const bytes = bs58.decode(box.address);
+      const ergoTree = Buffer.from(bytes).toString("hex");
+      // remove prefix and checksum
+      // see: https://docs.ergoplatform.com/dev/wallet/address/
+      box.ergoTree = ergoTree.substring(2, ergoTree.length - 8);
     }
-  )(input) as any;
+    return box;
+  })(input) as any;
 };

@@ -27,7 +27,8 @@ export interface Store {
   dimensions: DimensionsByKey; // dimensions by internalId
   diagramDimensions: Dimensions;
   colorMap: {
-    [key: string]: string;
+    // [key: string]: string;
+    [key: string]: { color: string };
   };
   // connectionsByBoxId?: [[string,string]]
   connectionsByBoxId: any;

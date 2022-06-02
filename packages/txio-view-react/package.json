@@ -44,6 +44,7 @@
     "jsondiffpatch": "^0.4.1",
     "ramda": "^0.28.0",
     "react-flow-renderer": "^10.2.3",
+    "react-icons": "^4.4.0",
     "usehooks-ts": "^2.5.3"
   }
 }

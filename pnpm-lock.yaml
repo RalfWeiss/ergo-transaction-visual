@@ -36,6 +36,7 @@ importers:
       react: ~18.1.0
       react-dom: ~18.1.0
       react-flow-renderer: ^10.2.3
+      react-icons: ^4.4.0
       rimraf: ~3.0.2
       ts-jest: ~28.0.0
       ts-node: ~10.7.0
@@ -48,6 +49,7 @@ importers:
       jsondiffpatch: 0.4.1
       ramda: 0.28.0
       react-flow-renderer: 10.3.4_ef5jwxihqo6n7gxfmzogljlgcm
+      react-icons: 4.4.0_react@18.1.0
       usehooks-ts: 2.5.3_react@18.1.0
     devDependencies:
       '@jest/types': 28.1.0
@@ -4270,6 +4272,14 @@ packages:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       zustand: 3.7.2_react@18.1.0
+    dev: false
+
+  /react-icons/4.4.0_react@18.1.0:
+    resolution: {integrity: sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.1.0
     dev: false
 
   /react-is/16.13.1:

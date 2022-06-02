@@ -32,7 +32,7 @@ const colorForInternalId =
     // }
     const ergoTree = ergoTreeById(id)(state) || "";
     if (state.colorMap[ergoTree]) {
-      return state.colorMap[ergoTree];
+      return state.colorMap[ergoTree].color;
     }
     return "Silver"; // Todo: return a default color
   };
