@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@koale/useworker": "^4.0.2",
+    "bs58": "^5.0.0",
     "dagre": "^0.8.5",
     "jsondiffpatch": "^0.4.1",
     "ramda": "^0.28.0",

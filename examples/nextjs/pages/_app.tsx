@@ -13,7 +13,7 @@ const theme = extendTheme({
         color: "blue.500",
       },
       ".txio-diagram": {
-        bgColor: "gray.300",
+        bgColor: "gray.100",
         pt: "0",
         display: "flex",
         flexDirection: "column",

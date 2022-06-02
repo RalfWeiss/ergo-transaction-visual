@@ -46,10 +46,20 @@ interface TxDiagramProps {
   };
 }
 
+const MaxBoxes = 5
+
 export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const { state, setState } = useStore();
   const isMounted = useIsMounted();
   const prevData = usePrevious(data);
+
+  if ((data.inputs.length > MaxBoxes) ||
+      (data.outputs.length > MaxBoxes )) {
+        return (<div>
+        At present I can only handle <br />
+        max {MaxBoxes} inputs to max {MaxBoxes} outputs.
+        </div>)
+      }
 
   // move data to state
   useEffect(() => {
@@ -80,12 +90,19 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
 
   // Todo: there is an endless loop if no connections could be found
   useEffect(() => {
+    // if (R.equals(prevData, data)) {
+    //   console.log("useEffect data are equal: ", state.noOfGraphLayouts)
+    // }
+    // else {
+    //   console.log("useEffect data has changed: ", state.noOfGraphLayouts)
+    // }
+    if (state.noOfGraphLayouts > 0) return
     if (R.isEmpty(state.boxes) || state.searchConnections) {
       return;
     }
-    if (!R.isEmpty(state.connectionsByTokenId)) {
-      return;
-    }
+    // if (!R.isEmpty(state.connectionsByTokenId)) {
+    //   return;
+    // }
 
     debugLog("Start searching connections")(state.connectionsByTokenId);
     setState(setSearchConnections(true));

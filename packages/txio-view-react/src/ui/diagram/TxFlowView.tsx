@@ -209,7 +209,7 @@ export const TxFlowView = ({
     //   return;
     // }
     // if (state.noOfGraphLayouts >= 3) {
-    if (state.noOfGraphLayouts >= 4) {
+    if (state.noOfGraphLayouts >= 4) { // 4
       // setNodes(layoutWithDagre)
       if (useDagreLayout) {
         const layoutedNodes = layoutWithDagre(state)(nodes, edges);
@@ -236,6 +236,27 @@ export const TxFlowView = ({
     setState,
     useDagreLayout,
   ]);
+
+  // if I move this out I cannot move the nodes anymore
+  // useEffect(() => {
+  //   if (state.noOfGraphLayouts >= 4) { // 4
+  //     // setNodes(layoutWithDagre)
+  //     if (useDagreLayout) {
+  //       const layoutedNodes = layoutWithDagre(state)(nodes, edges);
+
+  //       const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
+
+  //       const repositionedNodes = R.map((node) => ({
+  //         ...node,
+  //         position:
+  //           adjustedPositions[node.data?.internalId]?.position || node.position,
+  //       }))(layoutedNodes);
+
+  //       setNodes(repositionedNodes);
+  //     }
+  //   }
+
+  // }, [nodes, edges, state, setNodes])
 
   useUpdateEffect(() => {
     if (R.equals(prevConnections, state.connectionsByTokenId)) {
