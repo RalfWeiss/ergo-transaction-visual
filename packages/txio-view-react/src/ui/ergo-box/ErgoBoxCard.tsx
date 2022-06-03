@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from "react";
+import React, { useRef, useLayoutEffect } from "react";
 import { ErgoBox } from "../../model";
 import { Assets } from "./Assets";
 import { RootProps } from "./RootProps";

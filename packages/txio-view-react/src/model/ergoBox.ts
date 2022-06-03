@@ -52,7 +52,7 @@ export const normalize = (input: any): ErgoBox => {
       const ergoTree = Buffer.from(bytes).toString("hex");
       // remove prefix and checksum
       // see: https://docs.ergoplatform.com/dev/wallet/address/
-      box.ergoTree = ergoTree.substring(2, ergoTree.length - 8);
+      box.ergoTree = ergoTree.substring(2, ergoTree.length - 8);  // eslint-disable-line
     }
     return box;
   })(input) as any;

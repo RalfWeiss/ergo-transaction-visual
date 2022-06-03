@@ -55,7 +55,7 @@ const InitialTxNode: Node = {
     label: "txBox",
     internalId: "Tx",
   },
-  position: { x: 100, y: 50 },
+  position: { x: 450, y: 100 },
   // node is only used for dagre calculations
   hidden: true,
 };
@@ -143,7 +143,7 @@ const getAdjustedPositions = (state) => (layoutedNodes) => {
   });
 };
 
-const MaxNoOfGraphLayouts = 7;
+// const MaxNoOfGraphLayouts = 7;
 
 // const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -160,7 +160,8 @@ export const TxFlowView = ({
   const prevConnections = usePrevious(state.connectionsByTokenId);
 
   useEffect(() => {
-    if (state.noOfGraphLayouts > MaxNoOfGraphLayouts) {
+    // if (state.noOfGraphLayouts > MaxNoOfGraphLayouts) {
+    if (state.noOfGraphLayouts > state.allBoxes.length + 1) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
@@ -209,7 +210,8 @@ export const TxFlowView = ({
     //   return;
     // }
     // if (state.noOfGraphLayouts >= 3) {
-    if (state.noOfGraphLayouts >= 4) {
+    // if (state.noOfGraphLayouts >= 4) {
+    if (state.noOfGraphLayouts >= state.allBoxes.length) {
       // 4
       // setNodes(layoutWithDagre)
       if (useDagreLayout) {
@@ -221,10 +223,28 @@ export const TxFlowView = ({
           ...node,
           position:
             adjustedPositions[node.data?.internalId]?.position || node.position,
+          // try to only position x
+          // {
+          //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
+          //   y: node.position.y
+          // }
         }))(layoutedNodes);
 
+        // console.log("state.inputBoxIds: ", state.inputBoxIds)
+        // const debugLog = logWhen(true)
         setNodes(repositionedNodes);
-        //setNodes(layoutedNodes);
+        // new 3.6.22
+        // R.pipe(
+        //   debugLog("input"),
+        //   R.reduce(
+        //     (acc, x) => R.assoc(x.id)(x)(acc)
+        //   )({}),
+        //   avoidOverlappingY(5)(state.inputBoxIds),
+        //   avoidOverlappingY(5)(state.outputBoxIds),
+        //   debugLog("output"),
+        //   R.values,
+        //   setNodes
+        // )(layoutedNodes)
       }
     }
   }, [

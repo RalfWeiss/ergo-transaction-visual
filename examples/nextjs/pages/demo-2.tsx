@@ -1,17 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Button, Container, Flex, HStack, Input, Text } from "@chakra-ui/react";
 import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  Input,
-  Text,
-} from "@chakra-ui/react";
-import {
-  TxIoView,
   TxDiagram,
-  useStore,
   TxioStoreProvider,
   ReactFlowProvider,
 } from "@ertravi/txio-view-react";
@@ -35,34 +25,6 @@ a9165c2e40a27024a3bda3012bb5796dd39a16be9d6488868f2294424e752342
 too big:
 baf44dba0b91a7105cb2648f0ad75c820c2b55e39eb315dd400e46768b16c206
 */
-
-{
-  /* <Container maxW='2xl' bg='blue.600' centerContent>
-  <Box padding='4' bg='blue.400' color='black' maxW='md'>
-    There are many benefits to a joint design and development system. Not only
-    does it bring benefits to the design team, but it also brings benefits to
-    engineering teams. It makes sure that our experiences have a consistent look
-    and feel, not just in our design specs, but in production.
-  </Box>
-</Container>
-
-function Example() {
-  const [value, setValue] = React.useState('')
-  const handleChange = (event) => setValue(event.target.value)
-
-  return (
-    <>
-      <Text mb='8px'>Value: {value}</Text>
-      <Input
-        value={value}
-        onChange={handleChange}
-        placeholder='Here is a sample placeholder'
-        size='sm'
-      />
-    </>
-  )
-}    */
-}
 
 const MaxBoxes = 5;
 
@@ -88,12 +50,7 @@ const TxioViewConfig = {
 };
 
 const TransactionView = ({ txId }) => {
-  const { state } = useStore();
   const { data, error } = useFetch(`/ergoexplorer/en/transactions/${txId}`);
-
-  useEffect(() => {
-    console.log(JSON.stringify(state, null, 2));
-  }, [state]);
 
   if (error) {
     return <p>There is an error: {JSON.stringify(error, null, 2)}</p>;
@@ -169,9 +126,10 @@ const TransactionViewWrapper = ({ txId }) => {
 };
 
 export default () => {
-  const { state } = useStore();
   const [txId2View, setTxId2View] = React.useState("");
-  const [txId, setTxId] = React.useState("95c9ffdf0bfc4e4f904dfba2f516bb8e3929a2fb369c59b7a5a93087ba7730ef");
+  const [txId, setTxId] = React.useState(
+    "95c9ffdf0bfc4e4f904dfba2f516bb8e3929a2fb369c59b7a5a93087ba7730ef"
+  );
   const handleChange = (event) => setTxId(event.target.value);
 
   return (

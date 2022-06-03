@@ -53,15 +53,6 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   const isMounted = useIsMounted();
   const prevData = usePrevious(data);
 
-  if (data.inputs.length > MaxBoxes || data.outputs.length > MaxBoxes) {
-    return (
-      <div>
-        At present I can only handle <br />
-        max {MaxBoxes} inputs to max {MaxBoxes} outputs.
-      </div>
-    );
-  }
-
   // move data to state
   useEffect(() => {
     if (R.equals(prevData, data)) {
@@ -134,6 +125,15 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
       }
     });
   }, [isMounted, state, setState, prevData, data]);
+
+  if (data.inputs.length > MaxBoxes || data.outputs.length > MaxBoxes) {
+    return (
+      <div>
+        At present I can only handle <br />
+        max {MaxBoxes} inputs to max {MaxBoxes} outputs.
+      </div>
+    );
+  }
 
   return (
     <div className="txio-diagram" style={{ width, height }}>

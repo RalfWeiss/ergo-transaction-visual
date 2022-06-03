@@ -13,65 +13,19 @@ import data1 from "../fixtures/demo-1.json";
 import data2 from "../fixtures/demo-2.json";
 // import data3 from "../fixtures/demo-3.json";
 import rentNft from "../fixtures/dappstep Rent NFT.json";
-import TwoP2PK from "../fixtures/two-p2pk.json"
-
-// const data4 = {
-//   inputs: [
-//     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 1 },
-//     { boxId: "001x", ergoTree: "001et", address: "O000001", value: 2 },
-//     { value: 3 },
-//   ],
-//   outputs: [
-//     { address: "Z000001", value: 4 },
-//     { boxId: "001x", ergoTree: "001et", address: "B000001", value: 5 },
-//     { boxId: "000x", ergoTree: "000et", address: "A000001", value: 6 },
-//     { boxId: "100x", ergoTree: "100et", address: "O000001", value: 7 },
-//     { boxId: "001x", ergoTree: "001et", address: "A000001", value: 8 },
-//     { value: 9 },
-//   ],
-// };
-
-const data4 = {
-  inputs: [
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 100 },
-    { boxId: "001x", ergoTree: "001et", address: "O000001", value: 200 },
-    { value: 300 },
-  ],
-  outputs: [
-    { address: "Z000001", value: 100 },
-    { boxId: "001x", ergoTree: "001et", address: "B000001", value: 150 },
-    { boxId: "000x", ergoTree: "000et", address: "A000001", value: 200 },
-    { boxId: "100x", ergoTree: "003et", address: "O000001", value: 70 },
-    { boxId: "002x", ergoTree: "004et", address: "A000001", value: 80 },
-    // { value: 9 },
-  ],
-};
-
-const data5 = {
-  inputs: [
-    { address: "Z000001", value: 1, assets: [{ tokenId: "T1" }] },
-    { ergoTree: "001et", value: 2 },
-    { ergoTree: "002et", value: 3 },
-    { ergoTree: "003et", value: 4 },
-    { ergoTree: "004et", value: 5 },
-  ],
-  outputs: [
-    { ergoTree: "001et", value: 6 },
-    {
-      ergoTree: "001et",
-      value: 1,
-      assets: [{ tokenId: "T1" }],
-    },
-    { ergoTree: "005et", value: 8 },
-  ],
-};
+// import TwoP2PK from "../fixtures/two-p2pk.json";
+import NftRelistSkyhabor from "../fixtures/two-p2pk.json";
+// Some weird fee 300000 0008cd035afd0501f6f5c1c9fb9ed5afc84fbc02825c0c7c3f65970fa3e3d9c8c6abc546
+import ListForSaleTxSkyharbor from "../fixtures/Skyharbor-ListForSaleTx.json";
 
 const demos = [
   { title: "Demo-1", data: data1 },
   { title: "Demo-2", data: data2 },
   { title: "Rent NFT", data: rentNft },
-  { title: "Demo Box Coloring", data: data4 },
-  { title: "Two P2PK's", data: TwoP2PK },
+  //  { title: "Demo Box Coloring", data: data4 },
+  //  { title: "Two P2PK's", data: TwoP2PK },
+  { title: "Nft Relist Skyhabor", data: NftRelistSkyhabor },
+  { title: "List for Sale Skyhabor", data: ListForSaleTxSkyharbor },
 ];
 
 const screenStyle = {

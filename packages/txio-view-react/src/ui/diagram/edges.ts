@@ -14,7 +14,11 @@ const edgeFromIdPair =
     targetHandle: "left",
     animated: true,
     style,
-    // label: "0 ERG",
+    // label: "10 ERG",
+    // //labelStyle: { color: "red", backgroundColor: "blue" },
+    // labelStyle: { fill: 'blue', fontWeight: 700, paddingBottom: "10px" },
+    // labelShowBg: true,
+    // labelBgStyle: { fill: "rgb(237, 242, 247)" },
     markerEnd: appConfig.markerEnd,
   });
 

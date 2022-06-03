@@ -84,33 +84,31 @@ export const makeColorMap = (store: Store) => (input: any) => {
   return mapValuesWithColors(store)(values);
 };
 
-export const addLabelsToColorMap = colorMap => {
-  const result = R.clone(colorMap)
+export const addLabelsToColorMap = (colorMap) => {
+  const result = R.clone(colorMap);
 
-  const labelByType = input => R.pipe(
-    obj => R.zip(R.keys(obj),R.pluck("type")(R.values(obj))),
-    R.groupBy(R.nth(1)),
-    R.map(R.o(R.unnest, R.map(R.head))),
-    R.evolve({
-      SC: R.zip(["A", "B", "C", "D", "E"]),
-      P2PK: R.zip(["Alice", "Bob", "Carol", "Dave"]),
-      Fee: R.zip(["Fee"])
-    }),
-    // R.tap(x => console.log("grouped: ", JSON.stringify(x,null,2))),
-    R.forEachObjIndexed(
-      (val) => R.forEach(
-        ([label,ergoTree]) => {
-          //console.log("val: ", val)
-          //console.log("ergoTree: ", ergoTree)
-          //console.log("result[ergoTree]: ", result[ergoTree])
-          result[ergoTree].label = label
-        }
-      )(val)
-    )
+  const labelByType = (input) =>
+    R.pipe(
+      (obj) => R.zip(R.keys(obj), R.pluck("type")(R.values(obj))),
+      R.groupBy(R.nth(1)),
+      R.map(R.o(R.unnest, R.map(R.head))),
+      R.evolve({
+        SC: R.zip(["A", "B", "C", "D", "E"]),
+        P2PK: R.zip(["Alice", "Bob", "Carol", "Dave"]),
+        Fee: R.zip(["Fee"]),
+      }),
+      // R.tap(x => console.log("grouped: ", JSON.stringify(x,null,2))),
+      R.forEachObjIndexed((val) =>
+        R.forEach(([label, ergoTree]) => {
+          // console.log("val: ", val)
+          // console.log("ergoTree: ", ergoTree)
+          // console.log("result[ergoTree]: ", result[ergoTree])
+          result[ergoTree].label = label;
+        })(val)
+      )
+    )(input);
 
-  )(input)
+  labelByType(colorMap);
 
-  labelByType(colorMap)
-
-  return result
-}
+  return result;
+};

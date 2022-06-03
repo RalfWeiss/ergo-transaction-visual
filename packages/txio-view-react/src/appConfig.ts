@@ -23,6 +23,8 @@ export default {
   styleEdgeByTokenId: {
     stroke: "coral",
     strokeWidth: 3,
+    color: "red",
+    // backgroundColor: "red"
   },
   markerEnd: {
     type: "arrowclosed",
