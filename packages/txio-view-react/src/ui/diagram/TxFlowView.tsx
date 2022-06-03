@@ -18,7 +18,7 @@ import ReactFlow, {
   useEdgesState,
   useNodesState,
 } from "react-flow-renderer";
-import { layoutWithDagre } from "../../utils";
+import { layoutWithDagre, avoidOverlappingY } from "../../utils";
 import {
   //  edgeByBoxIdFromIdPair,
   edgeByTokenIdFromIdPair,
@@ -232,19 +232,19 @@ export const TxFlowView = ({
 
         // console.log("state.inputBoxIds: ", state.inputBoxIds)
         // const debugLog = logWhen(true)
-        setNodes(repositionedNodes);
+        //setNodes(repositionedNodes);
         // new 3.6.22
-        // R.pipe(
-        //   debugLog("input"),
-        //   R.reduce(
-        //     (acc, x) => R.assoc(x.id)(x)(acc)
-        //   )({}),
-        //   avoidOverlappingY(5)(state.inputBoxIds),
-        //   avoidOverlappingY(5)(state.outputBoxIds),
-        //   debugLog("output"),
-        //   R.values,
-        //   setNodes
-        // )(layoutedNodes)
+        R.pipe(
+          debugLog("input"),
+          R.reduce(
+            (acc, x) => R.chain(R.assoc, R.prop("id"))(x)(acc)
+          )({}),
+          avoidOverlappingY(5)(state.inputBoxIds),
+          avoidOverlappingY(5)(state.outputBoxIds),
+          debugLog("output"),
+          R.values,
+          setNodes
+        )(layoutedNodes)
       }
     }
   }, [
