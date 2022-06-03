@@ -1,5 +1,5 @@
 import { initialGraphLayout, avoidOverlappingY } from "./layoutWithDagre";
-// import * as R from "ramda";
+import * as R from "ramda";
 
 /*
 [
@@ -122,6 +122,64 @@ import { initialGraphLayout, avoidOverlappingY } from "./layoutWithDagre";
   }
 ]
 */
+describe("reduce to obj", () => {
+  it("should return an object", () => {
+    // these are the layouted nodes from dagre
+    const input = [
+      {
+        id: "input-0",
+        type: "inputBox",
+        position: {
+          x: 160,
+          y: 143.75,
+        },
+        data: {
+          internalId: "input-0",
+          label: "input-0",
+        },
+        style: {
+          borderRadius: "10px",
+          border: "solid 1px lightgray",
+        },
+        width: 320,
+        height: 279,
+        x: 160,
+        y: 143.75,
+      },
+      {
+        id: "input-1",
+        type: "inputBox",
+        position: {
+          x: 160,
+          y: 560.5,
+        },
+        data: {
+          internalId: "input-1",
+          label: "input-1",
+        },
+        style: {
+          borderRadius: "10px",
+          border: "solid 1px lightgray",
+        },
+        width: 223,
+        height: 348,
+        x: 160,
+        y: 560.5,
+      },
+    ];
+    const expected = {
+      "input-0": input[0],
+      "input-1": input[1],
+    };
+    const result = R.pipe(
+      R.reduce(
+        // (acc, x) => R.assoc(R.prop("id")(x))(x)(acc)
+        (acc, x) => R.chain(R.assoc, R.prop("id"))(x)(acc)
+      )({})
+    )(input);
+    expect(result).toEqual(expected);
+  });
+});
 
 describe("avoidOverlappingY", () => {
   it("adjust y with respect to height", () => {
