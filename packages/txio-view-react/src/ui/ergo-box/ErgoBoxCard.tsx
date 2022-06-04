@@ -134,6 +134,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
       return;
     }
     if (R.equals(prevErgoBox, ergoBox)) {
+    //if (prevErgoBox === ergoBox) {
       return;
     }
 
@@ -144,8 +145,8 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
     const dimensionsFromState = state.dimensions[ergoBox.internalId];
 
     if (
-      dimension.height !== 0 &&
-      dimension.width !== 0 &&
+      // dimension.height !== 0 &&
+      // dimension.width !== 0 &&
       !R.equals(dimension, dimensionsFromState)
     ) {
       setState(setDimension(ergoBox.internalId)(dimension));

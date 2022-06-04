@@ -4,7 +4,10 @@ import { Store } from "../model";
 import { Node, Edge } from "react-flow-renderer";
 // import { Selectors } from "../model";
 // import appConfig from "../appConfig";
+import { logWhen } from "../utils"
 import * as R from "ramda";
+
+const debugLog = logWhen(false)
 
 const reduceIndexed = R.addIndex(R.reduce);
 
@@ -56,6 +59,7 @@ export const avoidOverlappingY =
       R.sortBy(R.prop("y")),
       //      R.tap((x) => console.log("prop y: ", x)),
       R.pluck("id"),
+      debugLog("ids ordered"),
       // readjust according to y and height
       reduceIndexed((acc, x, idx, arr) => {
         if (idx === 0) {
@@ -75,7 +79,8 @@ export const avoidOverlappingY =
         );
         const newAcc = R.assocPath([x, "y"])(newY)(acc);
         return newAcc;
-      })(nodeObj)
+      })(nodeObj),
+      debugLog("avoid overlap: updated")
     )(nodeObj);
 
 // const adjustXPositionsOnLayoutedNodes =
@@ -108,16 +113,26 @@ export const layoutWithDagre =
       return nodes;
     }
 
+    const debugLog = logWhen(false)
+
     const dagreGraph = initialGraphLayout(nodes, edges);
 
     // attempt to just use dagre
     const layoutedNodes2 = nodes.map((node) => {
       const nodeWithPosition = dagreGraph.node(node.id);
-      // - deltaY;
-      node.position.y = nodeWithPosition.y; // eslint-disable-line 
-      node.position.x = nodeWithPosition.x; // eslint-disable-line
-      // , appConfig.nodeStartPosition.y)
-      return node;
+      // // - deltaY;
+      // node.position.y = nodeWithPosition.y; // eslint-disable-line 
+      // node.position.x = nodeWithPosition.x; // eslint-disable-line
+      // // , appConfig.nodeStartPosition.y)
+      // return node;
+      return R.pipe(
+        R.assocPath(["position", "y"])(nodeWithPosition.y),
+        R.assocPath(["position", "x"])(nodeWithPosition.x),        
+        // Todo: Document it!!! This is an important step to layout the graph correctly
+        n => R.mergeDeepLeft(R.path(["dimensions", n.id])(state))(n),
+
+        debugLog("node in layouted")
+      )(node)
     });
     return layoutedNodes2;
 

@@ -134,7 +134,9 @@ export const allValidSamples = (txs) =>
     debugLog("sorted patchesCount")
   )(txs);
 
-export const toIdPairs = (txs) =>
+export type ConnectionInfo = [string, string]
+
+export const toIdPairs = (txs):ConnectionInfo[] =>
   R.pipe(
     R.ifElse(R.isEmpty)(R.identity)(
       R.pipe(
@@ -148,3 +150,24 @@ export const toIdPairs = (txs) =>
       )
     )
   )(txs);
+
+export type ConnectionInfoEx = [string, string, bigint]
+
+export const toConnectionInfoEx = (txs):ConnectionInfoEx[] =>
+  R.pipe(
+    R.ifElse(R.isEmpty)(R.identity)(
+      R.pipe(
+        R.head,
+        R.propOr({}, "sampleStructure"),
+        R.mapObjIndexed((v, inKey) =>
+          R.map((outObj) => [
+            inKey, 
+            R.prop("internalId", outObj),
+            R.prop("value", outObj)
+          ])(v)
+        ),
+        R.values,
+        R.unnest
+      )
+    )
+  )(txs);  

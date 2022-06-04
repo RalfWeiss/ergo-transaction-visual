@@ -5,6 +5,7 @@ import {
   allInOutCombies,
   allInOutSampleStructures,
   allValidSamples,
+  toConnectionInfoEx,
   toIdPairs,
   txSampler,
 } from "./allCombinations";
@@ -579,6 +580,39 @@ describe("toIdPairs", () => {
       ["I-2", "O-2"],
     ];
     const result = toIdPairs(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("toConnectionInfoEx", () => {
+  it("returns empty array when there was no solution found", () => {
+    const input = [];
+    const expected = [];
+    const result = toIdPairs(input);
+    expect(result).toEqual(expected);
+  });
+  it("returns connection pairs for first solution", () => {
+    const input = [
+      {
+        outputCount: 3,
+        balance: 0,
+        zeroValueCount: 0,
+        patchesCount: 2,
+        sampleStructure: {
+          "I-1": [
+            { internalId: "O-1", value: 10, patchesCount: 0 },
+            { internalId: "O-3", value: 20, patchesCount: 0 },
+          ],
+          "I-2": [{ internalId: "O-2", value: 30, patchesCount: 2 }],
+        },
+      },
+    ];
+    const expected = [
+      ["I-1", "O-1", 10],
+      ["I-1", "O-3", 20],
+      ["I-2", "O-2", 30],
+    ];
+    const result = toConnectionInfoEx(input);
     expect(result).toEqual(expected);
   });
 });

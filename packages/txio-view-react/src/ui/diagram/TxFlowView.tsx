@@ -17,6 +17,7 @@ import ReactFlow, {
   Node,
   useEdgesState,
   useNodesState,
+  ReactFlowInstance
 } from "react-flow-renderer";
 import { layoutWithDagre, avoidOverlappingY } from "../../utils";
 import {
@@ -161,7 +162,7 @@ export const TxFlowView = ({
 
   useEffect(() => {
     // if (state.noOfGraphLayouts > MaxNoOfGraphLayouts) {
-    if (state.noOfGraphLayouts > state.allBoxes.length + 1) {
+    if (state.noOfGraphLayouts > (state.allBoxes.length + 1)) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
@@ -217,21 +218,21 @@ export const TxFlowView = ({
       if (useDagreLayout) {
         const layoutedNodes = layoutWithDagre(state)(nodes, edges);
 
-        const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
+        // const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
 
-        const repositionedNodes = R.map((node) => ({
-          ...node,
-          position:
-            adjustedPositions[node.data?.internalId]?.position || node.position,
-          // try to only position x
-          // {
-          //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
-          //   y: node.position.y
-          // }
-        }))(layoutedNodes);
+        // const repositionedNodes = R.map((node) => ({
+        //   ...node,
+        //   position:
+        //     adjustedPositions[node.data?.internalId]?.position || node.position,
+        //   // try to only position x
+        //   // {
+        //   //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
+        //   //   y: node.position.y
+        //   // }
+        // }))(layoutedNodes);
 
         // console.log("state.inputBoxIds: ", state.inputBoxIds)
-        // const debugLog = logWhen(true)
+        const debugLog = logWhen(false)
         //setNodes(repositionedNodes);
         // new 3.6.22
         R.pipe(
@@ -239,12 +240,45 @@ export const TxFlowView = ({
           R.reduce(
             (acc, x) => R.chain(R.assoc, R.prop("id"))(x)(acc)
           )({}),
-          avoidOverlappingY(5)(state.inputBoxIds),
-          avoidOverlappingY(5)(state.outputBoxIds),
+          avoidOverlappingY(50)(state.inputBoxIds),
+          avoidOverlappingY(50)(state.outputBoxIds),
+          // adjust positions
+          nodes => {
+            const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
+            return R.map((node) => ({
+                ...node,
+                position:
+                  adjustedPositions[node.data?.internalId]?.position || node.position,
+                // try to only position x
+                // {
+                //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
+                //   y: node.position.y
+                // }
+              }))(nodes);            
+          },
+          // adjust y
+          nodes => {
+            const minY = R.reduce(R.min)(Infinity)(R.pluck("y")(R.values(nodes)))
+
+            return R.map(
+              n => R.assoc("y")(n.y - minY + 10)(n)
+            )(nodes)
+          },
+          // move y it to position.y
+          R.map(R.chain(R.assocPath(["position","y"]), R.prop("y"))),
           debugLog("output"),
           R.values,
           setNodes
         )(layoutedNodes)
+
+        const edgesFromStore = [
+          ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
+          //      ...R.map(edgeByBoxIdFromIdPair)(state.connectionsByBoxId),
+          ...R.map(edgeForInputToTx)(state.inputBoxIds),
+          ...R.map(edgeForOutputToTx)(state.outputBoxIds),
+        ];
+  
+        setEdges(edgesFromStore);        
       }
     }
   }, [
@@ -312,12 +346,17 @@ export const TxFlowView = ({
 
   return (
     <ReactFlow
+      //fitView={true}
       nodes={nodes}
       edges={edges}
       // onInit={() => onLayout()}
+      // onInit={((reactFlowInstance: ReactFlowInstance) => {
+      //   reactFlowInstance.zoomTo(1.1)
+      // })}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       nodeTypes={nodeTypes}
+      //defaultZoom={0.8}
       // onConnect={onConnect}
       // onPaneClick={onPaneClick}
       // connectionLineType={ConnectionLineType.Bezier}

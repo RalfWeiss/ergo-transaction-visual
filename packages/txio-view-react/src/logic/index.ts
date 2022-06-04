@@ -1,3 +1,3 @@
 export { connectionsByBoxId } from "./connectionsByBoxId";
 export { connectionsByTokenId } from "./connectionsByTokenId";
-export { allValidSamples, toIdPairs } from "./allCombinations";
+export { allValidSamples, toIdPairs, toConnectionInfoEx } from "./allCombinations";
