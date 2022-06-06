@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Flex, HStack, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Container, HStack, Input, Text } from "@chakra-ui/react";
 import {
   TxDiagram,
   TxioStoreProvider,
@@ -105,8 +105,11 @@ const TransactionView = ({ txId }) => {
       <div>state form useStore</div>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       </Flex> */}
-      {/* <div>data from ErgoExplorer</div>
-      <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      <div style={{ marginTop: 200, overflow: "hidden" }}>
+        <div>data from ErgoExplorer</div>
+
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
     </>
   );
 };
@@ -133,37 +136,39 @@ export default () => {
   const handleChange = (event) => setTxId(event.target.value);
 
   return (
-    <Container maxW="6xl" bg="gray.100" p={4} mt={2} centerContent>
-      <HStack spacing="24px">
-        <Input
-          value={txId}
-          onChange={handleChange}
-          placeholder="Ergo Transaction Id"
-          w="70ch"
-        />
-        <Button
-          size="sm"
-          colorScheme="blue"
-          isDisabled={txId.length < 40}
-          onClick={() => setTxId2View(txId)}
+    <Box w="full" bg="gray.100">
+      <Container p={4} mt={2} centerContent>
+        <HStack spacing="24px">
+          <Input
+            value={txId}
+            onChange={handleChange}
+            placeholder="Ergo Transaction Id"
+            w="70ch"
+          />
+          <Button
+            size="sm"
+            colorScheme="blue"
+            isDisabled={txId.length < 40}
+            onClick={() => setTxId2View(txId)}
+          >
+            View
+          </Button>
+        </HStack>
+        <Box
+          w={1000}
+          h={840}
+          pt={2}
+          // align="center"
+          // justify="center"
+          flexDirection="column"
         >
-          View
-        </Button>
-      </HStack>
-      <Flex
-        w={1000}
-        h={840}
-        pt={2}
-        align="center"
-        justify="center"
-        flexDirection="column"
-      >
-        <TxioStoreProvider config={TxioViewConfig}>
-          <ReactFlowProvider>
-            <TransactionViewWrapper txId={txId2View} />
-          </ReactFlowProvider>
-        </TxioStoreProvider>
-      </Flex>
-    </Container>
+          <TxioStoreProvider config={TxioViewConfig}>
+            <ReactFlowProvider>
+              <TransactionViewWrapper txId={txId2View} />
+            </ReactFlowProvider>
+          </TxioStoreProvider>
+        </Box>
+      </Container>
+    </Box>
   );
 };

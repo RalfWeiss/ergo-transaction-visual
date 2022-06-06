@@ -5,7 +5,6 @@ import {
   TxDiagram,
   useToggleDagreLayout,
   //  TxioStoreContext,
-  useStore,
 } from "@ertravi/txio-view-react"; // , useToggleDagreLayout
 
 // Todo: these imports don't work anymore after modifying next.config.js
@@ -35,9 +34,9 @@ const screenStyle = {
 };
 
 const mainStyle = {
-  backgroundColor: "lightgray",
-  width: 800,
-  height: 800,
+  backgroundColor: "var(--chakra-colors-gray-100)",
+  width: 1200,
+  height: 1000,
   display: "flex",
   flexDirection: "column",
 } as React.CSSProperties;
@@ -82,7 +81,7 @@ const Buttons = ({ setTxData }) => {
 export default () => {
   const [txData, setTxData] = useState(data1);
   // const [txData, setTxData] = useState(data4);
-  const { state } = useStore();
+
   return (
     <div style={screenStyle}>
       <div style={mainStyle}>
@@ -91,9 +90,9 @@ export default () => {
           />
         </div>
         <div>
-          <TxDiagram width={1200} height={1200} data={txData} />
+          <TxDiagram width={1000} height={800} data={txData} />
         </div>
-        <pre>{JSON.stringify(state, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
       </div>
     </div>
   );

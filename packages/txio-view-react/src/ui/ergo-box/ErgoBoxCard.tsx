@@ -34,6 +34,46 @@ const partStyle = {
   // opacity: '8'
 };
 
+// const badgeStyle = {
+//   bgColor: "inherit",
+//   color: "gray.700",
+//   // fontWeight: "bold",
+//   fontSize: "x-small",
+//   fontStyle: "italic",
+//   position: "absolute",
+//   paddingX: "8px",
+//   paddingY: "4px",
+//   paddingBottom: "2px",
+//   top: "-16px",
+//   // right: "-12px",
+//   right: "4px",
+//   // height: 10,
+//   // border: "1px solid blue",
+//   borderRadius: "15px",
+//   // borderColor: "inherit"
+// }  as React.CSSProperties;
+
+const badgesStyle = {
+  backgroundColor: "inherit",
+  color: "gray.600",
+  display: "flex",
+  flexDirection: "row-reverse",
+  flexWrap: "nowrap",
+  alignItems: "center",
+  position: "absolute",
+  paddingLeft: "8px",
+  paddingRight: "8px",
+  paddingTop: "4px",
+  paddingBottom: "2px",
+  top: "-16px",
+  // right: "-12px",
+  right: "4px",
+  borderRadius: "15px",
+  fontSize: "small",
+  fontWeight: "bold",
+  // borderColor: "inherit"
+} as React.CSSProperties;
+
 interface PartProps {
   hideOn: (ergoBox: ErgoBox) => boolean; // function as property declaration
   ergoBox: ErgoBox;
@@ -108,7 +148,7 @@ export const TypeBadge = ({ ergoTree }) => {
     [R.T, R.always(() => <BiFace style={{ fontSize: "large" }} />)],
   ])(badgeType);
   return (
-    <div className="badges">
+    <div className="badges" style={badgesStyle}>
       {badgeText && badgeText !== "" ? (
         <div style={badgeIconStyle}>
           <Icon />
@@ -134,6 +174,7 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
       return;
     }
     if (R.equals(prevErgoBox, ergoBox)) {
+      // if (prevErgoBox === ergoBox) {
       return;
     }
 
@@ -144,8 +185,8 @@ export const ErgoBoxCard = ({ ergoBox }: ErgoBoxCardProps) => {
     const dimensionsFromState = state.dimensions[ergoBox.internalId];
 
     if (
-      dimension.height !== 0 &&
-      dimension.width !== 0 &&
+      // dimension.height !== 0 &&
+      // dimension.width !== 0 &&
       !R.equals(dimension, dimensionsFromState)
     ) {
       setState(setDimension(ergoBox.internalId)(dimension));

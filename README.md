@@ -40,11 +40,12 @@ yarn dev
 
 This will start the Nextjs development server and you have some routes demo data to look at.
 
-As of now, with version v0.0.30, you could see sth. like this:
+As of now, with version v0.0.31, you could see sth. like this:
 
-![](media/demo-output-v0-0-30a.png)
+![](media/demo-output-v0-0-31.png)
 
 This means:
+- amount of transfered value is added to the edges
 - deep combinatory analysis
   - spreads values over boxes until it finds a reasonable solution (least changes)
   - **drawbacks**: 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { toState } from "../../model";
 import { Store, setDiagramDimensions, setSearchConnections } from "../../model";
 import { addLabelsToColorMap, makeColorMap, logWhen } from "../../utils";
-import { allValidSamples, toIdPairs } from "../../logic";
+import { allValidSamples, toConnectionInfoEx } from "../../logic";
 import * as R from "ramda";
 import { TxFlowView } from "./TxFlowView";
 import { usePrevious, useStore } from "../../hooks";
@@ -14,11 +14,26 @@ import { useIsMounted } from "usehooks-ts";
 
 const debugLog = logWhen(false);
 
+const diagramStyle = {
+  // bgColor: "gray.100",
+  // backgroundColor: "gray.100",
+  backgroundColor: "rgb(237, 242, 247)",
+  padding: 4,
+  // display: "flex",
+  // flexDirection: "column",
+  // position: "relative",
+  // "& .react-flow__container": {
+  //   pt: "4",
+  // },
+} as React.CSSProperties;
+
 // const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const findConnections = (boxes) =>
   new Promise((resolve) =>
     setTimeout(() => {        // eslint-disable-line
-      const res = R.pipe(allValidSamples, toIdPairs)(boxes);
+      // const res = R.pipe(allValidSamples, toIdPairs)(boxes);
+      const res = R.pipe(allValidSamples, toConnectionInfoEx)(boxes);
+
       debugLog("found connections")(res);
 
       resolve(res);
@@ -31,6 +46,8 @@ const initialNodesWithState =
     id: internalId,
     type: state.boxes[internalId]?.boxType || "inputBox",
     position: { x: 50, y: 50 },
+    width: 0,
+    height: 0,
     data: {
       internalId,
       label: internalId,
@@ -136,15 +153,19 @@ export const TxDiagram = ({ width, height, data }: TxDiagramProps) => {
   }
 
   return (
-    <div className="txio-diagram" style={{ width, height }}>
-      {state.allBoxes.length === 0 ? (
+    <div className="txio-diagram" style={{ width, height, ...diagramStyle }}>
+      <TxFlowView
+        initialNodes={state.allBoxes.map(initialNodesWithState(state))}
+        useDagreLayout={state?.config?.useDagreLayout}
+      />
+      {/* {state.allBoxes.length === 0 ? (
         <div>No nodes</div>
       ) : (
         <TxFlowView
           initialNodes={state.allBoxes.map(initialNodesWithState(state))}
           useDagreLayout={state?.config?.useDagreLayout}
         />
-      )}
+      )} */}
       {state.searchConnections ? (
         <div className="indicator">Analyzing transaction ...</div>
       ) : null}

@@ -1,4 +1,6 @@
 import appConfig from "../../appConfig";
+import { ConnectionInfoEx } from "../../logic/allCombinations";
+import { toErg } from "../../utils";
 
 interface EdgeFromIdPairProps {
   type: string;
@@ -6,7 +8,7 @@ interface EdgeFromIdPairProps {
 }
 const edgeFromIdPair =
   ({ type, style }: EdgeFromIdPairProps) =>
-  ([inputId, outputId]: [string, string]) => ({
+  ([inputId, outputId, value]: ConnectionInfoEx) => ({
     id: `${type}-${inputId}-${outputId}`,
     source: inputId,
     target: outputId,
@@ -14,11 +16,12 @@ const edgeFromIdPair =
     targetHandle: "left",
     animated: true,
     style,
-    // label: "10 ERG",
-    // //labelStyle: { color: "red", backgroundColor: "blue" },
+    label: `${toErg(value)}`,
+    // labelStyle: { color: "red", backgroundColor: "blue" },
     // labelStyle: { fill: 'blue', fontWeight: 700, paddingBottom: "10px" },
-    // labelShowBg: true,
+    labelShowBg: true,
     // labelBgStyle: { fill: "rgb(237, 242, 247)" },
+    labelBgStyle: { fill: "var(--chakra-colors-gray-100)" },
     markerEnd: appConfig.markerEnd,
   });
 
