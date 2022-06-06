@@ -1,7 +1,6 @@
 import React from "react";
 import { LabeledValueEntry, LabeledValueEntryProps } from "./LabeledValueEntry";
-import {toErg} from "../../../utils"
-
+import { toErg } from "../../../utils";
 
 export const LabeledCurrency = ({ label, value }: LabeledValueEntryProps) => {
   const bigValue = BigInt(value);

@@ -3,6 +3,7 @@
 const valFormat = { minimumFractionDigits: 2, maximumFractionDigits: 9 };
 export const toErg = (val: bigint) => {
   const num_ = Number((val * BigInt(1000000)) / BigInt(1000000000)) / 1000000;
-  const num = Number(num_.toPrecision(3));
+
+  const num = Number(num_.toPrecision(4));
   return `${num.toLocaleString(undefined, valFormat)} ERG`;
 };

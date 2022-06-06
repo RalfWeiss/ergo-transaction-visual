@@ -4,10 +4,10 @@ import { Store } from "../model";
 import { Node, Edge } from "react-flow-renderer";
 // import { Selectors } from "../model";
 // import appConfig from "../appConfig";
-import { logWhen } from "../utils"
+import { logWhen } from "../utils";
 import * as R from "ramda";
 
-const debugLog = logWhen(false)
+const debugLog = logWhen(false);
 
 const reduceIndexed = R.addIndex(R.reduce);
 
@@ -113,7 +113,7 @@ export const layoutWithDagre =
       return nodes;
     }
 
-    const debugLog = logWhen(false)
+    const debugLog = logWhen(false);
 
     const dagreGraph = initialGraphLayout(nodes, edges);
 
@@ -121,18 +121,18 @@ export const layoutWithDagre =
     const layoutedNodes2 = nodes.map((node) => {
       const nodeWithPosition = dagreGraph.node(node.id);
       // // - deltaY;
-      // node.position.y = nodeWithPosition.y; // eslint-disable-line 
+      // node.position.y = nodeWithPosition.y; // eslint-disable-line
       // node.position.x = nodeWithPosition.x; // eslint-disable-line
       // // , appConfig.nodeStartPosition.y)
       // return node;
       return R.pipe(
         R.assocPath(["position", "y"])(nodeWithPosition.y),
-        R.assocPath(["position", "x"])(nodeWithPosition.x),        
+        R.assocPath(["position", "x"])(nodeWithPosition.x),
         // Todo: Document it!!! This is an important step to layout the graph correctly
-        n => R.mergeDeepLeft(R.path(["dimensions", n.id])(state))(n),
+        (n) => R.mergeDeepLeft(R.path(["dimensions", n.id])(state))(n),
 
         debugLog("node in layouted")
-      )(node)
+      )(node);
     });
     return layoutedNodes2;
 

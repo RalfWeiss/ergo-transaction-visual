@@ -17,7 +17,6 @@ import ReactFlow, {
   Node,
   useEdgesState,
   useNodesState,
-  ReactFlowInstance
 } from "react-flow-renderer";
 import { layoutWithDagre, avoidOverlappingY } from "../../utils";
 import {
@@ -162,7 +161,7 @@ export const TxFlowView = ({
 
   useEffect(() => {
     // if (state.noOfGraphLayouts > MaxNoOfGraphLayouts) {
-    if (state.noOfGraphLayouts > (state.allBoxes.length + 1)) {
+    if (state.noOfGraphLayouts > state.allBoxes.length + 1) {
       return;
     }
     debugLog("TxFlowView noOfGraphLayouts")(state.noOfGraphLayouts);
@@ -232,44 +231,44 @@ export const TxFlowView = ({
         // }))(layoutedNodes);
 
         // console.log("state.inputBoxIds: ", state.inputBoxIds)
-        const debugLog = logWhen(false)
-        //setNodes(repositionedNodes);
+        const debugLog = logWhen(false);
+        // setNodes(repositionedNodes);
         // new 3.6.22
         R.pipe(
           debugLog("input"),
-          R.reduce(
-            (acc, x) => R.chain(R.assoc, R.prop("id"))(x)(acc)
-          )({}),
+          R.reduce((acc, x) => R.chain(R.assoc, R.prop("id"))(x)(acc))({}),
           avoidOverlappingY(50)(state.inputBoxIds),
           avoidOverlappingY(50)(state.outputBoxIds),
           // adjust positions
-          nodes => {
-            const adjustedPositions = getAdjustedPositions(state)(layoutedNodes);
+          (nodes) => {
+            const adjustedPositions =
+              getAdjustedPositions(state)(layoutedNodes);
             return R.map((node) => ({
-                ...node,
-                position:
-                  adjustedPositions[node.data?.internalId]?.position || node.position,
-                // try to only position x
-                // {
-                //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
-                //   y: node.position.y
-                // }
-              }))(nodes);            
+              ...node,
+              position:
+                adjustedPositions[node.data?.internalId]?.position ||
+                node.position,
+              // try to only position x
+              // {
+              //   x: adjustedPositions[node.data?.internalId]?.position?.x || node.position.x,
+              //   y: node.position.y
+              // }
+            }))(nodes);
           },
           // adjust y
-          nodes => {
-            const minY = R.reduce(R.min)(Infinity)(R.pluck("y")(R.values(nodes)))
+          (nodes) => {
+            const minY = R.reduce(R.min)(Infinity)(
+              R.pluck("y")(R.values(nodes))
+            );
 
-            return R.map(
-              n => R.assoc("y")(n.y - minY + 10)(n)
-            )(nodes)
+            return R.map((n) => R.assoc("y")(n.y - minY + 10)(n))(nodes);
           },
           // move y it to position.y
-          R.map(R.chain(R.assocPath(["position","y"]), R.prop("y"))),
+          R.map(R.chain(R.assocPath(["position", "y"]), R.prop("y"))),
           debugLog("output"),
           R.values,
           setNodes
-        )(layoutedNodes)
+        )(layoutedNodes);
 
         const edgesFromStore = [
           ...R.map(edgeByTokenIdFromIdPair)(state.connectionsByTokenId),
@@ -277,8 +276,8 @@ export const TxFlowView = ({
           ...R.map(edgeForInputToTx)(state.inputBoxIds),
           ...R.map(edgeForOutputToTx)(state.outputBoxIds),
         ];
-  
-        setEdges(edgesFromStore);        
+
+        setEdges(edgesFromStore);
       }
     }
   }, [
@@ -346,7 +345,7 @@ export const TxFlowView = ({
 
   return (
     <ReactFlow
-      //fitView={true}
+      // fitView={true}
       nodes={nodes}
       edges={edges}
       // onInit={() => onLayout()}
@@ -356,7 +355,7 @@ export const TxFlowView = ({
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       nodeTypes={nodeTypes}
-      //defaultZoom={0.8}
+      // defaultZoom={0.8}
       // onConnect={onConnect}
       // onPaneClick={onPaneClick}
       // connectionLineType={ConnectionLineType.Bezier}
