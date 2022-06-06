@@ -84,11 +84,11 @@ const theme = extendTheme({
 const TxioViewConfig = {
   rootPropsToShow: [
     "value",
-    "ergoTree",
+    // "ergoTree",
     "address",
-    "boxId",
+    // "boxId",
     //    "blockId",
-    //    "transactionId",
+    // "transactionId",
   ],
   boxColors: [
     // "#996600",

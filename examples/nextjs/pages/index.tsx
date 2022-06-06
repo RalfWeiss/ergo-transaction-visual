@@ -92,7 +92,7 @@ export default () => {
         <div>
           <TxDiagram width={1000} height={800} data={txData} />
         </div>
-        {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
+        <pre>{JSON.stringify(txData, null, 2)}</pre>
       </div>
     </div>
   );

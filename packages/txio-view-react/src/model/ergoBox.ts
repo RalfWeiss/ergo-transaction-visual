@@ -4,6 +4,7 @@ import * as R from "ramda";
 import { Asset, transform as transformAsset } from "./asset";
 import bs58 from "bs58";
 import { Buffer } from "buffer";
+import { Address } from "@coinbarn/ergo-ts";
 
 export const enum BoxType {
   "inputBox",
@@ -53,6 +54,10 @@ export const normalize = (input: any): ErgoBox => {
       // remove prefix and checksum
       // see: https://docs.ergoplatform.com/dev/wallet/address/
       box.ergoTree = ergoTree.substring(2, ergoTree.length - 8);  // eslint-disable-line
+    }
+    if (box.address === "" && box.ergoTree !== "") {
+      const { address } = Address.fromErgoTree(box.ergoTree);
+      box.address = address// eslint-disable-line
     }
     return box;
   })(input) as any;
